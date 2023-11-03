@@ -1,11 +1,30 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
 
 export const NewsCard = ({ title, description, imgLink}) => {
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const iphone = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 744px)"
+  );
+  const ipadMini = useMediaQuery(
+    "only screen and (min-width : 744px)"
+  );
+  const laptop = useMediaQuery(
+    "only screen and (min-width : 1024px)"
+  );
+  const macbook = useMediaQuery("only screen and (min-width : 1280px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
   return (
-    <div className="flex flex-col justify-left w-full bg-order p-4 rounded-lg">
+    <div className={classNames("flex flex-col justify-left bg-order p-4 rounded-lg",{
+      "w-[379px] h-[598px]": !iphone,
+      "w-[302px] h-[507px]": iphone,
+    })}>
         <img src={imgLink} alt={title}/>
-        <h3 className="text-2xl font-semibold max-w-[280px] mt-4 text-left">{title}</h3>
-        <p className="mt-2 text-left text-base">{description}</p>
-        <button className="font-semibold text-xl px-4 py-3 bg-btns rounded-lg self-left w-28 mt-4 mb-8">Читать</button>
+        <h3 className={classNames("text-2xl font-semibold max-w-[280px] mt-4 text-left",{
+          "text-xl": iphone,
+        })}>{title}</h3>
+        <p className="mt-2 text-left text-base h-[98px] line-clamp-4">{description}</p>
+        <button className={classNames("font-semibold text-xl px-4 py-3 bg-btns rounded-lg self-left mt-4 w-28 ")}>Читать</button>
     </div>
   );
 };
