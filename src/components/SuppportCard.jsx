@@ -1,6 +1,7 @@
-export const SuppportCard = ({title, text, icon, onClick}) => {
+export const SuppportCard = ({title, text, icon, onClick, mr="mr-6", mb="mb-6"}) => {
+    let classForCard = `bg-gradient-to-br from-[#38096780] to-[#7811C580] rounded-2xl w-[314px] px-4 py-6 ${mr} ${mb}`;
     return (
-        <li className="bg-gradient-to-br from-[#38096780] to-[#7811C580] rounded-2xl w-[314px] px-4 py-6 mr-6 mb-6">
+        <li className={classForCard}>
             <div className="flex items-center mb-2">
                 <div className="rounded-full bg-gradient-to-r from-[#38096780] to-[#7811C580] p-2 mr-2">
                     <img src={icon} alt="Иконка соцсети" />
