@@ -18,7 +18,7 @@ export const AccountMenu = ({ isLanguageOpen, setIsLanguageOpen, isAccountOpen, 
   return (
     <>
       <div
-        className="flex flex-row items-center pr-7 cursor-pointer relative"
+        className="flex flex-row items-center cursor-pointer relative"
         onClick={handleOpen}
       >
         <div className="text-xl">Аккаунт</div>
