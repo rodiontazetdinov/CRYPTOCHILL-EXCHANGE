@@ -17,6 +17,10 @@ module.exports = {
       },
       maxWidth: {
         '1328': '1328px',
+        '1280': '1280px',
+        'main-container': 'calc(100% - 112px)',
+        'tablet-container': 'calc(100% - 48px)',
+        'mobile-container': 'calc(100% - 32px)',
       },
     },
   },

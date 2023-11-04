@@ -3,36 +3,60 @@ import newsImg from "../images/news.svg";
 import "@splidejs/react-splide/css/core";
 import { NewsCard } from "./NewsCard";
 import { useRef } from "react";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
 
 import leftArrow from "../images/slider-arrow-left.svg";
 import rightArrow from "../images/slider-arrow-right.svg";
 import { Link } from "react-router-dom";
 
 export const News = () => {
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const iphone = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 744px)"
+  );
+  const ipadMini = useMediaQuery(
+    "only screen and (min-width : 744px) and (max-width : 1024px)"
+  );
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
   const sliderRef = useRef()
   const splideOptions = {
     type   : 'loop',
     perPage: 3,
+    perMove: 1,
     gap: 16,
     arrows: false,
-    // arrowPath: `url(${leftArrow}) left center, url(${rightArrow}) right center`
+    autoWidth: true,
   };
+
   return (
-    <section className="flex flex-col max-w-1328 self-center px-16">
-      <h2 className="text-center font-bold text-4xl font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-12 mb-10 self-center">
+    <section className={classNames("flex flex-col self-center mx-auto",{
+      "max-w-[calc(100% - 112px)]": macbook,
+      "max-w-[1328px]": desctop,
+      "max-w-[696px]": ipadMini,
+      "max-w-[696px]": iphone,
+    })}>
+      <h2 className={classNames("text-center font-bold font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-12 mb-10 self-center",{
+        "text-4xl": !iphone,
+        "text-2xl": iphone,
+      })}>
         Новости
       </h2>
       <div className="relative">
-      <button className="mb-8 absolute z-10 top-2/4 -left-16" onClick={() => sliderRef.current.splide.go('<')}><img src={leftArrow} alt="левая срелка слайдера"/></button>
+      {!iphone && <button className=" w-14 mb-8 absolute z-10 top-2/4 -left-16 ml-11" onClick={() => sliderRef.current.splide.go('<')}><img className="w-14 " src={leftArrow} alt="левая срелка слайдера"/></button>}
       <Splide
       ref={sliderRef}
         aria-label="My Favorite Images"
         options={splideOptions}
         hasTrack={ false }
-        // className="splide is-overflow is-initialized splide--loop splide--ltr splide--draggable is-active"
+        className="splide is-overflow is-initialized splide--loop splide--ltr splide--draggable is-active min-w-[1169px] max-w-[1169px] mx-auto"
       >
         <SplideTrack>
-        <SplideSlide>
+        <SplideSlide className={classNames({
+          "w-[379px] h-[598px]": !iphone,
+          "w-[302px] h-[507px]": iphone,
+        })}>
           <NewsCard
             title={"Новости криптовалют 1 недели июня 2023 года"}
             description={
@@ -41,7 +65,10 @@ export const News = () => {
             imgLink={newsImg}
           />
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={classNames({
+          "w-[379px] h-[598px]": !iphone,
+          "w-[302px] h-[507px]": iphone,
+        })}>
           <NewsCard
             title={"Новости криптовалют 2 недели июня 2023 года"}
             description={
@@ -50,7 +77,10 @@ export const News = () => {
             imgLink={newsImg}
           />
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={classNames({
+          "w-[379px] h-[598px]": !iphone,
+          "w-[302px] h-[507px]": iphone,
+        })}>
           <NewsCard
             title={"Новости криптовалют 3 недели июня 2023 года"}
             description={
@@ -59,7 +89,10 @@ export const News = () => {
             imgLink={newsImg}
           />
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={classNames({
+          "w-[379px] h-[598px]": !iphone,
+          "w-[302px] h-[507px]": iphone,
+        })}>
           <NewsCard
             title={"Новости криптовалют 4 недели июня 2023 года"}
             description={
@@ -68,7 +101,10 @@ export const News = () => {
             imgLink={newsImg}
           />
         </SplideSlide>
-        <SplideSlide>
+        <SplideSlide className={classNames({
+          "w-[379px] h-[598px]": !iphone,
+          "w-[302px] h-[507px]": iphone,
+        })}>
           <NewsCard
             title={"Новости криптовалют 5 недели июня 2023 года"}
             description={
@@ -79,9 +115,12 @@ export const News = () => {
         </SplideSlide>
         </SplideTrack>
       </Splide>
-      <button className="mb-8 absolute z-10 top-2/4 -right-16" onClick={() => sliderRef.current.splide.go('>')}><img src={rightArrow} alt="левая срелка слайдера"/></button>
+      {!iphone && <button className="w-14 mb-8 absolute z-10 top-2/4 -right-16 mr-11" onClick={() => sliderRef.current.splide.go('>')}><img className="w-14 " src={rightArrow} alt="левая срелка слайдера"/></button>}
       </div>
-      <Link className="bg-btns w-[217px] mt-6 self-end mr-3 text-xl font-semibold px-4 py-3 rounded-xl mb-12">Читать все новости</Link>
+      <Link className={classNames("bg-btns mt-6 self-end mr-3 text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
+        "w-full mr-0": iphone,
+        "w-[217px]": !iphone
+      })}>Читать все новости</Link>
     </section>
   );
 };
