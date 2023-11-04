@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/css/main.affe8138.css",
-    "main.js": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/js/main.bcb127b2.js",
+    "main.css": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/css/main.5f039fdf.css",
+    "main.js": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/js/main.83e83713.js",
     "static/media/BG.png": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/BG.a79a2039ac5de0474449.png",
     "static/media/profitably.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/profitably.02c1641eb4c1f0c6d480d00298c90f62.svg",
     "static/media/comfortable.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/comfortable.cd3c25e0aa79df581f08023a6ce43bb8.svg",
@@ -12,7 +12,7 @@
     "static/media/order-switch.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/order-switch.f32708a1c8bf51efd1d48006153ae85b.svg",
     "static/media/ge-flag.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/ge-flag.15f98b238b7efea861e033548b81a4b1.svg",
     "static/media/reddit.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/reddit.bf1f963274e516ae2baa283cbbfaf1d4.svg",
-    "static/media/chat.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/chat.44a23fb4436c4d733e00ba1b46389375.svg",
+    "static/media/chat.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/chat.c4867a91867b89d5c165eed583a51816.svg",
     "static/media/bc.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/bc.fc0ba79b844b6bd9b8df6230cedc0294.svg",
     "static/media/btc.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/btc.946155ca0c015da9f1c9f4aa6c092b83.svg",
     "static/media/partner.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/partner.1f9d53e09b873f545e5c90c5b44cd282.svg",
@@ -43,11 +43,11 @@
     "static/media/adress-book.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/adress-book.e7cc935a91c0a3b238ca28ee5e978994.svg",
     "static/media/star.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/star.e43070acb4a6239df49e8595e13a69ff.svg",
     "static/media/purple-arrow.svg": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/media/purple-arrow.709afee1443fe1f6095bd62d7e086f4e.svg",
-    "main.affe8138.css.map": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/css/main.affe8138.css.map",
-    "main.bcb127b2.js.map": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/js/main.bcb127b2.js.map"
+    "main.5f039fdf.css.map": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/css/main.5f039fdf.css.map",
+    "main.83e83713.js.map": "/rodiontazetdinov/CRYPTOCHILL-EXCHANGE/static/js/main.83e83713.js.map"
   },
   "entrypoints": [
-    "static/css/main.affe8138.css",
-    "static/js/main.bcb127b2.js"
+    "static/css/main.5f039fdf.css",
+    "static/js/main.83e83713.js"
   ]
 }
