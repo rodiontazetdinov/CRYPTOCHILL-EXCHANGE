@@ -12,8 +12,9 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 export const Support = () => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-    const macbook = useMediaQuery("only screen and (min-width : 1280px)");
-    const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
+    const desctop = useMediaQuery("only screen and (min-width : 1280px)");
+
     return (
         <section className={classNames(
             "container mx-auto text-white font-semibold text-left", {
@@ -25,7 +26,7 @@ export const Support = () => {
                 "inline-block font-bold text-transparent bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text mb-5 mt-10", {
                 "text-3xl": iphone,
                 "text-5xl": ipadMini,
-                "text-5xl ": macbook,
+                " text-5xl": macbook,
                 "text-5xl  ": desctop,
             })}>Подержка</h3>
             <p className={classNames(
@@ -38,7 +39,9 @@ export const Support = () => {
     
             <ul className={classNames(
                 "flex flex-wrap items-start", {
-                "justify-center": iphone,
+                "min-w-[652px]": ipadMini,
+                "flex-col items-center": iphone,
+
             })}>
                 <SuppportCard
                     title="Чат на сайте"
