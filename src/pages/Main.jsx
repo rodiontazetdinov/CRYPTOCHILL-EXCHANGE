@@ -25,7 +25,7 @@ export const Main = () => {
                 "max-w-main-container": macbook,
                 "max-w-main-container": desctop,
                 "max-w-main-container": ipadMini,
-                "max-w-mobile-container": iphone,
+                "max-w-tablet-container": iphone,
                 "max-w-main-container": laptop,
             })}>
             <Transactions/>

@@ -1,9 +1,17 @@
 import { OrderItemCoin } from "./OrderItemCoin";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
+
 
 
 export const OrderItem = ({title}) => {
+    const miniOrder = useMediaQuery(
+        "only screen and (max-width : 610px)"
+      );
     return (
-        <div className="bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-lg">
+        <div className={classNames("bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-lg",{
+            "mt-2 w-full": miniOrder,
+        })}>
             <h3 className="text-3xl w-full text-left">{title}</h3>
             <OrderItemCoin/>
             <div className="flex flex-row justify-between w-full">
