@@ -17,7 +17,7 @@ export const Intro = () => {
       const desctop = useMediaQuery("only screen and (min-width : 1280px)");
       
     return (
-        <section className="bg-main-bg-img flex flex-col items-center bg-cover bg-center bg-no-repeat">
+        <section className="flex flex-col items-center">
             <h1 className={classNames("text-center font-bold font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-10",{
                 "text-2xl": iphone,
                 "text-5xl": !iphone,

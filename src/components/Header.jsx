@@ -11,22 +11,20 @@ import classNames from "classnames";
 
 export const Header = ({ isLoggedIn }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const iphone = useMediaQuery(
-    "only screen and (min-width : 343px) and (max-width : 744px)"
-  );
-  const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px) and (max-width : 1024px)"
-  );
-  const macbook = useMediaQuery("only screen and (min-width : 1280px)");
-  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+  const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1328px)");
+
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   return (
     <header
-      className={classNames("container mx-auto pt-6 flex justify-between", {
-        "w-[1168px] justify-between": macbook,
-        "w-[1328px] justify-between": desctop,
-        "w-[696px] flex-col justify-center items-center": ipadMini,
+      className={classNames("w-full mx-auto pt-6 flex justify-between", {
+        "max-w-1328 justify-between": desctop,
+        "max-w-main-container justify-between": macbook,
+        "max-w-tablet-container flex-col justify-center items-center": ipadMini,
+        "max-w-mobile-container": iphone,
       })}
     >
       {!iphone && (
