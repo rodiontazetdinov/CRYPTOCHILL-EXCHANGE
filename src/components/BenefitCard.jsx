@@ -13,9 +13,9 @@ export const BenefitCard = ({ imageSrc, title, description }) => {
   return (
     <div
       className={classNames(
-        "bg-order flex  rounded-2xl p-6  w-full  text-left h-full",
+        "bg-order flex  rounded-2xl p-6  w-full  text-left ",
         {
-          "h-[350px] flex-col": ipadMini,
+          "h-[350px] flex-col mb-6": ipadMini,
           "w-full flex-row items-start mb-3 justify-start": iphone,
           "mr-6 last:mr-0": macbook,
         //   "flex-row": miniOrder,
