@@ -9,7 +9,7 @@ export const Order = () => {
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
   const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px)"
+    "only screen and (min-width : 744px) and (max-width : 1024px)"
   );
   const laptop = useMediaQuery(
     "only screen and (min-width : 1024px)"
@@ -19,9 +19,11 @@ export const Order = () => {
   return (
     <div className={classNames("flex flex-col items-center rounded-3xl  ",{
       "max-w-[696px] px-6": ipadMini,
-      "max-w-screen-lg px-24": macbook,
+      "w-[912px] px-24": macbook,
+      "px-24": desctop,
       "bg-order mt-14 py-6": !iphone,
       "bg-transparent mt-6 py-0": iphone,
+      
       
     })}>
       <h2 className="text-center text-3xl">Тип заказа</h2>
