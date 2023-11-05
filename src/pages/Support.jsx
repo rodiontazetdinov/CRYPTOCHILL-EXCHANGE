@@ -9,18 +9,20 @@ import twitterIcon from "../images/support-icons/twitter.svg";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
+
 export const Support = () => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
-    const desctop = useMediaQuery("only screen and (min-width : 1280px)");
+    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
+    const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
     return (
         <section className={classNames(
-            "container mx-auto text-white font-semibold text-left", {
-            "w-[1168px] min-h-[657px]": macbook,
-            "w-[1328px] min-h-[657px]": desctop,
-            "w-[696px]": ipadMini,
+            "mx-auto text-white font-semibold text-left", {
+            "max-w-1328 min-h-[657px]": desctop,
+            "max-w-main-container min-h-[657px] ": macbook,
+            "max-w-tablet-container": ipadMini,
+            "max-w-mobile-container w-[696px]": iphone,
         })}>
             <h3 className={classNames(
                 "inline-block font-bold text-transparent bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text mb-5 mt-10", {
@@ -36,12 +38,11 @@ export const Support = () => {
                 "text-2xl ": macbook,
                 "text-2xl  ": desctop,
             })}>Нужна помощь? Мы готовы помочь вам 24 часа, 7 дней в неделю.</p>
-    
+
             <ul className={classNames(
                 "flex flex-wrap items-start", {
                 "min-w-[652px]": ipadMini,
                 "flex-col items-center": iphone,
-
             })}>
                 <SuppportCard
                     title="Чат на сайте"

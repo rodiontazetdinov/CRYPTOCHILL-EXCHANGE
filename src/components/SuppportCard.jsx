@@ -14,7 +14,7 @@ export const SuppportCard = ({ title, text, icon, onClick }) => {
             "mb-6 mr-6 last:mr-0": desctop,
             "mb-6 mr-6 last:mr-0 last:mb-0": macbook,
             "mb-6 mr-6 even:mr-0 last:mb-0": ipadMini,
-            "mb-6 mr-0 last:mb-0": iphone,
+            "mb-6 mr-0 last:mb-0 w-8/12 min-w-[314px]": iphone,
         })}>
             <div className="flex items-center mb-2">
                 <div className="rounded-full bg-gradient-to-r from-[#38096780] to-[#7811C580] p-1 mr-2">

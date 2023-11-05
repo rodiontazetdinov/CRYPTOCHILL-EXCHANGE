@@ -9,8 +9,8 @@ import { useState } from "react";
 export const Faq = () => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
-    const desctop = useMediaQuery("only screen and (min-width : 1280px)");
+    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
+    const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
     const [aboutCryptochillOpen, setAboutCryptochillOpen] = useState(true);
     const [aboutExchangeOpen, setAboutExchangeOpen] = useState(false);
@@ -24,10 +24,11 @@ export const Faq = () => {
     console.log(aboutCryptochillOpen, aboutExchangeOpen, aboutOrderOpen);
     return (
         <section className={classNames(
-            "container mx-auto text-white font-semibold text-left", {
-            "w-[1168px] min-h-[657px]": macbook,
-            "w-[1328px] min-h-[657px]": desctop,
-            "w-[696px]": ipadMini,
+            "mx-auto max-w-1328 text-white font-semibold text-left", {
+            "max-w-1328 min-h-[657px]": desctop,
+            "max-w-main-container min-h-[657px]": macbook,
+            "max-w-tablet-container": ipadMini,
+            "max-w-mobile-container": iphone,
         })}>
             <h3 className={classNames(
                 "inline-block font-bold text-transparent bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text mb-8 mt-10", {

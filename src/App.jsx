@@ -11,7 +11,7 @@ import { Support } from './pages/Support';
 
 export const App = () => {
   return (
-    <div className="App bg-cover bg-center bg-main-bg overflow-x-hidden">
+    <div className="App bg-[center_-500px] bg-main-bg bg-main-bg-img overflow-x-hidden">
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route index element={<Main/>} />
