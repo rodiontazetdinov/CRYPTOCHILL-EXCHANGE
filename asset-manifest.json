@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.6a2a6f5b.css",
-    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.21e3c993.js",
+    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.39a21769.css",
+    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.2f063a04.js",
     "static/media/BG2.png": "/CRYPTOCHILL-EXCHANGE/static/media/BG2.b37872dfb2039e8106a4.png",
     "static/media/profitably.svg": "/CRYPTOCHILL-EXCHANGE/static/media/profitably.02c1641eb4c1f0c6d480d00298c90f62.svg",
     "static/media/comfortable.svg": "/CRYPTOCHILL-EXCHANGE/static/media/comfortable.cd3c25e0aa79df581f08023a6ce43bb8.svg",
@@ -41,13 +41,15 @@
     "static/media/ua-flag.svg": "/CRYPTOCHILL-EXCHANGE/static/media/ua-flag.967c392a7591d21db3e06ab287280565.svg",
     "static/media/rf-flag.svg": "/CRYPTOCHILL-EXCHANGE/static/media/rf-flag.adbebbe8584a81c1a727c046e8cf8930.svg",
     "static/media/adress-book.svg": "/CRYPTOCHILL-EXCHANGE/static/media/adress-book.e7cc935a91c0a3b238ca28ee5e978994.svg",
+    "static/media/faq-plus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-plus.e07ddcfe121c75264322dabd09cc0507.svg",
     "static/media/star.svg": "/CRYPTOCHILL-EXCHANGE/static/media/star.e43070acb4a6239df49e8595e13a69ff.svg",
+    "static/media/faq-minus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-minus.ddb202cb3dcf81bd7e8add5f8208f1dd.svg",
     "static/media/purple-arrow.svg": "/CRYPTOCHILL-EXCHANGE/static/media/purple-arrow.709afee1443fe1f6095bd62d7e086f4e.svg",
-    "main.6a2a6f5b.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.6a2a6f5b.css.map",
-    "main.21e3c993.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.21e3c993.js.map"
+    "main.39a21769.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.39a21769.css.map",
+    "main.2f063a04.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.2f063a04.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a2a6f5b.css",
-    "static/js/main.21e3c993.js"
+    "static/css/main.39a21769.css",
+    "static/js/main.2f063a04.js"
   ]
 }
