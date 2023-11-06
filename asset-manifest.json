@@ -1,12 +1,11 @@
 {
   "files": {
-    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.39a21769.css",
-    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.2f063a04.js",
+    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.eefd4f0f.css",
+    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.2c63de52.js",
     "static/media/BG2.png": "/CRYPTOCHILL-EXCHANGE/static/media/BG2.b37872dfb2039e8106a4.png",
     "static/media/profitably.svg": "/CRYPTOCHILL-EXCHANGE/static/media/profitably.02c1641eb4c1f0c6d480d00298c90f62.svg",
     "static/media/comfortable.svg": "/CRYPTOCHILL-EXCHANGE/static/media/comfortable.cd3c25e0aa79df581f08023a6ce43bb8.svg",
     "static/media/fast.svg": "/CRYPTOCHILL-EXCHANGE/static/media/fast.37cad56c8d5385cf45c519028a090753.svg",
-    "static/media/puprple-circle.png": "/CRYPTOCHILL-EXCHANGE/static/media/puprple-circle.33b3621e967962a77fc7.png",
     "static/media/instruct-btc.svg": "/CRYPTOCHILL-EXCHANGE/static/media/instruct-btc.fa8a71fde170ee02959f7dc823fcd5e1.svg",
     "static/media/news.svg": "/CRYPTOCHILL-EXCHANGE/static/media/news.0d64d3e3cefe6023a8fbad9df5efd9fd.svg",
     "static/media/order-switch.svg": "/CRYPTOCHILL-EXCHANGE/static/media/order-switch.f32708a1c8bf51efd1d48006153ae85b.svg",
@@ -40,16 +39,16 @@
     "static/media/personal.svg": "/CRYPTOCHILL-EXCHANGE/static/media/personal.236cae0fd8a930085dafda774f9fa575.svg",
     "static/media/ua-flag.svg": "/CRYPTOCHILL-EXCHANGE/static/media/ua-flag.967c392a7591d21db3e06ab287280565.svg",
     "static/media/rf-flag.svg": "/CRYPTOCHILL-EXCHANGE/static/media/rf-flag.adbebbe8584a81c1a727c046e8cf8930.svg",
+    "static/media/faq-plus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-plus.42023bdef4ec76648a134892ecd0274d.svg",
     "static/media/adress-book.svg": "/CRYPTOCHILL-EXCHANGE/static/media/adress-book.e7cc935a91c0a3b238ca28ee5e978994.svg",
-    "static/media/faq-plus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-plus.e07ddcfe121c75264322dabd09cc0507.svg",
     "static/media/star.svg": "/CRYPTOCHILL-EXCHANGE/static/media/star.e43070acb4a6239df49e8595e13a69ff.svg",
-    "static/media/faq-minus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-minus.ddb202cb3dcf81bd7e8add5f8208f1dd.svg",
+    "static/media/faq-minus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-minus.95cf2137ad80cbdbbc4300f210a768c0.svg",
     "static/media/purple-arrow.svg": "/CRYPTOCHILL-EXCHANGE/static/media/purple-arrow.709afee1443fe1f6095bd62d7e086f4e.svg",
-    "main.39a21769.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.39a21769.css.map",
-    "main.2f063a04.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.2f063a04.js.map"
+    "main.eefd4f0f.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.eefd4f0f.css.map",
+    "main.2c63de52.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.2c63de52.js.map"
   },
   "entrypoints": [
-    "static/css/main.39a21769.css",
-    "static/js/main.2f063a04.js"
+    "static/css/main.eefd4f0f.css",
+    "static/js/main.2c63de52.js"
   ]
 }
