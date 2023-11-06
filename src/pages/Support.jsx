@@ -40,7 +40,7 @@ export const Support = () => {
             })}>Нужна помощь? Мы готовы помочь вам 24 часа, 7 дней в неделю.</p>
 
             <ul className={classNames(
-                "flex flex-wrap items-start", {
+                "flex flex-wrap items-start mb-4", {
                 "min-w-[652px]": ipadMini,
                 "flex-col items-center": iphone,
             })}>

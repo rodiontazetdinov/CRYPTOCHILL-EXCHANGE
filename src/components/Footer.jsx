@@ -28,7 +28,6 @@ export const Footer = ({ isLoggedIn }) => {
   );
 
   return (
-    // <div className="bg-main-bg">
     <footer
       className={classNames(
         "bg-transparent  mx-auto pt-6 flex justify-between",
@@ -216,7 +215,6 @@ export const Footer = ({ isLoggedIn }) => {
             "text-sm font-normal mb-6": miniFooter,
             "text-xl font-semibold": !miniFooter,
           })}>
-            © 2018–2023 Cryptochill. All rights reserved
           </div>
         </>
       )}
