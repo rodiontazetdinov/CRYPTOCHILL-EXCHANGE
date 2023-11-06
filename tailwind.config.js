@@ -23,6 +23,9 @@ module.exports = {
         'tablet-container': 'calc(100% - 48px)',
         'mobile-container': 'calc(100% - 32px)',
       },
+      fontFamily: {
+        'mono': ['Space Mono', 'sans'],
+      },
     },
   },
   plugins: [],
