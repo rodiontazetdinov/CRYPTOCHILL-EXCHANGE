@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.eefd4f0f.css",
-    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.2c63de52.js",
+    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.9e36749b.js",
     "static/media/BG2.png": "/CRYPTOCHILL-EXCHANGE/static/media/BG2.b37872dfb2039e8106a4.png",
     "static/media/profitably.svg": "/CRYPTOCHILL-EXCHANGE/static/media/profitably.02c1641eb4c1f0c6d480d00298c90f62.svg",
     "static/media/comfortable.svg": "/CRYPTOCHILL-EXCHANGE/static/media/comfortable.cd3c25e0aa79df581f08023a6ce43bb8.svg",
@@ -45,10 +45,10 @@
     "static/media/faq-minus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-minus.95cf2137ad80cbdbbc4300f210a768c0.svg",
     "static/media/purple-arrow.svg": "/CRYPTOCHILL-EXCHANGE/static/media/purple-arrow.709afee1443fe1f6095bd62d7e086f4e.svg",
     "main.eefd4f0f.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.eefd4f0f.css.map",
-    "main.2c63de52.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.2c63de52.js.map"
+    "main.9e36749b.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.9e36749b.js.map"
   },
   "entrypoints": [
     "static/css/main.eefd4f0f.css",
-    "static/js/main.2c63de52.js"
+    "static/js/main.9e36749b.js"
   ]
 }
