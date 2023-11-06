@@ -1,11 +1,18 @@
 import { OrderItem } from "./OrderItem";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
 
 import qr from "../images/icons/qr.svg";
 import squares from "../images/icons/squares.svg";
 
 export const OrderExchange = () => {
+  const miniOrder = useMediaQuery(
+    "only screen and (max-width : 610px)"
+  );
   return (
-    <div className=" flex flex-col justify-start mt-2 w-full text-left">
+    <div className={classNames("flex flex-col justify-start mt-2 w-full text-left",{
+      "mt-2 w-full max-w-mobile-container": miniOrder,
+    })}>
       <h3 className="text-3xl">Назначение</h3>
       <div className="bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-lg justify-between mt-2">
         <input

@@ -117,9 +117,9 @@ export const News = () => {
       </Splide>
       {!iphone && <button className="w-14 mb-8 absolute z-10 top-2/4 -right-16 mr-11" onClick={() => sliderRef.current.splide.go('>')}><img className="w-14 " src={rightArrow} alt="левая срелка слайдера"/></button>}
       </div>
-      <Link className={classNames("bg-btns mt-6 self-end mr-3 text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
+      <Link className={classNames("bg-btns mt-6 self-end text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
         "w-full mr-0": iphone,
-        "w-[217px]": !iphone
+        "w-[217px] mr-3": !iphone
       })}>Читать все новости</Link>
     </section>
   );
