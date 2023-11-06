@@ -18,7 +18,7 @@ export const Footer = ({ isLoggedIn }) => {
   return (
     // <div className="bg-main-bg">
       <footer className={classNames(
-        "bg-main-bg w-full mx-auto pt-6 flex justify-between", {
+        "w-full mx-auto pt-6 flex justify-between", {
         "max-w-1328": desctop,
         "max-w-main-container": macbook,
         "max-w-tablet-container": ipadMini,
