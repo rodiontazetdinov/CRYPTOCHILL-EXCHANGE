@@ -2,7 +2,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useState } from "react";
 
-export const FAQItem = ({ question, answer, account, children }) => {
+export const FAQItem = ({ question, account, children }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
