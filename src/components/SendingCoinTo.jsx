@@ -19,7 +19,7 @@ export const SendingCoinTo = () => {
   );
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
 
-    const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 845px)");
+    const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
 
   return (
     <div className={classNames("flex   mt-6",{
