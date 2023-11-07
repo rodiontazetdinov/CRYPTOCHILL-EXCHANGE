@@ -10,11 +10,11 @@ export const SuppportCard = ({ title, text, icon, onClick }) => {
 
     return (
         <li className={classNames(
-            "bg-gradient-to-br from-[#38096780] to-[#7811C580] rounded-2xl w-[314px] px-4 py-6", {
-            "mb-6 mr-6 last:mr-0": desctop,
-            "mb-6 mr-6 last:mr-0 last:mb-0": macbook,
-            "mb-6 mr-6 even:mr-0 last:mb-0": ipadMini,
-            "mb-6 mr-0 last:mb-0 w-8/12 min-w-[314px]": iphone,
+            "bg-gradient-to-br from-[#38096780] to-[#7811C580] rounded-2xl px-4 py-6", {
+            "mb-6 mr-6 last:mr-0 w-[314px]": desctop,
+            "mb-6 mr-6 last:mr-0 w-[314px] ": macbook,
+            "mb-6 mr-6 even:mr-0 w-[314px]": ipadMini,
+            "mb-6 mr-0 w-8/12 min-w-[314px]": iphone,
         })}>
             <div className="flex items-center mb-2">
                 <div className="rounded-full bg-gradient-to-r from-[#38096780] to-[#7811C580] p-1 mr-2">

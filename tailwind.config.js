@@ -22,6 +22,8 @@ module.exports = {
         'main-container': 'calc(100% - 112px)',
         'tablet-container': 'calc(100% - 48px)',
         'mobile-container': 'calc(100% - 32px)',
+        'first-news-card': 'calc(50% - 12px)',
+        'other-news-cagd': 'calc(33.33% - 16px)'
       },
       fontFamily: {
         'mono': ['Space Mono', 'sans'],
