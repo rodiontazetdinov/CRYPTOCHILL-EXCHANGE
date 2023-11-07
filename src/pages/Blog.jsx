@@ -2,7 +2,7 @@
 import { BlockNews } from "../components/BlockNews";
 
 // img
-import newsImg from "../images/news.svg";
+import newsImg from "../images/news.png";
 import arrowUp from "../images/arrow-up.svg";
 import arrowDown from "../images/arrow-down.svg";
 
