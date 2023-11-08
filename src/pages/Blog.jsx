@@ -85,7 +85,7 @@ export const Blog = () => {
             "max-w-mobile-container": iphone,
         })}>
             <h3 className={classNames(
-                "inline-block font-bold text-transparent bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text mb-8 mt-10 text-5xl")
+                "inline-block font-bold text-transparent bg-text bg-clip-text mb-8 mt-10 text-5xl")
             }>Блог</h3>
 
             {/* Навигация по разделам  Блог */}
@@ -167,7 +167,7 @@ export const Blog = () => {
             <BlockNews listNews={invalidDataJSON}/>
 
             <h3 className={classNames(
-                "inline-block font-bold text-transparent bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text mb-8 mt-10", {
+                "inline-block font-bold text-transparent bg-text bg-clip-text mb-8 mt-10", {
                 "text-3xl": iphone,
                 "text-5xl": ipadMini,
                 "text-5xl ": macbook,
