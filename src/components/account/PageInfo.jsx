@@ -40,7 +40,7 @@ export const PageInfo = ({ user }) => {
     const lastVisitMinutes = (new Date() - lastDateObj) / 1000 / 60;
 
     return (
-        <section className="py-6 px-10">
+        <section className="py-6 pl-10">
             <h2 className={classNames(
                 "inline-block font-bold text-transparent bg-text bg-clip-text mb-6 leading-tight", {
                 "text-3xl": iphone,
