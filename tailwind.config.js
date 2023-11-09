@@ -25,6 +25,9 @@ module.exports = {
         'first-news-card': 'calc(50% - 12px)',
         'other-news-cagd': 'calc(33.33% - 16px)'
       },
+      fontFamily: {
+        'mono': ['Space Mono', 'sans'],
+      },
     },
   },
   plugins: [],
