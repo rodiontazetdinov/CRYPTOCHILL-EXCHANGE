@@ -12,19 +12,19 @@ export const AccountDropdown = () => {
     return (
         <ul className="flex flex-col  absolute bg-drop text-base right-7 top-12 w-max p-2">
             <li >
-              <Link to="/personal-data" className="flex flex-row items-center whitespace-nowrap mb-2">
+              <Link to="/account" className="flex flex-row items-center whitespace-nowrap mb-2">
               <img className="mr-1 w-6 h-6" src={personal} alt="иконка персональных данных" />
               Персональные данные
               </Link>
             </li>
             <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/history" className="flex flex-row items-center whitespace-nowrap mb-2">
+              <Link to="/account/history" className="flex flex-row items-center whitespace-nowrap mb-2">
               <img className="mr-1 w-6 h-6" src={history} alt="иконка истории обменов" />
               История обменов
               </Link>
             </li>
             <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/adress-book" className="flex flex-row items-center whitespace-nowrap mb-2">
+              <Link to="/account/adress-book" className="flex flex-row items-center whitespace-nowrap mb-2">
               <img className="mr-1 w-6 h-6" src={adressBook} alt="иконка истории обменов" />
               Адресная книга
               </Link>

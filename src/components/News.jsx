@@ -1,5 +1,6 @@
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
-import newsImg from "../images/news.svg";
+import newsImg from "../images/news.png";
+import newsImgAnother  from "../images/news.png";
 import "@splidejs/react-splide/css/core";
 import { NewsCard } from "./NewsCard";
 import { useRef } from "react";

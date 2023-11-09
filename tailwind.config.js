@@ -15,6 +15,7 @@ module.exports = {
       backgroundColor: {
         'main-bg': '#060423',
         'drop': 'rgba(6, 4, 35, 0.70)',
+        'account': 'rgba(6, 4, 35, 0.70)'
       },
       maxWidth: {
         '1328': '1328px',
@@ -24,6 +25,7 @@ module.exports = {
         'mobile-container': 'calc(100% - 32px)',
         'first-news-card': 'calc(50% - 12px)',
         'other-news-cagd': 'calc(33.33% - 16px)'
+
       },
       fontFamily: {
         'mono': ['Space Mono', 'sans'],

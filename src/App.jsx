@@ -9,6 +9,7 @@ import { Faq } from './pages/Faq';
 import { ApiPage } from './pages/ApiPage';
 import { Support } from './pages/Support';
 import { SendingPage } from './pages/SendingPage';
+import { Account } from './pages/Account';
 
 export const App = () => {
   return (
@@ -22,6 +23,7 @@ export const App = () => {
           <Route path="api" element={<ApiPage/>} />
           <Route path="support" element={<Support/>} />
           <Route path="sending" element={<SendingPage/>} />
+          <Route path="account/*" element={<Account/>} />
         </Route>
       </Routes>
       {/* <Header/> */}
