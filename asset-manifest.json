@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.42e0fc14.css",
-    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.c6fa9866.js",
+    "main.css": "/CRYPTOCHILL-EXCHANGE/static/css/main.9e5097f6.css",
+    "main.js": "/CRYPTOCHILL-EXCHANGE/static/js/main.99f27cfb.js",
     "static/media/BG2.png": "/CRYPTOCHILL-EXCHANGE/static/media/BG2.b37872dfb2039e8106a4.png",
     "static/media/profitably.svg": "/CRYPTOCHILL-EXCHANGE/static/media/profitably.02c1641eb4c1f0c6d480d00298c90f62.svg",
     "static/media/comfortable.svg": "/CRYPTOCHILL-EXCHANGE/static/media/comfortable.cd3c25e0aa79df581f08023a6ce43bb8.svg",
@@ -52,6 +52,7 @@
     "static/media/time-icon.svg": "/CRYPTOCHILL-EXCHANGE/static/media/time-icon.2121ed3a7dcaf7d92fb23dc045c19017.svg",
     "static/media/bitcoin.svg": "/CRYPTOCHILL-EXCHANGE/static/media/bitcoin.48c4cf48f2a5436310c707082c4b2de5.svg",
     "static/media/uk-flag.svg": "/CRYPTOCHILL-EXCHANGE/static/media/uk-flag.8b04c50796aed76d227d94fc8d9bb98c.svg",
+    "static/media/tabler_trash.svg": "/CRYPTOCHILL-EXCHANGE/static/media/tabler_trash.46fdb587f7c881730d206e526aa9f700.svg",
     "static/media/history-change.svg": "/CRYPTOCHILL-EXCHANGE/static/media/history-change.ae84ada1a07790ded9dada89e3c4d420.svg",
     "static/media/arrow-up.svg": "/CRYPTOCHILL-EXCHANGE/static/media/arrow-up.900e6cbbf93de113f2726e5c7f29f485.svg",
     "static/media/arrow-down.svg": "/CRYPTOCHILL-EXCHANGE/static/media/arrow-down.5dad78408428b320d4f597d646443c60.svg",
@@ -69,11 +70,11 @@
     "static/media/pink-arrow.svg": "/CRYPTOCHILL-EXCHANGE/static/media/pink-arrow.3467a0961a3f7ce1b139b932a923a1c9.svg",
     "static/media/faq-minus.svg": "/CRYPTOCHILL-EXCHANGE/static/media/faq-minus.95cf2137ad80cbdbbc4300f210a768c0.svg",
     "static/media/purple-arrow.svg": "/CRYPTOCHILL-EXCHANGE/static/media/purple-arrow.709afee1443fe1f6095bd62d7e086f4e.svg",
-    "main.42e0fc14.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.42e0fc14.css.map",
-    "main.c6fa9866.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.c6fa9866.js.map"
+    "main.9e5097f6.css.map": "/CRYPTOCHILL-EXCHANGE/static/css/main.9e5097f6.css.map",
+    "main.99f27cfb.js.map": "/CRYPTOCHILL-EXCHANGE/static/js/main.99f27cfb.js.map"
   },
   "entrypoints": [
-    "static/css/main.42e0fc14.css",
-    "static/js/main.c6fa9866.js"
+    "static/css/main.9e5097f6.css",
+    "static/js/main.99f27cfb.js"
   ]
 }
