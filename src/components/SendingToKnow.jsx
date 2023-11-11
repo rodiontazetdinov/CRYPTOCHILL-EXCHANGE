@@ -27,7 +27,7 @@ export const SendingToKnow = () => {
     <div className={classNames("flex flex-col bg-order rounded-3xl px-8",{
         'flex-col justify-left  relative': miniSending && !iphone,
         'flex-row mx-auto ': !miniSending,
-        "flex-col justify-left ml-4 relative": iphone,
+        "flex-col justify-left  relative": iphone,
         "pb-[104px]": desctop,
         "pb-12": !desctop,
       })}>

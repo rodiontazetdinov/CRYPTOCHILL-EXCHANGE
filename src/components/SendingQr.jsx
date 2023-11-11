@@ -24,6 +24,12 @@ export const SendingQr = ({
     "only screen and (min-width : 320px) and (max-width : 911px)"
   );
 
+  const miniTop = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 1210px)");
+    const phone = useMediaQuery(
+        "only screen and (min-width : 320px) and (max-width : 585px)"
+      );
+
   const [isActive, setIsActive] = useState(true);
 
   const handleSubmit = (event) => {
@@ -33,13 +39,21 @@ export const SendingQr = ({
 
   return (
     <div
-      className="flex flex-col bg-order px-8 py-8 rounded-3xl text-left w-full"
+      className={classNames("flex flex-col bg-order px-8 py-8 rounded-3xl text-left space-y-4",{
+          "w-1/2": miniTop && !phone,
+          "w-1/4": !miniTop,
+          'w-full': phone,
+      })}
       onSubmit={handleSubmit}
     >
-      <img className="p-8" src={qr} />
-      <div className="flex flex-row items-center w-full px-2 py-1">
-        <button className={classNames("bg-btns")}>адрес</button>
-        <button className={classNames("bg-btns")}>с суммой</button>
+      <img className="" src={qr} />
+      <div className="flex flex-row items-center w-full px-2 py-1 bg-purple-800 rounded-2xl space-x-2 h-12">
+        <button className={classNames("text-xl font-semibold flex items-center w-full text-center justify-center h-full",{
+            'bg-btns rounded-xl': !isActive
+        })} onClick={() => setIsActive((prev) => !prev)}>адрес</button>
+        <button className={classNames("text-xl font-semibold flex items-center w-full text-center justify-center h-full",{
+            'bg-btns rounded-xl': isActive
+        })} onClick={() => setIsActive((prev) => !prev)}>с суммой</button>
       </div>
     </div>
   );

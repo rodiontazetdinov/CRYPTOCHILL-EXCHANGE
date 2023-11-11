@@ -19,6 +19,11 @@ export const SendingOrderNumber = ({time = '29:52', rateType = 'Плавающи
   const miniSending = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 911px)"
   );
+  const miniTop = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 1210px)");
+    const phone = useMediaQuery(
+        "only screen and (min-width : 320px) and (max-width : 585px)"
+      );
 
   const [email, setEmail] = useState("");
 
@@ -29,7 +34,11 @@ export const SendingOrderNumber = ({time = '29:52', rateType = 'Плавающи
 
   return (
     <div
-      className="flex flex-col bg-order pl-6 py-8 rounded-3xl text-left w-full"
+      className={classNames("flex flex-col bg-order pl-6 py-8 rounded-3xl text-left ", {
+          'w-1/4': desctop || macbook,
+          "w-1/2": miniTop && !phone,
+          "w-full": phone
+      })}
       onSubmit={handleSubmit}
     >
       <p className="text-2xl font-semibold">Номер заказа</p>

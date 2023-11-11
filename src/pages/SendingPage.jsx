@@ -8,6 +8,7 @@ import { SendingToKnow } from "../components/SendingToKnow";
 import { SendingNotifications } from "../components/SendingNotifications";
 import { SendingOrderNumber } from "../components/SendingOrderNumber";
 import { SendingQr } from "../components/SendingQr";
+import { SendingInfo } from "../components/SendingInfo";
 
 export const SendingPage = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
@@ -23,6 +24,12 @@ export const SendingPage = () => {
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
   const miniSending = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 911px)"
+  );
+  const miniTop = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 1210px)"
+  );
+  const phone = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 585px)"
   );
 
   const [isWaiting, setIsWaiting] = useState(false);
@@ -46,10 +53,25 @@ export const SendingPage = () => {
     >
       <SendingCoinTo />
       {/* <div className={classNames("")}></div> */}
-      <div className="flex flex-row w-full space-x-6">
-        <SendingOrderNumber />
-        <SendingQr />
-      </div>
+      {!miniTop && (
+        <div className="flex flex-row w-full space-x-6">
+          <SendingOrderNumber />
+          <SendingInfo />
+          <SendingQr />
+        </div>
+      )}
+      {miniTop && (
+        <div className="flex flex-col w-full space-y-6">
+          <div className={classNames("flex w-full",{
+            "flex-row  space-x-6": !phone,
+            "flex-col space-y-6": phone,
+          })}>
+            <SendingOrderNumber />
+            <SendingQr />
+          </div>
+          <SendingInfo />
+        </div>
+      )}
       {miniSending && (
         <div className="flex flex-col space-y-6">
           <SendingNotifications />
