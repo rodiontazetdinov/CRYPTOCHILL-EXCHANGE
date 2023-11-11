@@ -14,13 +14,15 @@ export const AccountWrapper = () => {
   return (
     <div className="bg-account">
       <div className={classNames(
-          "flex mx-auto text-white font-semibold text-left min-h-[90vh] pt-[52px]", {
-          "max-w-1328": desctop,
-          "max-w-main-container": macbook,
+          "flex mx-auto text-white font-semibold text-left", {
+          "max-w-1328 min-h-screen pt-[52px]": desctop,
+          "max-w-main-container pt-[52px]": macbook,
           "max-w-tablet-container": ipadMini,
-          "max-w-mobile-container": iphone,
+          "max-w-mobile-container pt-0": iphone,
       })}>
-        <Sidebar />
+        {(desctop || macbook) && (
+          <Sidebar />
+        )}
         <Outlet />
       </div>
     </div>

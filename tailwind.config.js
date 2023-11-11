@@ -14,6 +14,7 @@ module.exports = {
       },
       backgroundColor: {
         'main-bg': '#060423',
+        'input':'#08035B',
         'drop': 'rgba(6, 4, 35, 0.70)',
         'account': 'rgba(6, 4, 35, 0.70)'
       },
@@ -25,6 +26,9 @@ module.exports = {
         'mobile-container': 'calc(100% - 32px)',
         'first-news-card': 'calc(50% - 12px)',
         'other-news-cagd': 'calc(33.33% - 16px)'
+      },
+      width: {
+        'inputPartner': 'calc(1328px / 100 * 42)'
       }
     },
   },
