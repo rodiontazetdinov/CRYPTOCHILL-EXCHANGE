@@ -54,8 +54,8 @@ export const Sidebar = () => {
     ]
 
     return (
-        <div className="pr-14">
-            <ul className="flex flex-col">
+        <div className="pr-14 w-[254px]">
+            <ul className="flex flex-col whitespace-nowrap">
                 {menuItems.map((item, index) => {
                     return (
                         <li key={index} className="text-base font-normal mb-4">

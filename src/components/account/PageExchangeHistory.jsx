@@ -1,5 +1,6 @@
 // components
-import { ExchangeTable } from "../ExchangeTable";
+import { TableActiveExchanges } from "./TableActiveExchanges";
+import { TableCompletedExchanges } from "./TableCompletedExchanges";
 
 // Lib
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -15,7 +16,10 @@ export const PageExchangeHistory = ({ user }) => {
     const listExchangesCompleted = user.history.filter((exchange) => exchange.status === 'Выполнен');
 
     return (
-        <section className="py-6 pl-10 text-xl flex-grow">
+        <section className={classNames("py-6 text-xl flex-grow", {
+            "pl-10": desctop || macbook,
+            "pl-0": iphone || ipadMini,
+        })}>
             <h2 className={classNames(
                 "inline-block font-bold text-transparent bg-text bg-clip-text mb-10 leading-tight", {
                 "text-3xl": iphone,
@@ -31,8 +35,8 @@ export const PageExchangeHistory = ({ user }) => {
 
             {(user.history.length > 0) && (
                 <>
-                    <ExchangeTable exchanges={listExchangesPending} title="Активные заказы" />
-                    <ExchangeTable exchanges={listExchangesCompleted} title="Выполненные заказы" />
+                    <TableActiveExchanges exchanges={listExchangesPending} title="Активные заказы" />
+                    <TableCompletedExchanges exchanges={listExchangesCompleted} title="Выполненные заказы" />
                 </>
 
             )}

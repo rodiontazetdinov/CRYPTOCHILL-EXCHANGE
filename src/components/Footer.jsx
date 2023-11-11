@@ -28,9 +28,9 @@ export const Footer = ({ isLoggedIn }) => {
   );
 
   return (
-    <footer
-      className={classNames(
-        "bg-transparent  mx-auto pt-6 flex justify-between",
+    <footer className="bg-main-bg">
+    <div className={classNames(
+        " mx-auto pt-6 flex justify-between",
         {
           "w-[1328px]": desctop,
           "max-w-main-container": macbook,
@@ -38,8 +38,7 @@ export const Footer = ({ isLoggedIn }) => {
           "max-w-mobile-container": iphone,
           "flex-col": laptop,
         }
-      )}
-    >
+      )}>
       {!laptop && !iphone && (
         <>
           <div className="flex flex-col justify-start">
@@ -218,7 +217,7 @@ export const Footer = ({ isLoggedIn }) => {
           </div>
         </>
       )}
+    </div>
     </footer>
-    // </div>
   );
 };

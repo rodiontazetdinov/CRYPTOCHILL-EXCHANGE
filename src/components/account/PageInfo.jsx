@@ -40,7 +40,10 @@ export const PageInfo = ({ user }) => {
     const lastVisitMinutes = (new Date() - lastDateObj) / 1000 / 60;
 
     return (
-        <section className="py-6 pl-10">
+        <section className={classNames("py-6 flex-grow", {
+            "pl-10": desctop || macbook,
+            "pl-0": iphone || ipadMini
+        })}>
             <h2 className={classNames(
                 "inline-block font-bold text-transparent bg-text bg-clip-text mb-6 leading-tight", {
                 "text-3xl": iphone,
@@ -55,26 +58,38 @@ export const PageInfo = ({ user }) => {
             </p>
 
             {/* INPUT смены и подтверждения Email-а */}
-            <form className="flex items-center mb-6 text-xl" name="Email">
-                <label className="mr-2" htmlFor="email-input">Email:</label>
-                <input
-                    id="email-input"
-                    className="bg-transparent outline-none w-auto block mr-2"
-                    type="text"
-                    value={isUserEmail}
-                    onChange={(ev) => setIsUserEmail(ev.target.value)}
-                />
+            <form 
+                className={classNames("flex mb-6 text-xl", {
+                    "flex-col items-start": iphone,
+                    "items-center": !iphone,
+                })}
+                name="Email"
+            >
+                <label className={classNames("flex", {"mb-2 mr-0": iphone, 'mr-2': !iphone})} htmlFor="email-input">
+                    Email: 
+                    <input
+                        id="email-input"
+                        className="bg-transparent outline-none w-[110px] block ml-2"
+                        type="text"
+                        value={isUserEmail}
+                        onChange={(ev) => setIsUserEmail(ev.target.value)}
+                    />
+                </label>
                 {!user.verifiedEmail && (
-                    <span className="mr-6 text-[#FF5454]">(Не подтвержден)</span>
+                    <span className={classNames("text-[#FF5454]", {'mb-6': iphone, 'mr-6': !iphone})}>
+                        (Не подтвержден)
+                    </span>
                 )}
-                <button
-                    className="bg-btns h-12 px-4 py-3 rounded-xl text-xl mr-2"
-                    type="submit"
-                >Подтвердить</button>
-                <button
-                    className="bg-btns h-12 px-4 py-3 rounded-xl text-xl"
-                    type="submit"
-                >Изменить</button>
+                <div className="flex">
+                    <button
+                        className="bg-btns h-12 px-4 py-3 rounded-xl text-xl mr-2"
+                        type="submit"
+                    >Подтвердить</button>
+                    <button
+                        className="bg-btns h-12 px-4 py-3 rounded-xl text-xl"
+                        type="submit"
+                    >Изменить</button>
+                </div>
             </form>
 
             {/* INPUT смены пароля */}
@@ -82,7 +97,7 @@ export const PageInfo = ({ user }) => {
                 <label className="mr-2" htmlFor="pass-input">Пароль: </label>
                 <input
                     id="pass-input"
-                    className="bg-transparent outline-none mr-2"
+                    className="bg-transparent outline-none w-[110px] mr-2"
                     type="password"
                     value={isUserPassword}
                     onChange={(ev) => setIsUserPassword(ev.target.value)}
@@ -95,7 +110,9 @@ export const PageInfo = ({ user }) => {
 
             {/* INPUT подтверждения рассылки email */}
             <form className="text-xl">
-                <label className="flex items-center leading-6">
+                <label className={classNames("flex items-center leading-6", {
+                    "text-base font-normal": iphone
+                })}>
                     <input
                         className="hidden"
                         type="checkbox"
@@ -110,8 +127,12 @@ export const PageInfo = ({ user }) => {
                             <img src={biCheck} alt="v"/>
                         )}
                     </div>
-                    Получать уведомления о изменении статуса заказа на почту
+                    <span className="inline-block w-[80%]">Получать уведомления о изменении статуса заказа на почту</span>
                 </label>
+                <p className={classNames("text-[#FF5454] mt-2 text-base font-normal", {
+                    "pl-10": !iphone,
+                    "pl-0": iphone
+                })}>Для получения уведомлений подтвердите адрес электронной почты</p>
             </form>
         </section>
     );
