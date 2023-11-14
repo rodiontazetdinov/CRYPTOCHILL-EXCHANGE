@@ -10,7 +10,7 @@ export const OrderItem = ({ title }) => {
   return (
     <div
       className={classNames(
-        "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-lg",
+        "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-[24px]",
         {
           "mt-2 w-full max-w-mobile-container": miniOrder,
           "w-[347px]": laptop,
