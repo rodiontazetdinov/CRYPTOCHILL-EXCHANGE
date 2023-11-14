@@ -22,15 +22,23 @@ export const Account = () => {
                 id: 'ggyH453',
                 time: '2022-11-08T17:33:04.394Z',
                 sent: {name: 'ETH', sum: 24},
-                get: {name: 'BTC', sum: 0.99990000009},
-                status: 'Ожидается',
+                get: {name: 'BTC', sum: 0.9999000009},
+                status: 'Выполнен',
                 address: 'ght753jg65hgndhtjyjjjdjtjfjtjg32'
             },
             {
                 id: 'ggyH453',
                 time: '2022-11-08T17:33:04.394Z',
                 sent: {name: 'ETH', sum: 24},
-                get: {name: 'BTC', sum: 0.9999000000},
+                get: {name: 'BTC', sum: 0.9999000009},
+                status: 'Выполнен',
+                address: 'ght753jg65hgndhtjyjjjdjtjfjtjg32'
+            },
+            {
+                id: 'ttestyH453',
+                time: '2022-11-08T10:33:04.394Z',
+                sent: {name: 'ETH', sum: 24},
+                get: {name: 'BTC', sum: 0.9999000009},
                 status: 'Ожидается',
                 address: 'ght753jg65hgndhtjyjjjdjtjfjtjg32'
             },
@@ -38,12 +46,20 @@ export const Account = () => {
                 id: 'ttestyH453',
                 time: '2022-11-08T10:33:04.394Z',
                 sent: {name: 'ETH', sum: 24},
-                get: {name: 'BTC', sum: 0.99990000009},
+                get: {name: 'BTC', sum: 0.9999000009},
                 status: 'Ожидается',
                 address: 'ght753jg65hgndhtjyjjjdjtjfjtjg32'
             },
         ],
         addresBook: [
+            {
+                id: 'ggyH453',
+                time: '2022-11-08T17:33:04.394Z',
+                sent: {name: 'ETH', sum: 24},
+                get: {name: 'BTC', sum: 0.99990000009},
+                status: 'Ожидается',
+                address: 'ght753jg65hgndhtjyjjjdjtjfjtjg32'
+            },
             {
                 id: 'ggyH453',
                 time: '2022-11-08T17:33:04.394Z',

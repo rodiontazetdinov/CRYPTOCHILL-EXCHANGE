@@ -1,4 +1,5 @@
 import { ExchangeTable } from "./TableActiveExchanges";
+import { DropdownListCoins } from "../DropdownListCoins";
 
 // img
 import ETHicon from "../../images/coins/eth.svg";
@@ -10,6 +11,8 @@ import orderSwitch from "../../images/order-switch.svg";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useState } from "react";
+import { TablePartnerExchanges } from "./TablePartnerExchanges";
+import { PopupPartnerLink } from "./PopupPartnerLink";
 
 export const PagePartner = ({ user }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
@@ -17,13 +20,20 @@ export const PagePartner = ({ user }) => {
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
     const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-    const link = true;
+    const link = false;
+
+    const coins = [
+        {name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'},
+        {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
+        {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
+    ]
 
     const [sentCoin, setSentCoin] = useState("BTC");
     const [getCoin, setGetCoin] = useState("ETH");
+    const [popupOpen, setPopupOpen] = useState(false);
 
     return (
-        <section className={classNames("py-6 flex-grow text-xl", {
+        <section className={classNames("py-6 flex-grow text-xl w-full", {
             "pl-10": desctop || macbook,
             "pl-0": iphone || ipadMini
         })}>
@@ -92,11 +102,20 @@ export const PagePartner = ({ user }) => {
                     "text-3xl": iphone,
                     "text-5xl": !iphone,
                 })}>Партнерский код и ссылка</h2>
-                <button className={classNames("bg-btns rounded-xl h-12 px-4", {
+                <button
+                    onClick={() => {
+                        document.body.style.overflow = 'hidden';
+                        setPopupOpen(true);
+                    }}
+                    className={classNames("bg-btns rounded-xl h-12 px-4", {
                     "mt-6": macbook || ipadMini,
                     "mt-4": iphone,
                 })}>Добавить новый код</button>
             </div>
+
+            {popupOpen && (
+                <PopupPartnerLink setPopupOpen={setPopupOpen}/>
+            )}
 
             {/* Партнерский код и ссылка */}
             <div className={classNames("w-full bg-order rounded-2xl px-8 py-6", {
@@ -115,12 +134,15 @@ export const PagePartner = ({ user }) => {
                     <span className="text-base font-normal text-[#FFFFFFCC]">40% за обмен по ссылке</span>
                 </div>
 
-                <div className="inline-block w-full">
+                <div className={classNames("inline-block ", {
+                    'w-full': !desctop,
+                    'w-[85%]': desctop
+                })}>
                     <div className={classNames("flex mb-4", {
                         "justify-between items-center": desctop,
                         "flex-col": !desctop
                     })}>
-                        <span>Простая ссылка</span>
+                        <span className="whitespace-nowrap">Простая ссылка</span>
                         <div className={classNames("flex bg-input rounded-xl px-4 py-3", {
                             "ml-2 w-[560px]": desctop,
                             "mt-3  w-[560px]": macbook,
@@ -128,10 +150,9 @@ export const PagePartner = ({ user }) => {
                         })}>
                             <input
                                 className={classNames("bg-transparent flex-grow outline-none", {
-                                    "w-[230px] overflow-hidden": iphone
+                                    "w-[210px] overflow-hidden": iphone
                                 })}
                                 type="text"
-                                value={'https://cryptochil.com/ref1'}
                             />
                             <button>
                                 <img src={squaresIcon} alt="" />
@@ -139,8 +160,7 @@ export const PagePartner = ({ user }) => {
                         </div>
                     </div>
 
-
-                    <div className={classNames("flex", {
+                    <div className={classNames("flex relative", {
                         "justify-between items-center": desctop,
                         "flex-col": !desctop
                     })}>
@@ -168,28 +188,20 @@ export const PagePartner = ({ user }) => {
                             </div>
                         )}
 
-                        {/* ТЫ меня остановил пошел ппушить  */}
-                        {/* {!link && (
-                            <form className={classNames("flex bg-input rounded-xl", {
+                        {!link && (
+                            <form className={classNames("flex h-12 bg-input rounded-xl", {
                                 "ml-2 w-[560px]": desctop,
                                 "mt-3  w-[560px]": macbook,
                                 "mt-3 w-full": ipadMini || iphone,
                             })}>
-                                <div className="px-4 py-3">
-                                    <select
-                                        className="hidden"
-                                        name="coins"
-                                        value={sentCoin}
-                                    ></select>
-                                    <div>
-                                        <div></div>
-                                        <ul>
-                                            
-                                        </ul>
-                                    </div>
+                                <div className="w-[50%]">
+                                    <DropdownListCoins />
+                                </div>
+                                <div className="w-[50%]">
+                                    <DropdownListCoins />
                                 </div>
                             </form>
-                        )} */}
+                        )}
                     </div>
                 </div>
             </div>
@@ -200,7 +212,7 @@ export const PagePartner = ({ user }) => {
                 "text-5xl": !iphone,
             })}>Партнерские заказы</h2>
 
-            {/* <ExchangeTable exchanges={user.addresBook}/> */}
+            <TablePartnerExchanges exchanges={user.addresBook}/>
 
         </section>
     );

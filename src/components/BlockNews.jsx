@@ -11,10 +11,12 @@ export const BlockNews = ({ listNews }) => {
     const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
     return (
-        <div className="w-full overflow-x-scroll mb-12">
-            <ul className={classNames("flex flex-wrap justify-between", {
-                'w-[1185px]': ipadMini,
-                'w-[1860px]': iphone
+        <div className={classNames("mb-12", {
+            "w-screen": ipadMini || iphone
+        })}>
+            <ul className={classNames("flex w-full", {
+                "flex-wrap justify-between": desctop || macbook,
+                'pr-4 overflow-x-scroll no-scrollbar flex-nowrap snap-x snap-mandatory': ipadMini || iphone,
             })}>
                 {listNews.map((news, index) => {
                     if (index < 5 && desctop) {
@@ -30,27 +32,45 @@ export const BlockNews = ({ listNews }) => {
                                 imgLink={news.img}
                             />
                         </li>)
-                    } else if (index < 6 && (macbook || ipadMini)) {
-                        return (<li key={index} className={classNames(
-                                    "max-w-other-news-cagd", {
-                                    'mb-6': index < 3,
-                                })}>
-                            <NewsCard
-                                title={news.title}
-                                description={news.description}
-                                imgLink={news.img}
-                            />
-                        </li>)
-                    } else if (index < 6 && iphone) {
-                        return (<li key={index} className={classNames(
-                                    "max-w-[302px]", {
-                                })}>
-                            <NewsCard
-                                title={news.title}
-                                description={news.description}
-                                imgLink={news.img}
-                            />
-                        </li>)
+                    } else if (index < 6 && macbook) {
+                        return (
+                            <li key={index} className={classNames(
+                                "max-w-other-news-cagd", {
+                                'mb-6': index < 3,
+                            })}>
+                                <NewsCard
+                                    title={news.title}
+                                    description={news.description}
+                                    imgLink={news.img}
+                                />
+                            </li>
+                        )
+                    } else if (index < 6 && (ipadMini)) {
+                        return (
+                            <li key={index} className={classNames(
+                                "min-w-[380px] mr-6 snap-always snap-start", {
+                                'mb-6': index < 3,
+                            })}>
+                                <NewsCard
+                                    title={news.title}
+                                    description={news.description}
+                                    imgLink={news.img}
+                                />
+                            </li>
+                        )
+                    } 
+                    else if (index < 6 && iphone) {
+                        return (
+                            <li key={index} className={classNames(
+                                "min-w-[302px] mr-3 snap-always snap-start", {
+                            })}>
+                                <NewsCard
+                                    title={news.title}
+                                    description={news.description}
+                                    imgLink={news.img}
+                                />
+                            </li>
+                        )
                     }
                 })}
             </ul>

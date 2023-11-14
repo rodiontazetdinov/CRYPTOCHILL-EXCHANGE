@@ -12,7 +12,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
 
 
-export const Blog = () => {
+export const Blog = ({ dropdownTagsOpen, setDropdownTagsOpen }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
@@ -24,7 +24,7 @@ export const Blog = () => {
     const [aboutCryptoOpen, setAboutCryptoOpen] = useState(false);
     const [exchangeOpen, setExchangeOpen] = useState(false);
 
-    const [isTagsOpen, setIsTagsOpen] = useState(false);
+    const [currentTag, setCurrentTag] = useState('Tег 1');
 
     function handleOpen(setCurrentAbout) {
         [
@@ -79,8 +79,8 @@ export const Blog = () => {
     return (
         <section className={classNames(
             "mx-auto max-w-1328 text-white font-semibold text-left", {
-            "max-w-1328 min-h-[657px]": desctop,
-            "max-w-main-container min-h-[657px]": macbook,
+            "max-w-1328 min-h-section-page-desctop": desctop,
+            "max-w-main-container min-h-section-page-desctop": macbook,
             "max-w-tablet-container": ipadMini,
             "max-w-mobile-container": iphone,
         })}>
@@ -139,26 +139,60 @@ export const Blog = () => {
                 </ul>
                 
                 {/* DROPDOWN с тегами */}
-                <div className={classNames("w-72 relative", {
-                    "ml-6": desctop,
-                    'mt-6': !desctop,
-                })}>
+                <div
+                    id="dropdown-tags"
+                    className={classNames("w-72 relative cursor-pointer", {
+                        "ml-6": desctop,
+                        'mt-6': !desctop,
+                    }
+                )}>
                     <div
-                        onClick={() => setIsTagsOpen((prev) => !prev)}
+                        onClick={(ev) => {
+                            setDropdownTagsOpen((prev) => !prev);
+                            ev.stopPropagation();
+                        }}
                         className="flex justify-between border border-solid border-solid rounded-lg h-12 py-2 px-3 text-2xl"
                     >
-                        <span>Теги</span>
+                        <span>{currentTag}</span>
                         <img 
-                            src={isTagsOpen ? arrowUp : arrowDown}
+                            src={dropdownTagsOpen ? arrowUp : arrowDown}
                             alt=""
                         />
                     </div>
-                    {isTagsOpen && (
+                    {dropdownTagsOpen && (
                         <div className="absolute w-[100%] top-[100%] border border-solid border-solid border-t-0 rounded-b-lg py-2 px-3 text-2xl">
-                            <div className="mb-2">Название тега</div>
-                            <div className="mb-2">Название тега</div>
-                            <div className="mb-2">Название тега</div>
-                            <div className="mb-2 last:mb-0">Название тега</div>
+                            <div
+                                onClick={(ev) => {
+                                    setCurrentTag(ev.target.textContent);
+                                    setDropdownTagsOpen(false);
+                                    ev.stopPropagation();
+                                }}
+                                className="mb-2"
+                            >Tег 1</div>
+                            <div
+                                onClick={(ev) => {
+                                    setCurrentTag(ev.target.textContent);
+                                    setDropdownTagsOpen(false);
+                                    ev.stopPropagation();
+                                }}
+                                className="mb-2"
+                            >Tег 2</div>
+                            <div
+                                onClick={(ev) => {
+                                    setCurrentTag(ev.target.textContent);
+                                    setDropdownTagsOpen(false);
+                                    ev.stopPropagation();
+                                }}
+                                className="mb-2"
+                            >Tег 3</div>
+                            <div
+                                onClick={(ev) => {
+                                    setCurrentTag(ev.target.textContent);
+                                    setDropdownTagsOpen(false);
+                                    ev.stopPropagation();
+                                }}
+                                className="mb-2 last:mb-0"
+                            >Tег 4</div>
                         </div>
                     )}
                 </div>

@@ -16,9 +16,9 @@ export const PageExchangeHistory = ({ user }) => {
     const listExchangesCompleted = user.history.filter((exchange) => exchange.status === 'Выполнен');
 
     return (
-        <section className={classNames("py-6 text-xl flex-grow", {
+        <section className={classNames("py-6 text-xl flex-grow w-full", {
             "pl-10": desctop || macbook,
-            "pl-0": iphone || ipadMini,
+            "pl-0 w-full": iphone || ipadMini,
         })}>
             <h2 className={classNames(
                 "inline-block font-bold text-transparent bg-text bg-clip-text mb-10 leading-tight", {
@@ -40,9 +40,6 @@ export const PageExchangeHistory = ({ user }) => {
                 </>
 
             )}
-
-
-
         </section>
     );
 }

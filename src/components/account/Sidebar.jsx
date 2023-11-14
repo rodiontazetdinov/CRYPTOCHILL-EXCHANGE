@@ -10,11 +10,7 @@ import moneyBack from "../../images/account-icons/money-back.svg";
 import apiManagement from "../../images/account-icons/api-management.svg";
 import exit from "../../images/account-icons/exit.svg";
 
-
-
-
 export const Sidebar = () => {
-
     const menuItems = [
         {
             name: 'Персональные данные',
