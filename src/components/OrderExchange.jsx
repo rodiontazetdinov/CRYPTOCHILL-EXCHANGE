@@ -34,7 +34,7 @@ export const OrderExchange = () => {
           <img src={squares} />
         </div>
       </div>
-      <button type="submit" className="bg-btns py-3 text-xl rounded-lg mt-4">
+      <button type="submit" className="bg-btns py-3 text-xl rounded-xl mt-4">
         Начать обмен
       </button>
     </form>

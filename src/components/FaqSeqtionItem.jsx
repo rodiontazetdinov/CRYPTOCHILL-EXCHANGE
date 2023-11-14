@@ -20,16 +20,30 @@ export const FaqSeqtionItem = ({ question, answer }) => {
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   return (
     <div className="flex flex-row items-center mb-4">
-      <div className="flex flex-col justify-start text-left w-full">
-      <h3 className={classNames("font-bold mb-1",{
-        "text-xl font-semibold": iphone,
-        "text-3xl font-bold": !iphone
-      })}>{question}</h3>
+      <div
+        className="flex flex-col justify-start text-left w-full"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
+        <h3
+          className={classNames("font-bold mb-1", {
+            "text-xl font-semibold": iphone,
+            "text-3xl font-bold": !iphone,
+          })}
+        >
+          {question}
+        </h3>
         {isOpen && <p className="text-base">{answer}</p>}
       </div>
       <button className="w-12 h-12" type="button">
-        <img className={classNames("cursor-pointer", { "w-8 h-8": iphone, "w-12 h-12": !iphone })} src={isOpen ? minus : plus} alt="иконка переключения секции FAQ" onClick={() => setIsOpen((prev) => !prev)}>
-        </img>
+        <img
+          className={classNames("cursor-pointer", {
+            "w-8 h-8": iphone,
+            "w-12 h-12": !iphone,
+          })}
+          src={isOpen ? minus : plus}
+          alt="иконка переключения секции FAQ"
+          onClick={() => setIsOpen((prev) => !prev)}
+        ></img>
       </button>
     </div>
   );

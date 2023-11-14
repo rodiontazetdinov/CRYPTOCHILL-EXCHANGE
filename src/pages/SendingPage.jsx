@@ -40,7 +40,7 @@ export const SendingPage = () => {
   return (
     <section
       className={classNames(
-        "flex flex-col self-center mx-auto w-full space-y-8",
+        "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
         {
           "px-14": macbook || ipadMini,
           "max-w-[1328px]": desctop,
