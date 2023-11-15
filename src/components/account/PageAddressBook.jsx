@@ -12,7 +12,10 @@ export const PageAddressBook = ({ user }) => {
     const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
     return (
-        <section className="py-6 px-10 text-xl flex-grow">
+        <section className={classNames("py-6 flex-grow text-xl w-full", {
+            "pl-10": desctop || macbook,
+            "pl-0": iphone || ipadMini
+        })}>
             <h2 className={classNames(
                 "inline-block font-bold text-transparent bg-text bg-clip-text mb-8       leading-tight", {
                 "text-3xl": iphone,

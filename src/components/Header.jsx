@@ -9,7 +9,10 @@ import { useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 
-export const Header = ({ isLoggedIn }) => {
+
+export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOpen }) => {
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+
   const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
   const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
   const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
@@ -17,6 +20,7 @@ export const Header = ({ isLoggedIn }) => {
 
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+
   return (
     <header
       className={classNames("w-full mx-auto pt-6 flex justify-between", {
@@ -78,32 +82,42 @@ export const Header = ({ isLoggedIn }) => {
       )}
       {iphone && (
         <div className="flex flex-col w-full">
-          <div className="flex flex- justify-between">
+          <div className="flex flex- justify-between relative">
             <Link to={"/"} className="flex flex-row items-center h-16">
               <img className="mr-4" src={logo} alt="logo" />
               <p className="text-xl">CRYPTOCHILL</p>
             </Link>
-            <button>
+            <button
+              onClick={(ev) => {
+                setDropdownMainMenuOpen((prev) => !prev);
+                ev.stopPropagation();
+              }}
+            >
               <img src={burger} alt="burger" />
             </button>
+            {dropdownMainMenuOpen && (
+              <div className="absolute top-full -left-4 w-screen rounded-b-3xl bg-[#060423B2] backdrop-blur z-10 p-4">
+                <Navbar />
+              </div>
+            )}
           </div>
-            <div className="flex flex-row items-center h-16 justify-between mt-7">
-              <LanguageMenu
+          <div className="flex flex-row items-center h-16 justify-between mt-7">
+            <LanguageMenu
+              isLanguageOpen={isLanguageOpen}
+              setIsLanguageOpen={setIsLanguageOpen}
+              isAccountOpen={isAccountOpen}
+              setIsAccountOpen={setIsAccountOpen}
+            />
+            {!isLoggedIn && (
+              <AccountMenu
                 isLanguageOpen={isLanguageOpen}
                 setIsLanguageOpen={setIsLanguageOpen}
                 isAccountOpen={isAccountOpen}
                 setIsAccountOpen={setIsAccountOpen}
               />
-              {!isLoggedIn && (
-                <AccountMenu
-                  isLanguageOpen={isLanguageOpen}
-                  setIsLanguageOpen={setIsLanguageOpen}
-                  isAccountOpen={isAccountOpen}
-                  setIsAccountOpen={setIsAccountOpen}
-                />
-              )}
-              {isLoggedIn && <AuthMenu />}
-            </div>
+            )}
+            {isLoggedIn && <AuthMenu />}
+          </div>
         </div>
       )}
     </header>

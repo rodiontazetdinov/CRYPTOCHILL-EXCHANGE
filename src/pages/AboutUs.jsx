@@ -200,8 +200,8 @@ export const AboutUs = () => {
         <section>
             <div className={classNames(
                 "mx-auto max-w-1328 text-white font-semibold text-left mb-16", {
-                "max-w-1328 min-h-[657px]": desctop,
-                "max-w-main-container min-h-[657px]": macbook,
+                "max-w-1328 min-h-section-page-desctop": desctop,
+                "max-w-main-container min-h-section-page-desctop": macbook,
                 "max-w-tablet-container": ipadMini,
                 "max-w-tablet-container ": iphone,
             })}>

@@ -40,7 +40,7 @@ export const PageInfo = ({ user }) => {
     const lastVisitMinutes = (new Date() - lastDateObj) / 1000 / 60;
 
     return (
-        <section className={classNames("py-6 flex-grow", {
+        <section className={classNames("py-6 flex-grow w-full", {
             "pl-10": desctop || macbook,
             "pl-0": iphone || ipadMini
         })}>

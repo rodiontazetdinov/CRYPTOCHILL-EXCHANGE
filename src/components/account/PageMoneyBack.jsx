@@ -11,6 +11,7 @@ import qrIcon from "../../images/icons/qr.svg";
 // lib
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { TablePartnerExchanges } from "./TablePartnerExchanges";
 
 export const PageMoneyBack = ({ user }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
@@ -78,7 +79,7 @@ export const PageMoneyBack = ({ user }) => {
                 "text-5xl": !iphone,
             })}>Последние вывод средств</h2>
 
-            <TableActiveExchanges exchanges={user.addresBook}/>
+            <TablePartnerExchanges exchanges={user.addresBook}/>
         </section>
     );
 }
