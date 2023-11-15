@@ -17,7 +17,7 @@ export const OrderItemCoin = ({ title }) => {
         }
       )}
     >
-      <p>3123213213</p>
+      <input className="bg-[#08035B]"/>
       <div className={classNames("flex flex-row items-center ml-3",{
         "justify-between": miniOrder,
         // "items-center": !miniOrder,

@@ -22,11 +22,11 @@ export const Main = () => {
         <div className="flex flex-col w-full">
             <Intro/>
             <div className={classNames("max-w-main-container mx-auto",{
-                "max-w-main-container": macbook,
-                "max-w-main-container": desctop,
-                "max-w-main-container": ipadMini,
+                "max-w-main-container": !iphone,
+                // "max-w-main-container": desctop,
+                // "max-w-main-container": ipadMini,
                 "max-w-tablet-container": iphone,
-                "max-w-main-container": laptop,
+                // "max-w-main-container": laptop,
             })}>
             <Transactions/>
             <FaqSection/>

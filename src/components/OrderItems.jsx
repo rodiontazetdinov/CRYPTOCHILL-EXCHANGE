@@ -20,7 +20,7 @@ export const OrderItems = () => {
       const macbook = useMediaQuery("only screen and (min-width : 1024px)");
       const desctop = useMediaQuery("only screen and (min-width : 1280px)");
     return (
-        <div className={classNames(" flex flex-row items-center mt-10 rounded-3xl",{
+        <div className={classNames(" flex flex-row items-center mt-10  w-full",{
             "flex-col w-full": miniOrder,
         })}>
             <OrderItem title="Отправляете"/>
