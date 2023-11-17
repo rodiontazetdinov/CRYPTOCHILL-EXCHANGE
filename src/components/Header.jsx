@@ -26,7 +26,7 @@ export const Header = ({
   const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
   const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
-  if (dropdownMainMenuOpen) {
+  if (dropdownMainMenuOpen || isAccountOpen || isLanguageOpen) {
     document.body.style.overflow = 'hidden';
   } else {
     document.body.style.overflow = 'auto';
