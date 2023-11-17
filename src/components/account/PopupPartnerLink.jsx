@@ -2,7 +2,14 @@ import { DropdownListCoins } from "../DropdownListCoins";
 
 
 
-export const PopupPartnerLink = ({ setPopupOpen }) => {
+export const PopupPartnerLink = ({
+    setPopupOpen,
+    dropdownSendingCoin,
+    setDropdownSendingCoin,
+    dropdownReceivingCoin,
+    setDropdownReceivingCoin,
+    dropdownCoinsMenuOpenHandler
+}) => {
     return (
         <div
             onClick={(ev) => {
@@ -15,11 +22,17 @@ export const PopupPartnerLink = ({ setPopupOpen }) => {
         >
             <div className="bg-main-bg rounded-2xl w-[352px] flex flex-col pt-10 px-8 pb-8">
                 <p className="text-center text-3xl text-transparent bg-text bg-clip-text font-bold mb-4">Ссылка с выбором валют</p>
-                <div className="w-full h-12 mb-4">
-                    <DropdownListCoins />
+                <div className="w-full mb-4">
+                    <DropdownListCoins
+                        dropdownState={dropdownSendingCoin}
+                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownSendingCoin, state)}
+                    />
                 </div>
-                <div className="w-full h-12 mb-4">
-                    <DropdownListCoins />
+                <div className="w-full mb-4">
+                    <DropdownListCoins
+                        dropdownState={dropdownReceivingCoin}
+                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownReceivingCoin, state)}
+                    />
                 </div>
                 <button
                     className="bg-btns rounded-xl py-3 text-xl"
