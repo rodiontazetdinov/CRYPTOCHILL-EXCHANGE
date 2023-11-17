@@ -15,13 +15,17 @@ import { useState } from 'react';
 export const App = () => {
 
   const [dropdownTagsOpen, setDropdownTagsOpen] = useState(false);
-  const [dropdownMainMenuOpen, setDropdownMainMenuOpen] = useState(true);
+  const [dropdownMainMenuOpen, setDropdownMainMenuOpen] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   return (
     <div
-      onClick={() => { 
-        setDropdownTagsOpen(false);
-        setDropdownMainMenuOpen(false);
+      onClick={() => {
+        if (isLanguageOpen) setIsLanguageOpen(false);
+        if (isAccountOpen) setIsAccountOpen(false);
+        if (dropdownTagsOpen) setDropdownTagsOpen(false);
+        if (dropdownMainMenuOpen) setDropdownMainMenuOpen(false);
       }}
       className="App bg-[center_-500px] bg-main-bg bg-main-bg-img overflow-x-hidden"
     >
@@ -32,6 +36,10 @@ export const App = () => {
             <Layout
               dropdownMainMenuOpen={dropdownMainMenuOpen}
               setDropdownMainMenuOpen={setDropdownMainMenuOpen}
+              isLanguageOpen={isLanguageOpen}
+              setIsLanguageOpen={setIsLanguageOpen}
+              isAccountOpen={isAccountOpen}
+              setIsAccountOpen={setIsAccountOpen}
             />
           }
         >
