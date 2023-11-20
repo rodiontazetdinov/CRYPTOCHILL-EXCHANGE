@@ -18,13 +18,11 @@ export const Order = () => {
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   return (
     <div className={classNames("flex flex-col items-center   ",{
-      "max-w-[696px] px-6 rounded-[64px]": ipadMini,
+      "w-[696px] px-6 rounded-[64px]": ipadMini,
       "w-[912px] px-24 rounded-[80px]": macbook,
       "px-24 rounded-[80px]": desctop,
       "bg-order mt-14 py-6": !iphone,
       "bg-transparent mt-6 py-0": iphone,
-      
-      
     })}>
       <h2 className="text-center text-3xl">Тип заказа</h2>
       <Percents />
