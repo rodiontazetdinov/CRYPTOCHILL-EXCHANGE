@@ -12,8 +12,9 @@ export const OrderExchange = () => {
   return (
     <form
       className={classNames(
-        "flex flex-col justify-start mt-2 w-full text-left",
+        "flex flex-col justify-start w-full text-left",
         {
+          "mt-5": !miniOrder,
           "mt-2 w-full max-w-mobile-container": miniOrder,
         }
       )}

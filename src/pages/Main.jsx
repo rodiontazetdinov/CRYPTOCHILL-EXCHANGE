@@ -16,17 +16,16 @@ export const Main = () => {
       const laptop = useMediaQuery(
         "only screen and (min-width : 1024px) and (max-width : 1280px)"
       );
-      const macbook = useMediaQuery("only screen and (min-width : 1280px)");
-      const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+      const macbook = useMediaQuery("only screen and (min-width : 1280px) and (max-width : 1328px)");
+      const desctop = useMediaQuery("only screen and (min-width : 1328px)");
     return (
         <div className="flex flex-col w-full">
             <Intro/>
-            <div className={classNames("max-w-main-container mx-auto",{
-                "max-w-main-container": !iphone,
-                // "max-w-main-container": desctop,
-                // "max-w-main-container": ipadMini,
-                "max-w-tablet-container": iphone,
-                // "max-w-main-container": laptop,
+            <div className={classNames("mx-auto",{
+                "min-w-[1328px] max-w-[1328px]": desctop,
+                "max-w-main-container": macbook || laptop,
+                "max-w-tablet-container": ipadMini,
+                "max-w-mobile-container": iphone,
             })}>
             <Transactions/>
             <FaqSection/>

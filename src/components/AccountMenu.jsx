@@ -8,15 +8,15 @@ import { AccountDropdown } from "./AccountDropdown";
 
 export const AccountMenu = ({ isLanguageOpen, setIsLanguageOpen, isAccountOpen, setIsAccountOpen }) => {
   
-  function handleOpen() {
+  function handleOpen(ev) {
     setIsAccountOpen((prev) => !prev)
     if (isLanguageOpen) {
       setIsLanguageOpen(false);
     }
+    ev.stopPropagation();
   }
 
-  return (
-    <>
+  return (  
       <div
         className="flex flex-row items-center cursor-pointer relative"
         onClick={handleOpen}
@@ -27,6 +27,5 @@ export const AccountMenu = ({ isLanguageOpen, setIsLanguageOpen, isAccountOpen, 
           <AccountDropdown />
         )}
       </div>
-    </>
   );
 };

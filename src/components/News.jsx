@@ -19,8 +19,8 @@ export const News = () => {
   const ipadMini = useMediaQuery(
     "only screen and (min-width : 744px) and (max-width : 1024px)"
   );
-  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
-  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1328px)");
   const sliderRef = useRef()
   const splideOptions = {
     type   : 'loop',
@@ -45,13 +45,15 @@ export const News = () => {
         Новости
       </h2>
       <div className="relative">
-      {!iphone && <button className=" w-14 mb-8 absolute z-10 top-2/4 -left-16 ml-11" onClick={() => sliderRef.current.splide.go('<')}><img className="w-14 " src={leftArrow} alt="левая срелка слайдера"/></button>}
+      {!iphone && <button className=" w-14 mb-8 absolute z-10 top-2/4 left-0" onClick={() => sliderRef.current.splide.go('<')}><img className="w-14 " src={leftArrow} alt="левая срелка слайдера"/></button>}
       <Splide
-      ref={sliderRef}
+        ref={sliderRef}
         aria-label="My Favorite Images"
         options={splideOptions}
         hasTrack={ false }
-        className="splide is-overflow is-initialized splide--loop splide--ltr splide--draggable is-active min-w-[1169px] max-w-[1169px] mx-auto"
+        className={classNames("splide is-overflow is-initialized splide--loop splide--ltr splide--draggable is-active min-w-[1169px] max-w-[1169px] mx-auto", {
+          "ml-[72px]": macbook || ipadMini
+        })}
       >
         <SplideTrack>
         <SplideSlide className={classNames({
@@ -116,11 +118,12 @@ export const News = () => {
         </SplideSlide>
         </SplideTrack>
       </Splide>
-      {!iphone && <button className="w-14 mb-8 absolute z-10 top-2/4 -right-16 mr-11" onClick={() => sliderRef.current.splide.go('>')}><img className="w-14 " src={rightArrow} alt="левая срелка слайдера"/></button>}
+      {!iphone && <button className="w-14 mb-8 absolute z-10 top-2/4 right-0" onClick={() => sliderRef.current.splide.go('>')}><img className="w-14 " src={rightArrow} alt="левая срелка слайдера"/></button>}
       </div>
       <Link className={classNames("bg-btns mt-6 self-end text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
+        "mr-20 w-[217px]": desctop,
         "w-full mr-0": iphone,
-        "w-[217px] mr-3": !iphone
+        "w-[217px]": macbook || ipadMini
       })}>Читать все новости</Link>
     </section>
   );

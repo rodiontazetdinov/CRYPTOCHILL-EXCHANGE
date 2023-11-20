@@ -21,6 +21,7 @@ export const PagePartner = ({ user }) => {
     const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
     const link = false;
+    const lincText = '';
 
     const coins = [
         {name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'},
@@ -31,12 +32,26 @@ export const PagePartner = ({ user }) => {
     const [sentCoin, setSentCoin] = useState("BTC");
     const [getCoin, setGetCoin] = useState("ETH");
     const [popupOpen, setPopupOpen] = useState(false);
+    const [dropdownSendingCoin, setDropdownSendingCoin] = useState(false);
+    const [dropdownReceivingCoin, setDropdownReceivingCoin] = useState(false);
+
+    function dropdownCoinsMenuOpenHandler(setState, state) {
+        if (dropdownSendingCoin) setDropdownSendingCoin(false);
+        if (dropdownReceivingCoin) setDropdownReceivingCoin(false);
+        setState(state);
+    }
 
     return (
-        <section className={classNames("py-6 flex-grow text-xl w-full", {
-            "pl-10": desctop || macbook,
-            "pl-0": iphone || ipadMini
-        })}>
+        <section 
+            className={classNames("py-6 flex-grow text-xl w-full", {
+                "pl-10": desctop || macbook,
+                "pl-0": iphone || ipadMini
+            })}
+            onClick={() => {
+                if (dropdownSendingCoin) setDropdownSendingCoin(false);
+                if (dropdownReceivingCoin) setDropdownReceivingCoin(false);
+            }}
+        >
             <div className={classNames("flex justify-between", {
                 "items-center mb-6": desctop,
                 "items-start flex-col mb-6": macbook || ipadMini,
@@ -103,10 +118,6 @@ export const PagePartner = ({ user }) => {
                     "text-5xl": !iphone,
                 })}>Партнерский код и ссылка</h2>
                 <button
-                    onClick={() => {
-                        document.body.style.overflow = 'hidden';
-                        setPopupOpen(true);
-                    }}
                     className={classNames("bg-btns rounded-xl h-12 px-4", {
                     "mt-6": macbook || ipadMini,
                     "mt-4": iphone,
@@ -114,7 +125,14 @@ export const PagePartner = ({ user }) => {
             </div>
 
             {popupOpen && (
-                <PopupPartnerLink setPopupOpen={setPopupOpen}/>
+                <PopupPartnerLink
+                    setPopupOpen={setPopupOpen}
+                    dropdownSendingCoin={dropdownSendingCoin}
+                    setDropdownSendingCoin={setDropdownSendingCoin}
+                    dropdownReceivingCoin={dropdownReceivingCoin}
+                    setDropdownReceivingCoin={setDropdownReceivingCoin}
+                    dropdownCoinsMenuOpenHandler={dropdownCoinsMenuOpenHandler}
+                />
             )}
 
             {/* Партнерский код и ссылка */}
@@ -162,44 +180,62 @@ export const PagePartner = ({ user }) => {
 
                     <div className={classNames("flex relative", {
                         "justify-between items-center": desctop,
-                        "flex-col": !desctop
+                        "flex-col pb-14": macbook,
+                        "flex-col": iphone || ipadMini
                     })}>
                         <span className="whitespace-nowrap">Ссылка с выбором валют</span>
-                        {link && (
+                        {(link || (iphone || ipadMini)) && (
                             <div className={classNames("flex bg-input rounded-xl px-4 py-3", {
                                 "ml-2 w-[560px]": desctop,
                                 "mt-3  w-[560px]": macbook,
                                 "mt-3 w-full": ipadMini || iphone,
                             })}>
-                                <div className="flex">
+                                <div
+                                    className="flex cursor-pointer"
+                                    onClick={() => {
+                                        document.body.style.overflow = 'hidden';
+                                        setPopupOpen(true);
+                                    }}
+                                >
                                     <img className="w-6 mr-1" src={BTCicon} alt="" />
                                     <img className="w-6 mr-1" src={orderSwitch} alt="" />
                                     <img className="w-6" src={ETHicon} alt="" />
                                 </div>
-                                <input
+                                <p
                                     className={classNames("bg-transparent flex-grow outline-none", {
                                         "w-[130px]": iphone
                                     })}
-                                    type="text"
-                                />
+                                >https://cryptochil.com/ref1</p>
                                 <button>
                                     <img src={squaresIcon} alt="" />
                                 </button>
                             </div>
                         )}
 
-                        {!link && (
-                            <form className={classNames("flex h-12 bg-input rounded-xl", {
+                        {(!link && (desctop || macbook)) && (
+                            <form className={classNames("relative flex h-12 bg-input rounded-xl", {
                                 "ml-2 w-[560px]": desctop,
-                                "mt-3  w-[560px]": macbook,
+                                "mt-3 w-[560px]": macbook,
                                 "mt-3 w-full": ipadMini || iphone,
                             })}>
-                                <div className="w-[50%]">
-                                    <DropdownListCoins />
+                                <div className="w-[50%] z-10">
+                                    <DropdownListCoins
+                                        dropdownState={dropdownSendingCoin}
+                                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownSendingCoin, state)}
+                                    />
                                 </div>
-                                <div className="w-[50%]">
-                                    <DropdownListCoins />
+                                <div className="w-[50%] z-10">
+                                    <DropdownListCoins
+                                        dropdownState={dropdownReceivingCoin}
+                                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownReceivingCoin, state)}
+                                    />
                                 </div>
+                                <button className={classNames("bg-btns absolute w-[107px] h-full rounded-xl", {
+                                    "-right-[116px]": desctop,
+                                    "top-14 left-0": !desctop,
+                                })}>
+                                    Создать
+                                </button>
                             </form>
                         )}
                     </div>
