@@ -9,7 +9,7 @@ export const OrderItems = () => {
         "only screen and (min-width : 320px) and (max-width : 744px)"
       );
       const miniOrder = useMediaQuery(
-        "only screen and (max-width : 610px)"
+        "only screen and (max-width : 744px)"
       );
       const ipadMini = useMediaQuery(
         "only screen and (min-width : 744px)"
@@ -21,7 +21,7 @@ export const OrderItems = () => {
       const desctop = useMediaQuery("only screen and (min-width : 1280px)");
     return (
         <div className={classNames(" flex flex-row items-center mt-10  w-full",{
-            "flex-col w-full": miniOrder,
+            "flex-col w-full space-y-4": miniOrder,
         })}>
             <OrderItem title="Отправляете"/>
             {!miniOrder && <img src={orderSwitch} alt="switch"/>}
