@@ -30,7 +30,7 @@ export const Instructions = () => {
       autoWidth: true,
       height: '100%'
     };
-    console.log(iphone, ipadMini, macbook, desctop)
+    
     return (
       <section className={classNames("flex flex-col self-center mx-auto",{
         "max-w-[calc(100% - 112px)]": macbook,

@@ -10,7 +10,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useState } from "react";
 
-export const DropdownListCoins = ({ selectName, dropdownState, setDropdownState }) => {
+export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDropdownState }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
@@ -22,9 +22,13 @@ export const DropdownListCoins = ({ selectName, dropdownState, setDropdownState 
         {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
         {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
         {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
-    ]
+    ];
 
-    const [selectedCoin, setSelectedCoin] = useState({name: "BTC", img: BTCicon});
+    const [selectedCoin, setSelectedCoin] = stateCoin;
+
+    // if (stateCoin) {
+    //     const [selectedCoin, setSelectedCoin] = useState({name: "BTC", img: BTCicon});
+    // }
 
     return (
         <div className="w-full rounded-xl">
@@ -45,7 +49,7 @@ export const DropdownListCoins = ({ selectName, dropdownState, setDropdownState 
             <div className={classNames("bg-input w-full rounded-xl", {
                 "bg-gradient-to-b from-[#08035B] to-[#1B11A5]": dropdownState
             })}>
-                <div className="flex h-full justify-between px-4 py-2">
+                <div className="flex justify-between px-4 py-2 h-12">
                     {dropdownState ? (
                         <>
                             <img src={searchIcon} alt=""/>
