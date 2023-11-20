@@ -15,7 +15,7 @@ export const LanguageMenu = ({ isLanguageOpen, setIsLanguageOpen, isAccountOpen,
   }
 
   return (
-    <div className="flex flex-row items-center mr-7 cursor-pointer relative" onClick={() => setIsLanguageOpen((prev) => !prev)}>
+    <div className="flex flex-row items-center mr-7 cursor-pointer relative" onClick={handleOpen}>
       <img src={flag} alt="flag " className="rounded" />
       <img src={isLanguageOpen ? arrowUp : arrowDown} alt="arrow" className="ml-2"/>
       {isLanguageOpen && (

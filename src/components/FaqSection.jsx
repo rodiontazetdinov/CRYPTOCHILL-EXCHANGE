@@ -1,10 +1,26 @@
 import { Link } from "react-router-dom";
 import { FaqSeqtionItem } from "./FaqSeqtionItem";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
 
 export const FaqSection = () => {
+  const iphone = useMediaQuery(
+    "only screen and (min-width : 320px) and (max-width : 744px)"
+  );
+  const ipadMini = useMediaQuery(
+    "only screen and (min-width : 744px) and (max-width : 1024px)"
+  );
+  const laptop = useMediaQuery(
+    "only screen and (min-width : 1024px) and (max-width : 1280px)"
+  );
+  const macbook = useMediaQuery("only screen and (min-width : 1024px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   return (
     <section className="flex flex-col max-w-1328 self-center">
-      <h2 className="text-center font-bold text-4xl font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-12 mb-10 self-center">
+      <h2 className={classNames("text-center font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-12 mb-10 self-center",{
+        "text-2xl font-semibold": iphone,
+        "text-5xl font-bold": !iphone
+      })}>
         FAQ
       </h2>
       <FaqSeqtionItem

@@ -15,11 +15,13 @@ export const NewsCard = ({ title, description, imgLink}) => {
   const macbook = useMediaQuery("only screen and (min-width : 1280px)");
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
   return (
-    <div className={classNames("flex flex-col justify-left bg-order p-4 rounded-lg",{
-      "w-[379px] h-[598px]": !iphone,
-      "w-[302px] h-[507px]": iphone,
-    })}>
-        <img src={imgLink} alt={title}/>
+    <div className={classNames("flex flex-col justify-left bg-order p-4 rounded-lg w-full")}>
+      <div className={classNames("flex w-full bg-[#976ADE] rounded-lg ", {
+        "h-[300px]": !iphone,
+        "h-[230px]": iphone,
+      })}>
+        <img className="" src={imgLink} alt={title}/>
+      </div>
         <h3 className={classNames("text-2xl font-semibold max-w-[280px] mt-4 text-left",{
           "text-xl": iphone,
         })}>{title}</h3>

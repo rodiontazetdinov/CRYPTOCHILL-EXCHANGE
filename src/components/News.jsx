@@ -1,5 +1,6 @@
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
-import newsImg from "../images/news.svg";
+import newsImg from "../images/news.png";
+import newsImgAnother  from "../images/news.png";
 import "@splidejs/react-splide/css/core";
 import { NewsCard } from "./NewsCard";
 import { useRef } from "react";
@@ -54,16 +55,16 @@ export const News = () => {
       >
         <SplideTrack>
         <SplideSlide className={classNames({
-          "w-[379px] h-[598px]": !iphone,
-          "w-[302px] h-[507px]": iphone,
+          "w-[379px]": !iphone,
+          "w-[302px]": iphone,
         })}>
-          <NewsCard
-            title={"Новости криптовалют 1 недели июня 2023 года"}
-            description={
-              "Bitcoin достиг $31000 23 июня цена BTC преодолела отметку в $31 000, продемонстрировав рост на 4,2% за последние 24 часа, согласно свежим данным CoinGecko. На данный момент стоимость криптовалюты удерживается выше психологической отметки в $31 400. Важно отметить, что положительную динамику наблюдают и другие активы из топ-10 по капитализации."
-            }
-            imgLink={newsImg}
-          />
+            <NewsCard
+              title={"Новости криптовалют 1 недели июня 2023 года"}
+              description={
+                "Bitcoin достиг $31000 23 июня цена BTC преодолела отметку в $31 000, продемонстрировав рост на 4,2% за последние 24 часа, согласно свежим данным CoinGecko. На данный момент стоимость криптовалюты удерживается выше психологической отметки в $31 400. Важно отметить, что положительную динамику наблюдают и другие активы из топ-10 по капитализации."
+              }
+              imgLink={newsImg}
+            />
         </SplideSlide>
         <SplideSlide className={classNames({
           "w-[379px] h-[598px]": !iphone,
@@ -117,9 +118,9 @@ export const News = () => {
       </Splide>
       {!iphone && <button className="w-14 mb-8 absolute z-10 top-2/4 -right-16 mr-11" onClick={() => sliderRef.current.splide.go('>')}><img className="w-14 " src={rightArrow} alt="левая срелка слайдера"/></button>}
       </div>
-      <Link className={classNames("bg-btns mt-6 self-end mr-3 text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
+      <Link className={classNames("bg-btns mt-6 self-end text-xl font-semibold px-4 py-3 rounded-xl mb-12",{
         "w-full mr-0": iphone,
-        "w-[217px]": !iphone
+        "w-[217px] mr-3": !iphone
       })}>Читать все новости</Link>
     </section>
   );
