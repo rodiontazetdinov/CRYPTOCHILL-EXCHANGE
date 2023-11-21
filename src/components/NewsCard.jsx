@@ -14,12 +14,22 @@ export const NewsCard = ({ title, description, imgLink}) => {
   );
   const macbook = useMediaQuery("only screen and (min-width : 1280px)");
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+
+  const tags = ['Solana', 'Stellar', 'Lumens', 'Tether', 'TON', 'Toncoin']
+
   return (
     <div className={classNames("flex flex-col justify-left bg-order p-4 rounded-lg w-full")}>
-      <div className={classNames("flex w-full bg-[#976ADE] rounded-lg ", {
+      <div className={classNames("flex w-full bg-[#976ADE] rounded-lg relative", {
         "h-[300px]": !iphone,
         "h-[230px]": iphone,
       })}>
+        <div className="absolute top-3 left-3 flex flex-wrap">
+          {tags.map((tag) => { return (
+            <button
+              className=" bg-[#2B23AC] rounded-lg mr-2 px-2 py-1 mb-2 cursor-pointer hover:bg-[#3c31e9]"
+            >{tag}</button>
+          )})}
+        </div>
         <img className="" src={imgLink} alt={title}/>
       </div>
         <h3 className={classNames("text-2xl font-semibold max-w-[280px] mt-4 text-left",{
