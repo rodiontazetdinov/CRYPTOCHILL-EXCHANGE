@@ -16,7 +16,7 @@ export const OrderItems = () => {
         "only screen and (min-width : 320px) and (max-width : 744px)"
       );
       const miniOrder = useMediaQuery(
-        "only screen and (max-width : 610px)"
+        "only screen and (max-width : 744px)"
       );
       const ipadMini = useMediaQuery(
         "only screen and (max-width : 744px)"
