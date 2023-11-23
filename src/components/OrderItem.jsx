@@ -13,6 +13,33 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
 
   const [summ, setSumm] = stateSumm;
 
+  function validateInput(input) {
+    // Убираем все символы, кроме цифр, точек и запятых
+    const sanitizedInput = input.replace(/[^0-9.,]/g, '');
+  
+    // Заменяем запятые на точки
+    const commaToDot = sanitizedInput.replace(',', '.');
+  
+    // Ограничиваем длину строки до 17 символов
+    const truncatedInput = commaToDot.slice(0, 17);
+  
+    // Удаляем все точки, кроме первой
+    const dotCount = truncatedInput.split('.').length - 1;
+    if (dotCount > 1) {
+      const firstDotIndex = truncatedInput.indexOf('.');
+      const beforeFirstDot = truncatedInput.slice(0, firstDotIndex);
+      const afterFirstDot = truncatedInput.slice(firstDotIndex + 1);
+      return `${beforeFirstDot}.${afterFirstDot.replace(/\./g, '')}`;
+    }
+  
+    return truncatedInput;
+  }
+  
+  const handleChange = (event) => {
+    setSumm(validateInput(event.target.value));
+
+  }
+
   return (
     <div
       className={classNames(
@@ -29,17 +56,18 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
       <div className="flex w-full h-12 z-10 mt-3 rounded-xl bg-input">
         {!dropdownState && (
           <input
-            type="number"
+            type="text"
             className={classNames(
-              "flex-grow block bg-transparent outline-none font-mono text-2xl py-3 pl-6 pr-1 text-[#D7DFFF]",
+              "flex-grow block bg-transparent outline-none font-mono text-2xl py-2 pl-6 pr-1 text-[#D7DFFF] no-scrollbar",
               {
                 "max-w-[170px]": laptop,
                 "min-w-[140px]": ipadMini,
               }
             )}
             onChange={(ev) => {
-              console.log(ev);
-              setSumm(ev.target.value);
+              // console.log(ev);
+              // setSumm(ev.target.value);
+              handleChange(ev);
             }}
             value={summ}
           />
