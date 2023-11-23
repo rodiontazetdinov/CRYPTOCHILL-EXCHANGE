@@ -1,5 +1,5 @@
 const initialState = {
-  calls: [],
+  coins: [],
   filteredCalls: [],
   filteredServices: [],
   filteredItems: [],
@@ -10,6 +10,7 @@ const initialState = {
   services: [],
   compositions: [],
   filteredCompositions: [],
+  percentType: 'fixed',
 };
 
 const rootReducer = (state = initialState, action) => {
