@@ -1,74 +1,19 @@
 const initialState = {
   coins: [],
-  filteredCalls: [],
-  filteredServices: [],
-  filteredItems: [],
-  choosedCall: {},
-  isCallModalOpen: false,
-  isUpdateMenuOpen: false,
-  page: [],
-  services: [],
-  compositions: [],
-  filteredCompositions: [],
-  percentType: 'fixed',
+  isFixed: true,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_SERVICES":
+    case "SET_PERCENT_TYPE_FIXED":
       return {
         ...state,
-        services: action.payload,
+        isFixed: true,
       };
-      case "SET_COMPOSITIONS":
+      case "SET_PERCENT_TYPE_FLOATING":
       return {
         ...state,
-        compositions: action.payload,
-      };
-      case "SET_FILTERED_COMPOSITIONS":
-      return {
-        ...state,
-        filteredCompositions: action.payload,
-      };
-    case "SET_FILTERED_SERVICES":
-      return {
-        ...state,
-        filteredServices: action.payload,
-      };
-    case "SET_PAGE":
-      return {
-        ...state,
-        page: action.payload,
-      };
-    case "SET_CALLS":
-      return {
-        ...state,
-        calls: action.payload,
-      };
-    case "SET_FILTERED_CALLS":
-      return {
-        ...state,
-        filteredCalls: action.payload,
-      };
-    case "SET_CHOOSED_CALL":
-      return {
-        ...state,
-        choosedCall: action.payload,
-      };
-    case "SET_FILTERED_ITEMS":
-      return {
-        ...state,
-        filteredItems: action.payload,
-      };
-    case "TOGGLE_CALLMODAL_OPEN":
-      return {
-        ...state,
-        isCallModalOpen: !state.isCallModalOpen,
-      };
-    case "TOGGLE_IS_UPDATE_MENU_OPEN":
-      return {
-        ...state,
-        isUpdateMenuOpen: !state.isUpdateMenuOpen,
+        isFixed: false,
       };
 
     default:
