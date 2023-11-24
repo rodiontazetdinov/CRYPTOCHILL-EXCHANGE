@@ -11,6 +11,8 @@ import { Support } from './pages/Support';
 import { SendingPage } from './pages/SendingPage';
 import { Account } from './pages/Account';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { closeAllDropdowns } from './store/actions';
 
 export const App = () => {
 
@@ -19,14 +21,12 @@ export const App = () => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
 
+  const dispatch = useDispatch();
+  console.log("App");
+
   return (
     <div
-      onClick={() => {
-        if (isLanguageOpen) setIsLanguageOpen(false);
-        if (isAccountOpen) setIsAccountOpen(false);
-        if (dropdownTagsOpen) setDropdownTagsOpen(false);
-        if (dropdownMainMenuOpen) setDropdownMainMenuOpen(false);
-      }}
+      onClick={() => dispatch(closeAllDropdowns())}
       className="App bg-[center_-500px] bg-main-bg bg-main-bg-img overflow-x-hidden"
     >
       <Routes>

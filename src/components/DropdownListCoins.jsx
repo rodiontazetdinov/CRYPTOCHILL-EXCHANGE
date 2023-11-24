@@ -26,12 +26,15 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
 
     const [selectedCoin, setSelectedCoin] = stateCoin;
 
-    // if (stateCoin) {
-    //     const [selectedCoin, setSelectedCoin] = useState({name: "BTC", img: BTCicon});
-    // }
-
     return (
-        <div className="w-full rounded-xl">
+        <div
+            className="w-full rounded-xl"
+            onClick={(ev) => {
+                ev.preventDefault();
+                setDropdownState();
+                ev.stopPropagation();
+            }}
+        >
             <select
                 className="hidden"
                 name={selectName}
@@ -61,13 +64,7 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                             />
                         </>
                     ) : (
-                        <div
-                            className="flex w-full justify-between items-center"
-                            onClick={(ev) => {
-                                ev.preventDefault();
-                                setDropdownState(!dropdownState);
-                            }}
-                        >
+                        <div className="flex w-full justify-between items-center cursor-pointer">
                             <span className="flex">
                                 <img className="mr-1 w-7" src={selectedCoin.img} alt="" />
                                 {selectedCoin.name}
@@ -90,7 +87,6 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                                 className="flex justify-between text-base font-normal last:mb-0 hover:cursor-pointer px-4 py-1"
                                 onClick={(ev) => {
                                     setSelectedCoin({name: coin.shortTeg, img: coin.img});
-                                    setDropdownState(!dropdownState);
                                 }}
                             >
                                 <div className="flex">
@@ -109,7 +105,6 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                                 className="flex justify-between text-base font-normal last:mb-0 hover:cursor-pointer px-4 py-1"
                                 onClick={(ev) => {
                                     setSelectedCoin({name: coin.shortTeg, img: coin.img});
-                                    setDropdownState(!dropdownState);
                                 }}
                             >
                                 <div className="flex">

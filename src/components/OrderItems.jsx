@@ -10,6 +10,8 @@ import orderSwitch from '../images/order-switch.svg';
 import { useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { closeDropdown, openDropdown } from "../store/actions";
 
 export const OrderItems = () => {
     const iphone = useMediaQuery(
@@ -27,18 +29,14 @@ export const OrderItems = () => {
       const macbook = useMediaQuery("only screen and (min-width : 1024px)");
       const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-      const [dropdownSendingCoin, setDropdownSendingCoin] = useState(false);
-      const [dropdownReceivingCoin, setDropdownReceivingCoin] = useState(false);
       const [sentCoin, setSentCoin] = useState({name: "BTC", img: BTCicon});
       const [receivedCoin, setReceivedCoin] = useState({name: "ETH", img: ETHicon});
       const [sendingSumm, setSendingSumm] = useState(0.0);
       const [receivedSumm, setReceivedSumm] = useState(0.0);
 
-      function dropdownCoinsMenuOpenHandler(setState, state) {
-        if (dropdownSendingCoin) setDropdownSendingCoin(false);
-        if (dropdownReceivingCoin) setDropdownReceivingCoin(false);
-        setState(state);
-      }
+      const dropdownSent = useSelector(state => state.dropdowns.coinSentOrder);
+      const dropdownReceived = useSelector(state => state.dropdowns.coinReceivedOrder);
+      const dispatch = useDispatch();
 
       function swapCoin(params) {
         const tmp = [sentCoin, sendingSumm];
@@ -54,19 +52,19 @@ export const OrderItems = () => {
         })}>
             <OrderItem
               title="Отправляете"
+              dropdownState={dropdownSent}
+              setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
               stateSumm={[sendingSumm, setSendingSumm]}
               stateCoin={[sentCoin, setSentCoin]}
-              dropdownState={dropdownSendingCoin}
-              setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownSendingCoin, state)}
             />
             {!ipadMini && <img onClick={swapCoin} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
             {/* <img src={orderSwitch} alt="switch"/> */}
             <OrderItem
               title="Получаете"
+              dropdownState={dropdownReceived}
+              setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateSumm={[receivedSumm, setReceivedSumm]}
               stateCoin={[receivedCoin, setReceivedCoin]}
-              dropdownState={dropdownReceivingCoin}
-              setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownReceivingCoin, state)}
             />
         </div>
     );

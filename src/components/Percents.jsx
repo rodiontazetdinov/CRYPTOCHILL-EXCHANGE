@@ -19,7 +19,7 @@ export const Percents = () => {
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   // const [isActive, setIsActive] = useState(true);
   const {isFixed} = useSelector((state) => state);
-
+  
   const dispatch = useDispatch();
   const handleFixed = () => {
     dispatch(setPercentTypeFixed());
@@ -29,7 +29,7 @@ export const Percents = () => {
     dispatch(setPercentTypeFloating());
     // setIsActive((prev) => !prev)
   }
-  console.log(isFixed)
+  
   return (
     <div className={classNames("flex items-center mt-4", {
       "w-full flex-row": macbook || desctop,

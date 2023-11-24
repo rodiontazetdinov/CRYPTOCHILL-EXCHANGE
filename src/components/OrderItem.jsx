@@ -3,6 +3,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { DropdownListCoins } from "./DropdownListCoins";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropdownState}) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
@@ -37,7 +38,6 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
   
   const handleChange = (event) => {
     setSumm(validateInput(event.target.value));
-
   }
 
   return (
@@ -65,8 +65,6 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
               }
             )}
             onChange={(ev) => {
-              // console.log(ev);
-              // setSumm(ev.target.value);
               handleChange(ev);
             }}
             value={summ}
@@ -74,10 +72,10 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
         )}
         <div className="flex-grow min-w-[110px]">
           <DropdownListCoins
-            selectName='main-sent-coin'
-            stateCoin={stateCoin}
             dropdownState={dropdownState}
             setDropdownState={setDropdownState}
+            selectName='main-sent-coin'
+            stateCoin={stateCoin}
           />
         </div>
       </div>

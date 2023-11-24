@@ -8,7 +8,8 @@ export const PopupPartnerLink = ({
     setDropdownSendingCoin,
     dropdownReceivingCoin,
     setDropdownReceivingCoin,
-    dropdownCoinsMenuOpenHandler
+    stateSentCoin,
+    stateReceivedCoin
 }) => {
     return (
         <div
@@ -24,14 +25,18 @@ export const PopupPartnerLink = ({
                 <p className="text-center text-3xl text-transparent bg-text bg-clip-text font-bold mb-4">Ссылка с выбором валют</p>
                 <div className="w-full mb-4">
                     <DropdownListCoins
+                        selectName='main-sent-coin'
+                        stateCoin={stateSentCoin}
                         dropdownState={dropdownSendingCoin}
-                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownSendingCoin, state)}
+                        setDropdownState={setDropdownSendingCoin}
                     />
                 </div>
                 <div className="w-full mb-4">
                     <DropdownListCoins
+                        selectName='main-received-coin'
+                        stateCoin={stateReceivedCoin}
                         dropdownState={dropdownReceivingCoin}
-                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownReceivingCoin, state)}
+                        setDropdownState={setDropdownReceivingCoin}
                     />
                 </div>
                 <button

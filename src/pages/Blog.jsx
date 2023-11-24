@@ -138,8 +138,6 @@ export const Blog = ({ dropdownTagsOpen, setDropdownTagsOpen }) => {
                 </ul>
                 
                 <DropdownTags
-                    state={dropdownTagsOpen}
-                    setState={setDropdownTagsOpen}
                     currentTag={currentTag}
                     setCurrentTag={setCurrentTag}
                 />

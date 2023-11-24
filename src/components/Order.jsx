@@ -16,6 +16,7 @@ export const Order = () => {
   );
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
+  
   return (
     <div className={classNames("flex flex-col items-center",{
       "max-w-[696px] px-6 rounded-[64px]": ipadMini,
