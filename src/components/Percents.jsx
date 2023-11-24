@@ -29,7 +29,7 @@ export const Percents = () => {
     dispatch(setPercentTypeFloating());
     // setIsActive((prev) => !prev)
   }
-  console.log(isFixed)
+  
   return (
     <div className={classNames("flex items-center mt-4", {
       "w-full flex-row": macbook || desctop,

@@ -15,6 +15,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isFixed: false,
       };
+      case "SET_COINS":
+      return {
+        ...state,
+        coins: action.payload,
+      };
 
     default:
       return state;
