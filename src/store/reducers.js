@@ -6,6 +6,7 @@ const initialDropdowns = {
   coinReceivedOrder: false,
   coinSentPartner: false,
   coinReceivedPartner: false,
+  mainMenu: false
 }
 
 const initialState = {
@@ -16,7 +17,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    
+
     case "SET_PERCENT_TYPE_FIXED":
       return {
         ...state,

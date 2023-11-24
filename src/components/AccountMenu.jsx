@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeAllDropdowns, closeDropdown, openDropdown } from "../store/actions";
 
 
-export const AccountMenu = ({ isLanguageOpen, setIsLanguageOpen, isAccountOpen, setIsAccountOpen }) => {
+export const AccountMenu = () => {
   const dropdownOpen = useSelector((state) => state.dropdowns.account);
   const dispatch = useDispatch();
 

@@ -27,9 +27,9 @@ export const AccountDropdown = () => {
   ]
 
     return (
-        <ul className={classNames("flex flex-col absolute rounded-2xl bg-drop backdrop-blur text-base right-0 top-12 py-1 z-10", {
-          "w-max right-0": !iphone,
-          "w-screen -right-4": iphone
+        <ul className={classNames("flex flex-col absolute bg-drop backdrop-blur text-base top-12 py-1 z-10", {
+          "w-max right-0 rounded-2xl": !iphone,
+          "w-screen -right-4 rounded-b-2xl": iphone
         })}>
           {accountMenuData.map((menuItem) => { return (
             <li className="flex w-full whitespace-nowrap cursor-pointer">

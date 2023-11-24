@@ -29,8 +29,7 @@ export const PagePartner = ({ user }) => {
         {name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'},
         {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
         {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
-    ]
-
+    ];
 
     const [sentCoin, setSentCoin] = useState({name: 'BTC', img: BTCicon});
     const [receivedCoin, setReceivedCoin] = useState({name: 'ETH', img: ETHicon});
