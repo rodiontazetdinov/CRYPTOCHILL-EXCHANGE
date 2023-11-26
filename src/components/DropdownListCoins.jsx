@@ -67,7 +67,7 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                         <div className="flex w-full justify-between items-center cursor-pointer">
                             <span className="flex">
                                 <img className="mr-1 w-7" src={selectedCoin.img} alt="" />
-                                {selectedCoin.name}
+                                {selectedCoin.shortTeg}
                             </span>
                             <button>
                                 <img className="w-4" src={arrowDown} alt="" />

@@ -19,18 +19,6 @@ export const Main = () => {
       const macbook = useMediaQuery("only screen and (min-width : 1280px) and (max-width : 1328px)");
       const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
-      // fetch('https://ff.io/api/v2/ccies', {
-      //     method: 'POST',
-      //     headers: {
-      //         'Accept': 'application/json',
-      //         'Content-Type': 'application/json;charset=utf-8',
-      //         'X-API-KEY': 'CZC970YKLNIquCCgW0JFxxBDvILAU27bZMImDaot',
-      //         'X-API-SIGN': '',
-      //     }
-      // }).then((data) => {
-      //   console.log(data);
-      // });
-
     return (
         <div className="flex flex-col w-full">
             <Intro/>

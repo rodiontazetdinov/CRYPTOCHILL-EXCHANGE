@@ -17,6 +17,7 @@ import cryptoImg6 from "../images/about-us-img/cryptocurrencies/6.svg";
 // Libraries
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useSelector } from "react-redux";
 
 export const AboutUs = () => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
@@ -196,6 +197,8 @@ export const AboutUs = () => {
 
     ]
 
+    const coins = useSelector(state => state.coins);
+
     return (
         <section>
             <div className={classNames(
@@ -329,14 +332,14 @@ export const AboutUs = () => {
                     <ul className={classNames("flex flex-wrap justify-between", {
                         "justify-evenly": !desctop,
                     })}>
-                        {cryptocurrencies.map((crypto, index) => {
+                        {coins.map((crypto, index) => {
                             return (<li className={classNames(" bg-order rounded-2xl flex flex-col items-center mb-6 pt-6 pb-5", {
                                 'w-[200px]': desctop,
                                 'mx-2 w-[200px]': macbook,
                                 'mx-2 w-[200px] ': ipadMini,
                                 "mx-0 w-full": iphone
                             })}>
-                                <img className="inline-block w-14 h-14 mb-4" src={crypto.img} alt="" />
+                                <img className="inline-block w-14 h-14 mb-4" src={cryptoImg1} alt="" />
                                 <p className="inline-block">{crypto.name}</p>
                             </li>)
                         })}

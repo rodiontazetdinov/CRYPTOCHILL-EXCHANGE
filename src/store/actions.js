@@ -1,3 +1,8 @@
+export const setCoins = (listCoins) => ({
+  type: "SET_COINS",
+  paylode: listCoins
+});
+
 export const setPercentTypeFixed = () => ({
   type: "SET_PERCENT_TYPE_FIXED",
 });

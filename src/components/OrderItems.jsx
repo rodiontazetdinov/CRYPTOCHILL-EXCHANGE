@@ -2,8 +2,6 @@
 import { OrderItem } from "./OrderItem";
 
 // img
-import ETHicon from "../images/coins/eth.svg";
-import BTCicon from "../images/coins/btc.svg";
 import orderSwitch from '../images/order-switch.svg';
 
 // lib
@@ -13,7 +11,7 @@ import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDropdown, openDropdown } from "../store/actions";
 
-export const OrderItems = () => {
+export const OrderItems = ({ stateSentCoin, stateReceivedCoin }) => {
     const iphone = useMediaQuery(
         "only screen and (min-width : 320px) and (max-width : 744px)"
       );
@@ -28,22 +26,28 @@ export const OrderItems = () => {
       );
       const macbook = useMediaQuery("only screen and (min-width : 1024px)");
       const desctop = useMediaQuery("only screen and (min-width : 1280px)");
-
-      const [sentCoin, setSentCoin] = useState({name: "BTC", img: BTCicon});
-      const [receivedCoin, setReceivedCoin] = useState({name: "ETH", img: ETHicon});
+      
       const [sendingSumm, setSendingSumm] = useState(0.0);
       const [receivedSumm, setReceivedSumm] = useState(0.0);
+      const [sentCoin, setSentCoin] = stateSentCoin;
+      const [receivedCoin, setReceivedCoin] = stateReceivedCoin;
+
+      // ТИПО КУРС
+      const [ rateSentCoin, setRateSentCoin ] = useState("1 BTC ≈ 15.9754668 ETH");
+      const [ rateReceivedCoin, setRateReceivedCoin ] = useState("1 ETH ≈ 0.5754668 BTC");
 
       const dropdownSent = useSelector(state => state.dropdowns.coinSentOrder);
       const dropdownReceived = useSelector(state => state.dropdowns.coinReceivedOrder);
       const dispatch = useDispatch();
 
       function swapCoin(params) {
-        const tmp = [sentCoin, sendingSumm];
+        const tmp = [sentCoin, sendingSumm, rateSentCoin];
         setSentCoin(receivedCoin);
         setSendingSumm(receivedSumm);
+        setRateSentCoin(rateReceivedCoin);
         setReceivedCoin(tmp[0]);
         setReceivedSumm(tmp[1]);
+        setRateReceivedCoin(tmp[2]);
       }
 
     return (
@@ -56,6 +60,7 @@ export const OrderItems = () => {
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
               stateSumm={[sendingSumm, setSendingSumm]}
               stateCoin={[sentCoin, setSentCoin]}
+              rate={ rateSentCoin }
             />
             {!ipadMini && <img onClick={swapCoin} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
             {/* <img src={orderSwitch} alt="switch"/> */}
@@ -65,6 +70,7 @@ export const OrderItems = () => {
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateSumm={[receivedSumm, setReceivedSumm]}
               stateCoin={[receivedCoin, setReceivedCoin]}
+              rate={ rateReceivedCoin }
             />
         </div>
     );

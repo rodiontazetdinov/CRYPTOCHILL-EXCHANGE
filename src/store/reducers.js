@@ -18,6 +18,12 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
 
+    case "SET_COINS":
+      return {
+        ...state,
+        coins: action.paylode,
+      };
+
     case "SET_PERCENT_TYPE_FIXED":
       return {
         ...state,
@@ -44,6 +50,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         dropdowns: {...initialDropdowns},
       };
+
     default:
       return state;
   }

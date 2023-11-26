@@ -1,14 +1,21 @@
+// comp
 import { OrderItem } from "./OrderItem";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import classNames from "classnames";
 
+// img
 import qr from "../images/icons/qr.svg";
 import squares from "../images/icons/squares.svg";
-import { useNavigate } from "react-router-dom";
 
-export const OrderExchange = () => {
+// lib
+import { useMediaQuery } from "@uidotdev/usehooks";
+import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+export const OrderExchange = ({ receivedCoin }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
   const navigate = useNavigate();
+  const [ coinAddress, setCoinAddress ] = useState();
+
   return (
     <form
       className={classNames(
@@ -28,11 +35,24 @@ export const OrderExchange = () => {
         <input
           className="bg-[#08035B] text-white focus:outline-none w-3/4"
           type="text"
-          placeholder="Ваш Bitcoin адрес"
+          value={coinAddress}
+          placeholder={`Ваш ${receivedCoin.name} адрес`}
+          onChange={(ev) => { setCoinAddress(ev.target.value) }}
         />
         <div className="flex flex-row">
-          <img className="mr-3" src={qr} />
-          <img src={squares} />
+          <img className="mr-3" src={qr} alt='QR'/>
+          <img
+            className="cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.readText()
+                .then((clipText) => setCoinAddress(clipText))
+                .catch((err) => {
+                  alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                })
+            }}
+            src={squares}
+            alt='Paste'
+          />
         </div>
       </div>
       <button type="submit" className="bg-btns py-3 text-xl rounded-xl mt-4">

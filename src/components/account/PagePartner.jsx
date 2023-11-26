@@ -31,8 +31,8 @@ export const PagePartner = ({ user }) => {
         {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
     ];
 
-    const [sentCoin, setSentCoin] = useState({name: 'BTC', img: BTCicon});
-    const [receivedCoin, setReceivedCoin] = useState({name: 'ETH', img: ETHicon});
+    const [sentCoin, setSentCoin] = useState({name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'});
+    const [receivedCoin, setReceivedCoin] = useState({name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'});
     const [popupOpen, setPopupOpen] = useState(false);
 
     const dropdownSent = useSelector(state => state.dropdowns.coinSentPartner);

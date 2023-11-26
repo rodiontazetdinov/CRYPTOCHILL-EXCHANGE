@@ -10,8 +10,10 @@ import { ApiPage } from './pages/ApiPage';
 import { Support } from './pages/Support';
 import { SendingPage } from './pages/SendingPage';
 import { Account } from './pages/Account';
-import { useDispatch } from 'react-redux';
-import { closeAllDropdowns } from './store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeAllDropdowns, setCoins } from './store/actions';
+import BTCicon from "./images/newCOIN/BTC.svg";
+import { useState } from 'react';
 
 export const App = () => {
 
@@ -20,8 +22,11 @@ export const App = () => {
   return (
     <div
       onClick={() => dispatch(closeAllDropdowns())}
-      className="App bg-[center_-500px] bg-main-bg bg-main-bg-img overflow-x-hidden"
+      className="App bg-[center_-500px] bg-main-bg bg-main-bg-img overflow-x-hidden no-scrollbar"
     >
+      {/* {imgsTest.map((img) => { return (
+        <img src={img} alt="" />
+      )})} */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Main/>} />
