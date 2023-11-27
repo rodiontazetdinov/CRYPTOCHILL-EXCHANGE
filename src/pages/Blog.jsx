@@ -1,10 +1,9 @@
 // Components
 import { BlockNews } from "../components/BlockNews";
+import { DropdownTags } from "../components/DropdownTags";
 
 // img
 import newsImg from "../images/news.png";
-import arrowUp from "../images/arrow-up.svg";
-import arrowDown from "../images/arrow-down.svg";
 
 // Libraries
 import classNames from "classnames";
@@ -24,7 +23,7 @@ export const Blog = ({ dropdownTagsOpen, setDropdownTagsOpen }) => {
     const [aboutCryptoOpen, setAboutCryptoOpen] = useState(false);
     const [exchangeOpen, setExchangeOpen] = useState(false);
 
-    const [currentTag, setCurrentTag] = useState('Tег 1');
+    const [currentTag, setCurrentTag] = useState('test');
 
     function handleOpen(setCurrentAbout) {
         [
@@ -138,64 +137,10 @@ export const Blog = ({ dropdownTagsOpen, setDropdownTagsOpen }) => {
                     </li>
                 </ul>
                 
-                {/* DROPDOWN с тегами */}
-                <div
-                    id="dropdown-tags"
-                    className={classNames("w-72 relative cursor-pointer", {
-                        "ml-6": desctop,
-                        'mt-6': !desctop,
-                    }
-                )}>
-                    <div
-                        onClick={(ev) => {
-                            setDropdownTagsOpen((prev) => !prev);
-                            ev.stopPropagation();
-                        }}
-                        className="flex justify-between border border-solid border-solid rounded-lg h-12 py-2 px-3 text-2xl"
-                    >
-                        <span>{currentTag}</span>
-                        <img 
-                            src={dropdownTagsOpen ? arrowUp : arrowDown}
-                            alt=""
-                        />
-                    </div>
-                    {dropdownTagsOpen && (
-                        <div className="absolute w-[100%] top-[100%] border border-solid border-solid border-t-0 rounded-b-lg py-2 px-3 text-2xl">
-                            <div
-                                onClick={(ev) => {
-                                    setCurrentTag(ev.target.textContent);
-                                    setDropdownTagsOpen(false);
-                                    ev.stopPropagation();
-                                }}
-                                className="mb-2"
-                            >Tег 1</div>
-                            <div
-                                onClick={(ev) => {
-                                    setCurrentTag(ev.target.textContent);
-                                    setDropdownTagsOpen(false);
-                                    ev.stopPropagation();
-                                }}
-                                className="mb-2"
-                            >Tег 2</div>
-                            <div
-                                onClick={(ev) => {
-                                    setCurrentTag(ev.target.textContent);
-                                    setDropdownTagsOpen(false);
-                                    ev.stopPropagation();
-                                }}
-                                className="mb-2"
-                            >Tег 3</div>
-                            <div
-                                onClick={(ev) => {
-                                    setCurrentTag(ev.target.textContent);
-                                    setDropdownTagsOpen(false);
-                                    ev.stopPropagation();
-                                }}
-                                className="mb-2 last:mb-0"
-                            >Tег 4</div>
-                        </div>
-                    )}
-                </div>
+                <DropdownTags
+                    currentTag={currentTag}
+                    setCurrentTag={setCurrentTag}
+                />
             </div>
 
             <BlockNews listNews={invalidDataJSON}/>

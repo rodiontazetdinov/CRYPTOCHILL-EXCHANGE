@@ -18,6 +18,7 @@ export const Main = () => {
       );
       const macbook = useMediaQuery("only screen and (min-width : 1280px) and (max-width : 1328px)");
       const desctop = useMediaQuery("only screen and (min-width : 1328px)");
+
     return (
         <div className="flex flex-col w-full">
             <Intro/>

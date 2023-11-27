@@ -12,10 +12,10 @@ const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && wi
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-        <Provider store={store}>
-    <BrowserRouter basename="/CRYPTOCHILL-EXCHANGE">
-    <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter basename="/CRYPTOCHILL-EXCHANGE">
+      <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

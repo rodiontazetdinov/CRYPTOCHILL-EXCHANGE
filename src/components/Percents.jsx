@@ -19,7 +19,7 @@ export const Percents = () => {
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   // const [isActive, setIsActive] = useState(true);
   const {isFixed} = useSelector((state) => state);
-
+  
   const dispatch = useDispatch();
   const handleFixed = () => {
     dispatch(setPercentTypeFixed());

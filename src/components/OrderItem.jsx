@@ -3,15 +3,17 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { DropdownListCoins } from "./DropdownListCoins";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropdownState}) => {
+export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropdownState, rate}) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
   const laptop = useMediaQuery(
     "only screen and (min-width : 1024px)"
   );
 
-  const [summ, setSumm] = stateSumm;
+  const [ summ, setSumm ] = stateSumm;
+  const [ coinSent ] = stateCoin;
 
   function validateInput(input) {
     // Убираем все символы, кроме цифр, точек и запятых
@@ -37,7 +39,6 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
   
   const handleChange = (event) => {
     setSumm(validateInput(event.target.value));
-
   }
 
   return (
@@ -65,8 +66,6 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
               }
             )}
             onChange={(ev) => {
-              // console.log(ev);
-              // setSumm(ev.target.value);
               handleChange(ev);
             }}
             value={summ}
@@ -74,15 +73,15 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
         )}
         <div className="flex-grow min-w-[110px]">
           <DropdownListCoins
-            selectName='main-sent-coin'
-            stateCoin={stateCoin}
             dropdownState={dropdownState}
             setDropdownState={setDropdownState}
+            selectName='main-sent-coin'
+            stateCoin={stateCoin}
           />
         </div>
       </div>
       <div className="flex flex-row justify-between w-full">
-        <p className="text-left text-base mt-2">1 BTC ≈ 15.9754668 ETH</p>
+        <p className="text-left text-base mt-2">{rate}</p>
         <p className="text-left text-base mt-2">51$</p>
       </div>
     </div>

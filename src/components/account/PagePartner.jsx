@@ -13,6 +13,8 @@ import classNames from "classnames";
 import { useState } from "react";
 import { TablePartnerExchanges } from "./TablePartnerExchanges";
 import { PopupPartnerLink } from "./PopupPartnerLink";
+import { useDispatch, useSelector } from "react-redux";
+import { closeDropdown, openDropdown } from "../../store/actions";
 
 export const PagePartner = ({ user }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
@@ -27,19 +29,15 @@ export const PagePartner = ({ user }) => {
         {name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'},
         {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
         {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
-    ]
+    ];
 
-    const [sentCoin, setSentCoin] = useState("BTC");
-    const [getCoin, setGetCoin] = useState("ETH");
+    const [sentCoin, setSentCoin] = useState({name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'});
+    const [receivedCoin, setReceivedCoin] = useState({name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'});
     const [popupOpen, setPopupOpen] = useState(false);
-    const [dropdownSendingCoin, setDropdownSendingCoin] = useState(false);
-    const [dropdownReceivingCoin, setDropdownReceivingCoin] = useState(false);
 
-    function dropdownCoinsMenuOpenHandler(setState, state) {
-        if (dropdownSendingCoin) setDropdownSendingCoin(false);
-        if (dropdownReceivingCoin) setDropdownReceivingCoin(false);
-        setState(state);
-    }
+    const dropdownSent = useSelector(state => state.dropdowns.coinSentPartner);
+    const dropdownReceived = useSelector(state => state.dropdowns.coinReceivedPartner);
+    const dispatch = useDispatch();
 
     return (
         <section 
@@ -47,10 +45,6 @@ export const PagePartner = ({ user }) => {
                 "pl-10": desctop || macbook,
                 "pl-0": iphone || ipadMini
             })}
-            onClick={() => {
-                if (dropdownSendingCoin) setDropdownSendingCoin(false);
-                if (dropdownReceivingCoin) setDropdownReceivingCoin(false);
-            }}
         >
             <div className={classNames("flex justify-between", {
                 "items-center mb-6": desctop,
@@ -127,11 +121,12 @@ export const PagePartner = ({ user }) => {
             {popupOpen && (
                 <PopupPartnerLink
                     setPopupOpen={setPopupOpen}
-                    dropdownSendingCoin={dropdownSendingCoin}
-                    setDropdownSendingCoin={setDropdownSendingCoin}
-                    dropdownReceivingCoin={dropdownReceivingCoin}
-                    setDropdownReceivingCoin={setDropdownReceivingCoin}
-                    dropdownCoinsMenuOpenHandler={dropdownCoinsMenuOpenHandler}
+                    dropdownSendingCoin={dropdownSent}
+                    setDropdownSendingCoin={() => dispatch(dropdownSent ? closeDropdown('coinSentPartner') : openDropdown('coinSentPartner'))}
+                    dropdownReceivingCoin={dropdownReceived}
+                    setDropdownReceivingCoin={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedPartner') : openDropdown('coinReceivedPartner'))}
+                    stateSentCoin={[sentCoin, setSentCoin]}
+                    stateReceivedCoin={[receivedCoin, setReceivedCoin]}
                 />
             )}
 
@@ -220,14 +215,18 @@ export const PagePartner = ({ user }) => {
                             })}>
                                 <div className="w-[50%] z-10">
                                     <DropdownListCoins
-                                        dropdownState={dropdownSendingCoin}
-                                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownSendingCoin, state)}
+                                        dropdownState={dropdownSent}
+                                        setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentPartner') : openDropdown('coinSentPartner'))}
+                                        selectName='main-sent-coin'
+                                        stateCoin={[sentCoin, setSentCoin]}
                                     />
                                 </div>
                                 <div className="w-[50%] z-10">
                                     <DropdownListCoins
-                                        dropdownState={dropdownReceivingCoin}
-                                        setDropdownState={(state) => dropdownCoinsMenuOpenHandler(setDropdownReceivingCoin, state)}
+                                        dropdownState={dropdownReceived}
+                                        setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedPartner') : openDropdown('coinReceivedPartner'))}
+                                        selectName='main-received-coin'
+                                        stateCoin={[receivedCoin, setReceivedCoin]}
                                     />
                                 </div>
                                 <button className={classNames("bg-btns absolute w-[107px] h-full rounded-xl", {
