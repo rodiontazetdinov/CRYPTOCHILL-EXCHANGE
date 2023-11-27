@@ -16,8 +16,48 @@ import BTCicon from "./images/newCOIN/BTC.svg";
 import { useState } from 'react';
 
 export const App = () => {
+  //   const API_KEY = 'CZC970YKLNIquCCgW0JFxxBDvILAU27bZMImDaot'
+  // const API_SECRET = 'k4sSQ8D9jxtiBEDKKMXWIIX2hV0FuEZsicpwpCff'
+  // const FixedFloat = require("fixedfloat-api");
+
+  // const fixed = new FixedFloat(API_KEY, API_SECRET);
 
   const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
+
+  const getSHA256Hash = async (input) => {
+    const textAsBuffer = new TextEncoder().encode(input);
+    const hashBuffer = await window.crypto.subtle.digest(
+      "SHA-256",
+      textAsBuffer
+    );
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hash = hashArray
+      .map((item) => item.toString(16).padStart(2, "0"))
+      .join("");
+    return hash;
+  };
+
+  const getCurrencies = async () => {
+    const response = await fetch("http://localhost:5000", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    return response.json()
+  };
+
+  useEffect(() => {
+    // getCurrencies()
+    // dispatch(setCoins() )
+    getCurrencies().then((data) => {
+      console.log(data)
+    })
+
+    // console.log()
+  });
 
   return (
     <div
@@ -28,6 +68,7 @@ export const App = () => {
         <img src={img} alt="" />
       )})} */}
       <Routes>
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Main/>} />
           <Route path="about" element={<AboutUs/>} />
@@ -42,4 +83,4 @@ export const App = () => {
       {/* <Header/> */}
     </div>
   );
-}
+};

@@ -35,6 +35,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isFixed: false,
       };
+      case "SET_COINS":
+      return {
+        ...state,
+        coins: action.payload,
+      };
 
     case "CLOSE_DROPDOWN":
       state.dropdowns[action.paylode] = false;

@@ -24,4 +24,3 @@ export const openDropdown = (name) => ({
   type: "OPEN_DROPDOWN",
   paylode: name,
 });
-
