@@ -12,20 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeDropdown, openDropdown } from "../store/actions";
 
 export const OrderItems = ({ stateSentCoin, stateReceivedCoin }) => {
-    const iphone = useMediaQuery(
-        "only screen and (min-width : 320px) and (max-width : 744px)"
-      );
-      const miniOrder = useMediaQuery(
-        "only screen and (max-width : 744px)"
-      );
+
       const ipadMini = useMediaQuery(
         "only screen and (max-width : 744px)"
       );
-      const laptop = useMediaQuery(
-        "only screen and (min-width : 1024px)"
-      );
-      const macbook = useMediaQuery("only screen and (min-width : 1024px)");
-      const desctop = useMediaQuery("only screen and (min-width : 1280px)");
       
       const [sendingSumm, setSendingSumm] = useState(0.0);
       const [receivedSumm, setReceivedSumm] = useState(0.0);

@@ -24,8 +24,6 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
   const getSHA256Hash = async (input) => {
     const textAsBuffer = new TextEncoder().encode(input);
     const hashBuffer = await window.crypto.subtle.digest(
@@ -49,15 +47,15 @@ export const App = () => {
     return response.json()
   };
 
-  useEffect(() => {
-    // getCurrencies()
-    // dispatch(setCoins() )
-    getCurrencies().then((data) => {
-      console.log(data)
-    })
+  // useEffect(() => {
+  //   // getCurrencies()
+  //   // dispatch(setCoins() )
+  //   getCurrencies().then((data) => {
+  //     console.log(data)
+  //   })
 
-    // console.log()
-  });
+  //   // console.log()
+  // });
 
   return (
     <div

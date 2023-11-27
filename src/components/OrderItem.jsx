@@ -18,6 +18,14 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
   function validateInput(input) {
     // Убираем все символы, кроме цифр, точек и запятых
     const sanitizedInput = input.replace(/[^0-9.,]/g, '');
+    if (sanitizedInput === '') return '';
+    // Если ввод пустой, возвращаем '0'
+  
+    // Если первая цифра 0, после неё ставим точку
+    if (sanitizedInput.startsWith('0') && sanitizedInput.length > 1) {
+      const restOfInput = sanitizedInput.slice(1);
+      return `0.${restOfInput.replace(/\./g, '')}`;
+    }
   
     // Заменяем запятые на точки
     const commaToDot = sanitizedInput.replace(',', '.');
@@ -36,6 +44,7 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
   
     return truncatedInput;
   }
+  
   
   const handleChange = (event) => {
     setSumm(validateInput(event.target.value));
@@ -69,6 +78,7 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
               handleChange(ev);
             }}
             value={summ}
+            maxLength={17}
           />
         )}
         <div className="flex-grow min-w-[110px]">
