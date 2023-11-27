@@ -13,7 +13,7 @@ import { Account } from './pages/Account';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeAllDropdowns, setCoins } from './store/actions';
 import BTCicon from "./images/newCOIN/BTC.svg";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const App = () => {
   //   const API_KEY = 'CZC970YKLNIquCCgW0JFxxBDvILAU27bZMImDaot'
@@ -24,21 +24,21 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
-  const getSHA256Hash = async (input) => {
-    const textAsBuffer = new TextEncoder().encode(input);
-    const hashBuffer = await window.crypto.subtle.digest(
-      "SHA-256",
-      textAsBuffer
-    );
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hash = hashArray
-      .map((item) => item.toString(16).padStart(2, "0"))
-      .join("");
-    return hash;
-  };
+  // const getSHA256Hash = async (input) => {
+  //   const textAsBuffer = new TextEncoder().encode(input);
+  //   const hashBuffer = await window.crypto.subtle.digest(
+  //     "SHA-256",
+  //     textAsBuffer
+  //   );
+  //   const hashArray = Array.from(new Uint8Array(hashBuffer));
+  //   const hash = hashArray
+  //     .map((item) => item.toString(16).padStart(2, "0"))
+  //     .join("");
+  //   return hash;
+  // };
 
   const getCurrencies = async () => {
-    const response = await fetch("http://localhost:5000", {
+    const response = await fetch("http://localhost:5000/getCcy", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -47,15 +47,34 @@ export const App = () => {
     return response.json()
   };
 
-  // useEffect(() => {
-  //   // getCurrencies()
-  //   // dispatch(setCoins() )
-  //   getCurrencies().then((data) => {
-  //     console.log(data)
-  //   })
+  const getPrice = async (from, to, type = 'float') => {
+    const response = await fetch("http://localhost:5000/getPrice", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        type
+      })
+    });
+    return response.json()
+  };
 
-  //   // console.log()
-  // });
+  useEffect(() => {
+    // getCurrencies()
+    // dispatch(setCoins() )
+    // getCurrencies().then((data) => {
+    //   console.log(data)
+    // })
+    getPrice('0.0001 BTC', 'ETH').then((data) => {
+      console.log(data)
+    })
+
+    // console.log()
+  });
 
   return (
     <div
