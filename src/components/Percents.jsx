@@ -18,16 +18,15 @@ export const Percents = () => {
   const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   // const [isActive, setIsActive] = useState(true);
-  const {isFixed} = useSelector((state) => state);
+  const isFixed = useSelector((state) => state.isFixed);
   
   const dispatch = useDispatch();
+
   const handleFixed = () => {
     dispatch(setPercentTypeFixed());
-    // setIsActive((prev) => !prev)
   }
   const handleFloating = () => {
     dispatch(setPercentTypeFloating());
-    // setIsActive((prev) => !prev)
   }
   
   return (

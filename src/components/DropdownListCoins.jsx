@@ -9,22 +9,17 @@ import searchIcon from "../images/ic_round-search.svg";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDropdownState }) => {
+export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdownState, setDropdownState }) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
     const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-    const coins = [
-        {name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'},
-        {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
-        {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
-        {name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'},
-        {name: 'Tether (ERC20)', img: BTCicon, shortTeg: 'USDT'},
-    ];
+    const coins = useSelector(state => state.coins);
 
-    const [selectedCoin, setSelectedCoin] = stateCoin;
+    const selectedCoin = coins.find((coin) => coin.currency === stateCoin.currency);
 
     return (
         <div
@@ -42,10 +37,10 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                 {coins.map((coin, i) => { return (
                     <option
                         key={i}
-                        selected={selectedCoin.name === coin.shortTeg}
-                        value={coin.shortTeg}
+                        selected={stateCoin.coin === coin.currency}
+                        value={coin.currency}
                     >
-                        {coin.shortTeg}
+                        {coin.currency}
                     </option>
                 )})}
             </select>
@@ -66,8 +61,8 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                     ) : (
                         <div className="flex w-full justify-between items-center cursor-pointer">
                             <span className="flex">
-                                <img className="mr-1 w-7" src={selectedCoin.img} alt="" />
-                                {selectedCoin.shortTeg}
+                                <img className="mr-1 w-[26px]" src={selectedCoin?.img} alt="Coin" />
+                                {selectedCoin?.currency}
                             </span>
                             <button>
                                 <img className="w-4" src={arrowDown} alt="" />
@@ -79,39 +74,36 @@ export const DropdownListCoins = ({ selectName, stateCoin, dropdownState, setDro
                     'hidden': !dropdownState,
                     'flex': dropdownState
                 })}>
-                    <p className="text-[#D7DFFF] text-base font-normal border-t border-[#2B23AC] py-2 mt-2 mx-4">Популярные валюты</p>
+                    {/* ПОПУЛЯРНЫЕ ВАЛЮТЫ */}
+                    {/* <p className="text-[#D7DFFF] text-base font-normal border-t border-[#2B23AC] py-2 mt-2 mx-4">Популярные валюты</p>
                     <ul>
                         {coins.map((coin, i) => { return (
                             <li
                                 key={i}
                                 className="flex justify-between text-base font-normal last:mb-0 hover:cursor-pointer px-4 py-1"
-                                onClick={(ev) => {
-                                    setSelectedCoin({name: coin.shortTeg, img: coin.img});
-                                }}
+                                onClick={() => setStateCoin(coin.currency)}
                             >
                                 <div className="flex">
-                                    <img className="w-7 mr-1" src={coin.img} alt={coin.shortTeg} />
+                                    <img className="w-7 mr-1" src={coin.img} alt={coin.currency} />
                                     <span>{coin.name}</span>
                                 </div>
-                                <span>{coin.shortTeg}</span>
+                                <span>{coin.currency}</span>
                             </li>
                         )})}
-                    </ul>
+                    </ul> */}
                     <p className="text-[#D7DFFF] text-base font-normal border-t border-[#2B23AC] py-2 mt-2 mx-4">Все валюты</p>
                     <ul>
                         {coins.map((coin, i) => { return (
                             <li
                                 key={i}
-                                className="flex justify-between text-base font-normal last:mb-0 hover:cursor-pointer px-4 py-1"
-                                onClick={(ev) => {
-                                    setSelectedCoin({name: coin.shortTeg, img: coin.img});
-                                }}
+                                className="flex justify-between items-center text-base font-normal last:mb-0 hover:cursor-pointer px-4 py-2"
+                                onClick={() => setStateCoin(coin.currency)}
                             >
-                                <div className="flex">
-                                    <img className="w-7 mr-1" src={coin.img} alt={coin.shortTeg} />
+                                <div className="flex items-center">
+                                    <img className="w-[26px] mr-1" src={coin.img} alt={coin.currency} />
                                     <span>{coin.name}</span>
                                 </div>
-                                <span>{coin.shortTeg}</span>
+                                <span>{coin.currency}</span>
                             </li>
                         )})}
                     </ul>

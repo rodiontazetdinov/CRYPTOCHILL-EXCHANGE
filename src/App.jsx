@@ -11,31 +11,13 @@ import { Support } from './pages/Support';
 import { SendingPage } from './pages/SendingPage';
 import { Account } from './pages/Account';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeAllDropdowns, setCoins } from './store/actions';
-import BTCicon from "./images/newCOIN/BTC.svg";
+import { closeAllDropdowns, setCoins, setOrderCoins } from './store/actions';
+import defaultImg from "./images/logo.svg";
 import { useState, useEffect } from 'react';
 
 export const App = () => {
-  //   const API_KEY = 'CZC970YKLNIquCCgW0JFxxBDvILAU27bZMImDaot'
-  // const API_SECRET = 'k4sSQ8D9jxtiBEDKKMXWIIX2hV0FuEZsicpwpCff'
-  // const FixedFloat = require("fixedfloat-api");
-
-  // const fixed = new FixedFloat(API_KEY, API_SECRET);
 
   const dispatch = useDispatch();
-
-  // const getSHA256Hash = async (input) => {
-  //   const textAsBuffer = new TextEncoder().encode(input);
-  //   const hashBuffer = await window.crypto.subtle.digest(
-  //     "SHA-256",
-  //     textAsBuffer
-  //   );
-  //   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  //   const hash = hashArray
-  //     .map((item) => item.toString(16).padStart(2, "0"))
-  //     .join("");
-  //   return hash;
-  // };
 
   const getCurrencies = async () => {
     const response = await fetch("http://localhost:5000/getCcy", {
@@ -44,7 +26,7 @@ export const App = () => {
         Accept: "application/json",
       },
     });
-    return response.json()
+    return response.json();
   };
 
   const getPrice = async (from, to, type = 'float') => {
@@ -60,18 +42,39 @@ export const App = () => {
         type
       })
     });
-    return response.json()
+    return response.json();
   };
 
   useEffect(() => {
-    // getCurrencies()
-    // dispatch(setCoins() )
-    // getCurrencies().then((data) => {
-    //   console.log(data)
-    // })
-    getPrice('0.0001 BTC', 'ETH').then((data) => {
-      console.log(data)
-    })
+    let dataServer;
+
+    getPrice('0.0001 BTC', 'ETH')
+      .then((data) => {
+        dispatch(setOrderCoins(data));
+      });
+
+    getCurrencies()
+      .then((data) => {
+        // dispatch(setCoins(data));
+        dataServer = data;
+
+        return Promise.allSettled(data.map((coin) => {
+          return import(`./images/newCOIN/${coin.currency}.svg`);
+        }))
+      })
+      .then((imgs) => {
+        const newCoins = [];
+
+        for (let i=0; i < dataServer.length; i++) {
+          // console.log(dataServer[i], imgs[i]);
+          newCoins.push({
+            ...dataServer[i],
+            img: imgs[i].status === "fulfilled" ? imgs[i].value.default : defaultImg
+          });
+        }
+
+        dispatch(setCoins(newCoins));
+      });
 
     // console.log()
   });

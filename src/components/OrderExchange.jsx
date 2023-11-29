@@ -12,6 +12,7 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import QrReader from 'react-qr-scanner';
+import { useSelector } from "react-redux";
 
 export const OrderExchange = ({ receivedCoin }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
@@ -22,6 +23,9 @@ export const OrderExchange = ({ receivedCoin }) => {
     height: '100%',
     width: '80vw',
   }
+
+  const receivedCoinName = useSelector(state => state.order.to.currency)
+
   return (
     <form
       className={classNames(
@@ -63,7 +67,7 @@ export const OrderExchange = ({ receivedCoin }) => {
           className="bg-[#08035B] text-white focus:outline-none w-3/4"
           type="text"
           value={coinAddress}
-          placeholder={`Ваш ${receivedCoin.name} адрес`}
+          placeholder={`Ваш ${receivedCoinName} адрес`}
           onChange={(ev) => { setCoinAddress(ev.target.value) }}
         />
         <div className="flex flex-row">

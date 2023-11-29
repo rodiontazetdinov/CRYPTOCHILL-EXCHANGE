@@ -5,50 +5,14 @@ import { DropdownListCoins } from "./DropdownListCoins";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropdownState, rate}) => {
+export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownState, setDropdownState, nameCoinTo, setAmountCoin=(() => {}) }) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
   const laptop = useMediaQuery(
     "only screen and (min-width : 1024px)"
   );
 
-  const [ summ, setSumm ] = stateSumm;
-  const [ coinSent ] = stateCoin;
-
-  function validateInput(input) {
-    // Убираем все символы, кроме цифр, точек и запятых
-    const sanitizedInput = input.replace(/[^0-9.,]/g, '');
-    if (sanitizedInput === '') return '';
-    // Если ввод пустой, возвращаем '0'
-  
-    // Если первая цифра 0, после неё ставим точку
-    if (sanitizedInput.startsWith('0') && sanitizedInput.length > 1) {
-      const restOfInput = sanitizedInput.slice(1);
-      return `0.${restOfInput.replace(/\./g, '')}`;
-    }
-  
-    // Заменяем запятые на точки
-    const commaToDot = sanitizedInput.replace(',', '.');
-  
-    // Ограничиваем длину строки до 17 символов
-    const truncatedInput = commaToDot.slice(0, 17);
-  
-    // Удаляем все точки, кроме первой
-    const dotCount = truncatedInput.split('.').length - 1;
-    if (dotCount > 1) {
-      const firstDotIndex = truncatedInput.indexOf('.');
-      const beforeFirstDot = truncatedInput.slice(0, firstDotIndex);
-      const afterFirstDot = truncatedInput.slice(firstDotIndex + 1);
-      return `${beforeFirstDot}.${afterFirstDot.replace(/\./g, '')}`;
-    }
-  
-    return truncatedInput;
-  }
-  
-  
-  const handleChange = (event) => {
-    setSumm(validateInput(event.target.value));
-  }
+  // const coinReceivedOrder = useSelector(state => state.order.to);
 
   return (
     <div
@@ -74,10 +38,8 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
                 "min-w-[140px]": ipadMini,
               }
             )}
-            onChange={(ev) => {
-              handleChange(ev);
-            }}
-            value={summ}
+            onChange={(ev) => setAmountCoin(ev)}
+            value={amount}
             maxLength={17}
           />
         )}
@@ -87,12 +49,13 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
             setDropdownState={setDropdownState}
             selectName='main-sent-coin'
             stateCoin={stateCoin}
+            setStateCoin={setStateCoin}
           />
         </div>
       </div>
       <div className="flex flex-row justify-between w-full">
-        <p className="text-left text-base mt-2">{rate}</p>
-        <p className="text-left text-base mt-2">51$</p>
+        <p className="text-left text-base mt-2">{`1 ${stateCoin.currency} ≈ ${stateCoin.rate} ${nameCoinTo}`}</p>
+        <p className="text-left text-base mt-2">{`${stateCoin.usd}$`}</p>
       </div>
     </div>
   );
