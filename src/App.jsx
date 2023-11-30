@@ -14,72 +14,87 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeAllDropdowns, setCoins, setOrderCoins } from './store/actions';
 import defaultImg from "./images/logo.svg";
 import { useState, useEffect } from 'react';
+import { api } from './utils/api';
 
 export const App = () => {
 
   const dispatch = useDispatch();
 
-  const getCurrencies = async () => {
-    const response = await fetch("http://localhost:5000/getCcy", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    return response.json();
-  };
+  // const getSHA256Hash = async (input) => {
+  //   const textAsBuffer = new TextEncoder().encode(input);
+  //   const hashBuffer = await window.crypto.subtle.digest(
+  //     "SHA-256",
+  //     textAsBuffer
+  //   );
+  //   const hashArray = Array.from(new Uint8Array(hashBuffer));
+  //   const hash = hashArray
+  //     .map((item) => item.toString(16).padStart(2, "0"))
+  //     .join("");
+  //   return hash;
+  // };
 
-  const getPrice = async (from, to, type = 'float') => {
-    const response = await fetch("http://localhost:7000/getPrice", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to,
-        type
-      })
-    });
-    return response.json();
-  };
+  // const getCurrencies = async () => {
+  //   const response = await fetch("http://localhost:3232/ccies", {
+  //     method: "GET",
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //   });
+  //   return response.json()
+  // };
+  // const getData = async () => {
+  //   const response = await fetch("http://localhost:3232", {
+  //     method: "GET",
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //   });
+  //   return response.json()
+  // };
+
+  // const getPrice = async (from, to, type = 'float') => {
+  //   const response = await fetch("http://localhost:3232/price", {
+  //     method: "POST",
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       from,
+  //       to,
+  //       type
+  //     })
+  //   });
+  //   return response.json()
+  // };
 
   useEffect(() => {
-    let dataServer;
-
-    getPrice('0.0001 BTC', 'ETH')
-      .then((data) => {
-        console.log(data);
-        dispatch(setOrderCoins(data));
-      });
-
-    getCurrencies()
-      .then((data) => {
-        console.log(data);
-        dispatch(setCoins(data));
-        // dataServer = data;
-
-        // return Promise.allSettled(data.map((coin) => {
-        //   return import(`./images/newCOIN/${coin.currency}.svg`);
-        // }))
+    api.getCurrencies()
+      .then((response) => {
+        dispatch(setCoins(response.data));
       })
-      // .then((imgs) => {
-      //   const newCoins = [];
-
-      //   for (let i=0; i < dataServer.length; i++) {
-      //     // console.log(dataServer[i], imgs[i]);
-      //     newCoins.push({
-      //       ...dataServer[i],
-      //       img: imgs[i].status === "fulfilled" ? imgs[i].value.default : defaultImg
-      //     });
-      //   }
-
-      //   dispatch(setCoins(newCoins));
-      // });
-
-    // console.log()
-  });
+    
+    // api.getPrice({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float"})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     dispatch(setOrderCoins(response.data));
+    //   })
+    // api.createOrder({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float", "toAddress":"TAzsQ9Gx8eqFNFSKbeXrbi45CuVPHzA8wr"}).then((data) => {
+    //     console.log(data);
+    //   })
+      // api.getOrder({"id": "ZG3Y2F", "token": "1LBH03tPYoU2RNBEXBNcl0B6cxrHM5VXloOyTjcd"}).then((data) => {
+      //   console.log(data);
+      // })
+      // api.setEmail({"id": "ZG3Y2F", "token": "1LBH03tPYoU2RNBEXBNcl0B6cxrHM5VXloOyTjcd", "email": "tweakymoo@gmail.com"}).then((data) => {
+      //   console.log(data);
+      // })
+      // api.getQr({"id": "ZG3Y2F", "token": "1LBH03tPYoU2RNBEXBNcl0B6cxrHM5VXloOyTjcd"}).then((data) => {
+      //   console.log(data);
+      // })
+      // api.cancelOrder({"id": "ZG3Y2F", "token": "1LBH03tPYoU2RNBEXBNcl0B6cxrHM5VXloOyTjcd", "choice":"REFUND", "address": "bc1qatuvdpzczlug7f6u5knmnpd0f3rj8j554qls0e"}).then((data) => {
+      //   console.log(data);
+      // })
+  }, []);
 
   return (
     <div
@@ -90,7 +105,6 @@ export const App = () => {
         <img src={img} alt="" />
       )})} */}
       <Routes>
-
         <Route path="/" element={<Layout />}>
           <Route index element={<Main/>} />
           <Route path="about" element={<AboutUs/>} />

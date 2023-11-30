@@ -5,50 +5,53 @@ import { OrderItem } from "./OrderItem";
 import orderSwitch from '../images/order-switch.svg';
 
 // lib
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDropdown, openDropdown, setOrderCoins } from "../store/actions";
+import { api } from "../utils/api";
 
-export const OrderItems = () => {
+export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
 
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
-      // let timerIdSetAmoumtCoin;
-
       const state = useSelector(state => state);
-
-      const [ timerIdSetAmoumtCoin, setTimerIdSetAmoumtCoin ] = useState(null);
-      const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(state.order.from.amount);
 
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
 
       const dispatch = useDispatch();
 
-      const getPrice = async (from, to, type = 'float') => {
-        const response = await fetch("http://localhost:5000/getPrice", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            from,
-            to,
-            type
-          })
+      const getPrice = (from, to) => {
+        const [amount, name] = from.split(' ');
+        const type = state.isFixed ? 'fixed' : 'float';
+        return api.getPrice({
+          fromCcy: name,
+          toCcy: to,
+          amount,
+          direction: "from",
+          type
         });
-        return response.json();
+      }
+
+      function checkLimit(amount) {
+        if (amount < Number(state.order.from.min)) return false
+        else if (amount > Number(state.order.from.max)) return false
+        return true;
       }
 
       const setStateSentCoin = (name, amount) => {
         const from =`${amount ? amount : state.order.from.amount} ${name}`;
-        const to = state.order.to.currency;
-        const type = state.isFixed ? 'fixed' : 'float';
-        getPrice(from, to, type)
-          .then((data) => dispatch(setOrderCoins(data)))
+        const to = state.order.to.code;
+        getPrice(from, to)
+          .then((response) => {
+            if (response.data === null) {
+              alert('Упс, что-то пошло не так(');
+            } else {
+              dispatch(setOrderCoins(response.data));
+            }
+          })
           .catch((err) => console.error(err));
       }
 
@@ -56,20 +59,24 @@ export const OrderItems = () => {
         // Убираем все символы, кроме цифр, точек и запятых
         const sanitizedInput = input.replace(/[^0-9.,]/g, '');
         if (sanitizedInput === '') return '';
-        // Если ввод пустой, возвращаем '0'
-      
+
+        // Если первый символ в строке точка, перед ней ставим 0
+        if (sanitizedInput.startsWith('.')) {
+          return `0${sanitizedInput.replace(/\./g, '')}`;
+        }
+
         // Если первая цифра 0, после неё ставим точку
         if (sanitizedInput.startsWith('0') && sanitizedInput.length > 1) {
           const restOfInput = sanitizedInput.slice(1);
-          return `0.${restOfInput.replace(/\./g, '')}`;
+          return `0.${restOfInput.replace(/[.,]/g, '')}`;
         }
-      
+
         // Заменяем запятые на точки
         const commaToDot = sanitizedInput.replace(',', '.');
-      
+
         // Ограничиваем длину строки до 17 символов
         const truncatedInput = commaToDot.slice(0, 17);
-      
+
         // Удаляем все точки, кроме первой
         const dotCount = truncatedInput.split('.').length - 1;
         if (dotCount > 1) {
@@ -78,35 +85,51 @@ export const OrderItems = () => {
           const afterFirstDot = truncatedInput.slice(firstDotIndex + 1);
           return `${beforeFirstDot}.${afterFirstDot.replace(/\./g, '')}`;
         }
-      
-        return truncatedInput;
+
+      return truncatedInput;
       }
 
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          if (Number(numberOfCoinsSent) > 0 && checkLimit(numberOfCoinsSent)) {
+            setStateSentCoin(state.order.from.code, numberOfCoinsSent);
+          }
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, [numberOfCoinsSent]);
+
       const setAmountCoin = (event) => {
-        let timerId;
-        clearTimeout(timerIdSetAmoumtCoin);
         setNumberOfCoinsSent(validateInput(event.target.value));
-        timerId = setTimeout(setStateSentCoin, 1000, state.order.from.currency, numberOfCoinsSent);
-        setTimerIdSetAmoumtCoin(timerId);
       }
 
       const setStateReceivedCoin = (name) => {
-        const from = `${state.order.from.amount} ${state.order.from.currency}`;
+        const from = `${state.order.from.amount} ${state.order.from.code}`;
         const to = name;
-        const type = state.isFixed ? 'fixed' : 'float';
-        getPrice(from, to, type)
-          .then((data) => dispatch(setOrderCoins(data)))
+        getPrice(from, to)
+        .then((response) => {
+          if (response.data === null) {
+            alert('Упс, что-то пошло не так(');
+          } else {
+            dispatch(setOrderCoins(response.data));
+          }
+        })
           .catch((err) => console.error(err));
       }
 
       const swapCoin = (from, to) => {
-        getPrice(`${from[0]} ${from[1]}`, to, state.orderRate)
-          .then((data) => dispatch(setOrderCoins(data)))
+        getPrice(`${from[0]} ${from[1]}`, to)
+        .then((response) => {
+          if (response.data === null) {
+            alert('Упс, что-то пошло не так(');
+          } else {
+            dispatch(setOrderCoins(response.data));
+          }
+        })
           .catch((err) => console.error(err));
       }
-
+      
     return (
-        <div className={classNames(" flex flex-row items-center mt-10  w-full",{
+        <div className={classNames(" flex flex-row items-center mt-10 w-full",{
             "flex-col": ipadMini,
         })}>
             <OrderItem
@@ -116,10 +139,11 @@ export const OrderItems = () => {
               stateCoin={state.order.from}
               setStateCoin={(name) => setStateSentCoin(name, state.order.from.amount)}
               setAmountCoin={setAmountCoin}
-              nameCoinTo={state.order.to.currency}
+              nameCoinTo={state.order.to.code}
               amount={numberOfCoinsSent}
+              warningShow={true}
             />
-            {!ipadMini && <img onClick={() => swapCoin([state.order.to.amount, state.order.to.currency], state.order.from.currency)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
+            {!ipadMini && <img onClick={() => swapCoin([state.order.to.amount, state.order.to.code], state.order.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
             {/* <img src={orderSwitch} alt="switch"/> */}
             <OrderItem
               title="Получаете"
@@ -127,8 +151,10 @@ export const OrderItems = () => {
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateCoin={state.order.to}
               setStateCoin={setStateReceivedCoin}
-              nameCoinTo={state.order.from.currency}
+              nameCoinTo={state.order.from.code}
               amount={state.order.to.amount}
+              warningShow={false}
+              float={!state.isFixed}
             />
         </div>
     );

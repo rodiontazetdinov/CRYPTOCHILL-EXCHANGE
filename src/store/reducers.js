@@ -11,10 +11,10 @@ const initialDropdowns = {
 
 const initialOrder = {
   "from": {
-      "currency": "BTC",
+      "code": "BTC",
       "network": "BTC",
       "coin": "BTC",
-      "amount": "0.0001",
+      "amount": "0.01",
       "rate": "18.286272",
       "precision": 8,
       "min": "0.00036661",
@@ -23,7 +23,7 @@ const initialOrder = {
       "btc": "0.0001"
   },
   "to": {
-      "currency": "ETH",
+      "code": "ETH",
       "network": "ETH",
       "coin": "ETH",
       "amount": "0.0001245",
