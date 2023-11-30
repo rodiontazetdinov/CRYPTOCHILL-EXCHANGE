@@ -13,14 +13,13 @@ import { closeDropdown, openDropdown, setOrderCoins } from "../store/actions";
 
 export const OrderItems = () => {
 
-      const ipadMini = useMediaQuery(
-        "only screen and (max-width : 744px)"
-      );
+      const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
-      let timerIdSetAmoumtCoin;
+      // let timerIdSetAmoumtCoin;
 
       const state = useSelector(state => state);
 
+      const [ timerIdSetAmoumtCoin, setTimerIdSetAmoumtCoin ] = useState(null);
       const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(state.order.from.amount);
 
       const dropdownSent = state.dropdowns.coinSentOrder;
@@ -45,7 +44,7 @@ export const OrderItems = () => {
       }
 
       const setStateSentCoin = (name, amount) => {
-        const from =`${amount ?amount : state.order.from.amount} ${name}`;
+        const from =`${amount ? amount : state.order.from.amount} ${name}`;
         const to = state.order.to.currency;
         const type = state.isFixed ? 'fixed' : 'float';
         getPrice(from, to, type)
@@ -84,9 +83,11 @@ export const OrderItems = () => {
       }
 
       const setAmountCoin = (event) => {
+        let timerId;
         clearTimeout(timerIdSetAmoumtCoin);
         setNumberOfCoinsSent(validateInput(event.target.value));
-        timerIdSetAmoumtCoin = setTimeout(setStateSentCoin, 3000, state.order.from.currency, numberOfCoinsSent);
+        timerId = setTimeout(setStateSentCoin, 1000, state.order.from.currency, numberOfCoinsSent);
+        setTimerIdSetAmoumtCoin(timerId);
       }
 
       const setStateReceivedCoin = (name) => {

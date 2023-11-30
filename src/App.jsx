@@ -30,7 +30,7 @@ export const App = () => {
   };
 
   const getPrice = async (from, to, type = 'float') => {
-    const response = await fetch("http://localhost:5000/getPrice", {
+    const response = await fetch("http://localhost:7000/getPrice", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -50,31 +50,33 @@ export const App = () => {
 
     getPrice('0.0001 BTC', 'ETH')
       .then((data) => {
+        console.log(data);
         dispatch(setOrderCoins(data));
       });
 
     getCurrencies()
       .then((data) => {
-        // dispatch(setCoins(data));
-        dataServer = data;
+        console.log(data);
+        dispatch(setCoins(data));
+        // dataServer = data;
 
-        return Promise.allSettled(data.map((coin) => {
-          return import(`./images/newCOIN/${coin.currency}.svg`);
-        }))
+        // return Promise.allSettled(data.map((coin) => {
+        //   return import(`./images/newCOIN/${coin.currency}.svg`);
+        // }))
       })
-      .then((imgs) => {
-        const newCoins = [];
+      // .then((imgs) => {
+      //   const newCoins = [];
 
-        for (let i=0; i < dataServer.length; i++) {
-          // console.log(dataServer[i], imgs[i]);
-          newCoins.push({
-            ...dataServer[i],
-            img: imgs[i].status === "fulfilled" ? imgs[i].value.default : defaultImg
-          });
-        }
+      //   for (let i=0; i < dataServer.length; i++) {
+      //     // console.log(dataServer[i], imgs[i]);
+      //     newCoins.push({
+      //       ...dataServer[i],
+      //       img: imgs[i].status === "fulfilled" ? imgs[i].value.default : defaultImg
+      //     });
+      //   }
 
-        dispatch(setCoins(newCoins));
-      });
+      //   dispatch(setCoins(newCoins));
+      // });
 
     // console.log()
   });
