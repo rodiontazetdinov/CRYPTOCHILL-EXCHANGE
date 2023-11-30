@@ -19,20 +19,24 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
     // Убираем все символы, кроме цифр, точек и запятых
     const sanitizedInput = input.replace(/[^0-9.,]/g, '');
     if (sanitizedInput === '') return '';
-    // Если ввод пустой, возвращаем '0'
-  
+
+    // Если первый символ в строке точка, перед ней ставим 0
+    if (sanitizedInput.startsWith('.')) {
+      return `0${sanitizedInput.replace(/\./g, '')}`;
+    }
+
     // Если первая цифра 0, после неё ставим точку
     if (sanitizedInput.startsWith('0') && sanitizedInput.length > 1) {
       const restOfInput = sanitizedInput.slice(1);
-      return `0.${restOfInput.replace(/\./g, '')}`;
+      return `0.${restOfInput.replace(/[.,]/g, '')}`;
     }
-  
+
     // Заменяем запятые на точки
     const commaToDot = sanitizedInput.replace(',', '.');
-  
+
     // Ограничиваем длину строки до 17 символов
     const truncatedInput = commaToDot.slice(0, 17);
-  
+
     // Удаляем все точки, кроме первой
     const dotCount = truncatedInput.split('.').length - 1;
     if (dotCount > 1) {
@@ -41,9 +45,9 @@ export const OrderItem = ({ title, stateCoin, stateSumm, dropdownState, setDropd
       const afterFirstDot = truncatedInput.slice(firstDotIndex + 1);
       return `${beforeFirstDot}.${afterFirstDot.replace(/\./g, '')}`;
     }
-  
+
     return truncatedInput;
-  }
+}
   
   
   const handleChange = (event) => {
