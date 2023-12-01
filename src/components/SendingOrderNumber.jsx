@@ -1,7 +1,10 @@
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import { useState } from "react";
+import { formatSeconds, formatDate } from "../utils/helpers";
+
 import squaresImg from "../images/icons/squares.svg";
 
 export const SendingOrderNumber = ({time = '29:52', rateType = 'Плавающий', crearedAt = '30.06.2023 06:21'}) => {
@@ -26,6 +29,19 @@ export const SendingOrderNumber = ({time = '29:52', rateType = 'Плавающи
       );
 
   const [email, setEmail] = useState("");
+  const order = useSelector((state) => state.order);
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    setTimer(order && order.time.left);
+  }, [order]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,15 +59,15 @@ export const SendingOrderNumber = ({time = '29:52', rateType = 'Плавающи
     >
       <p className="text-2xl font-semibold">Номер заказа</p>
       <div className="flex flex-row items-center">
-        <p className="text-3xl font-semibold text-blue-200">9ZAA46HG</p>
+        <p className="text-3xl font-semibold text-blue-200">{order && order.id}</p>
         <img src={squaresImg} alt="иконка квадраты" />
       </div>
       <p className="text-2xl font-semibold">Времени осталось</p>
-      <p className="text-5xl font-bold text-blue-200">{time}</p>
+      <p className="text-5xl font-bold text-blue-200">{formatSeconds(order && timer)}</p>
       <p className="text-2xl font-semibold">Тип курса</p>
-      <p className="text-2xl font-semibold text-blue-200">{rateType}</p>
+      <p className="text-2xl font-semibold text-blue-200">{order && order.type === 'float' ? 'Плавающий' : 'Фиксированный'}</p>
       <p className="text-2xl font-semibold">Время создания</p>
-      <p className="text-2xl font-semibold text-blue-200">{crearedAt}</p>
+      <p className="text-2xl font-semibold text-blue-200">{formatDate(order && order.time.reg)}</p>
     </div>
   );
 };

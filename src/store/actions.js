@@ -3,6 +3,11 @@ export const setCoins = (listCoins) => ({
   paylode: listCoins
 });
 
+export const setOrder = (order) => ({
+  type: "SET_ORDER",
+  paylode: order,
+});
+
 export const setPercentTypeFixed = () => ({
   type: "SET_PERCENT_TYPE_FIXED",
 });

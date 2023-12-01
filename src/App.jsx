@@ -74,9 +74,9 @@ export const App = () => {
   // };
 
   useEffect(() => {
-    // api.getCurrencies().then((data) => {
-    //   console.log(data);
-    // })
+    api.getCurrencies().then((data) => {
+      console.log(data);
+    })
     // api.getPrice({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float"}).then((data) => {
     //   console.log(data);
     // })
@@ -113,7 +113,7 @@ export const App = () => {
           <Route path="faq" element={<Faq/>} />
           <Route path="api" element={<ApiPage/>} />
           <Route path="support" element={<Support/>} />
-          <Route path="sending" element={<SendingPage/>} />
+          <Route path="sending/:id" element={<SendingPage/>} />
           <Route path="account/*" element={<Account/>} />
         </Route>
       </Routes>
