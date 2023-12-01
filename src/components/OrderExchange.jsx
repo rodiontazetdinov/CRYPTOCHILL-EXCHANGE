@@ -31,6 +31,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
   }
 
   const receivedCoinName = useSelector(state => state.order.to.code);
+  const order = useSelector(state => state.order);
+  const isFixed = useSelector(state => state.isFixed);
 
   return (
     <form
@@ -43,14 +45,23 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
       )}
       onSubmit={(e) => {
         e.preventDefault();
-          api.createOrder({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float", "toAddress":"werwe"})
+          const dataOrder = {
+            "fromCcy": order.from.code,
+            "toCcy": order.to.code,
+            "amount": numberOfCoinsSent,
+            "direction":"from",
+            "type": isFixed ? 'fixed' : 'float',
+            "toAddress": coinAddress
+          }
+          console.log(dataOrder);
+          api.createOrder(dataOrder)
             .then((data) => {
               if (data.msg === "Invalid address") {
                 setInvalidAddress(true);
+              } else {
+                navigate("/sending");
               }
-              console.log(data);
             })
-        // navigate("/sending");
       }}
     >
       {openQR && (
