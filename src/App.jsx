@@ -73,12 +73,12 @@ export const App = () => {
       .then((response) => {
         dispatch(setCoins(response.data));
       })
-    
     // api.getPrice({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float"})
     //   .then((response) => {
     //     console.log(response.data);
     //     dispatch(setOrderCoins(response.data));
     //   })
+
     // api.createOrder({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float", "toAddress":"TAzsQ9Gx8eqFNFSKbeXrbi45CuVPHzA8wr"}).then((data) => {
     //     console.log(data);
     //   })
@@ -112,7 +112,7 @@ export const App = () => {
           <Route path="faq" element={<Faq/>} />
           <Route path="api" element={<ApiPage/>} />
           <Route path="support" element={<Support/>} />
-          <Route path="sending" element={<SendingPage/>} />
+          <Route path="sending/:id" element={<SendingPage/>} />
           <Route path="account/*" element={<Account/>} />
         </Route>
       </Routes>

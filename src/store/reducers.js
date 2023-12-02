@@ -6,8 +6,9 @@ const initialDropdowns = {
   coinReceivedOrder: false,
   coinSentPartner: false,
   coinReceivedPartner: false,
-  mainMenu: false
-}
+  mainMenu: false,
+  order: {},
+};
 
 const initialOrder = {
   "from": {
@@ -43,12 +44,16 @@ const initialState = {
   coins: [],
   order: initialOrder,
   isFixed: true,
-  dropdowns: {...initialDropdowns}
+  dropdowns: { ...initialDropdowns },
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-
+    case "SET_ORDER":
+      return {
+        ...state,
+        order: action.paylode,
+      };
     case "SET_COINS":
       return {
         ...state,
@@ -66,7 +71,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         isFixed: true,
       };
-
     case "SET_PERCENT_TYPE_FLOATING":
       return {
         ...state,
@@ -75,17 +79,17 @@ const rootReducer = (state = initialState, action) => {
 
     case "CLOSE_DROPDOWN":
       state.dropdowns[action.paylode] = false;
-      return {...state};
+      return { ...state };
 
     case "OPEN_DROPDOWN":
-      state.dropdowns = {...initialDropdowns};
+      state.dropdowns = { ...initialDropdowns };
       state.dropdowns[action.paylode] = true;
-      return {...state};
+      return { ...state };
 
     case "CLOSE_ALL_DROPDOWNS":
       return {
         ...state,
-        dropdowns: {...initialDropdowns},
+        dropdowns: { ...initialDropdowns },
       };
 
     default:
