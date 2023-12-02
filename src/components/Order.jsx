@@ -8,6 +8,7 @@ import classNames from "classnames";
 import ETHicon from "../images/coins/eth.svg";
 import BTCicon from "../images/coins/btc.svg";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Order = () => {
   const iphone = useMediaQuery(
@@ -22,10 +23,9 @@ export const Order = () => {
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-  const [sentCoin, setSentCoin] = useState({name: 'Bitcoin', img: BTCicon, shortTeg: 'BTC'});
-  const [receivedCoin, setReceivedCoin] = useState({name: 'Ethereum', img: ETHicon, shortTeg: 'ETH'});
-
-
+  const amount = useSelector(state => state.order.from.amount);
+  
+  const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(amount);
   
   return (
     <div className={classNames("flex flex-col items-center",{
@@ -37,11 +37,8 @@ export const Order = () => {
     })}>
       <h2 className="text-center text-3xl">Тип заказа</h2>
       <Percents />
-      <OrderItems
-        stateSentCoin={[sentCoin, setSentCoin]}
-        stateReceivedCoin={[receivedCoin, setReceivedCoin]}
-      />
-      <OrderExchange receivedCoin={receivedCoin} />
+      <OrderItems numberOfCoinsSent={numberOfCoinsSent} setNumberOfCoinsSent={setNumberOfCoinsSent}/>
+      <OrderExchange numberOfCoinsSent={numberOfCoinsSent}/>
       <p className="text-base font-light mt-4">
         Используя сайт и создавая обмен, вы соглашаетесь<br/> с <a href="#" className="font-normal">Условиями
         использования</a> и <a href="#" className="font-normal">Политикой конфиденциальности</a>

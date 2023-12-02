@@ -11,17 +11,12 @@ import { Support } from './pages/Support';
 import { SendingPage } from './pages/SendingPage';
 import { Account } from './pages/Account';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeAllDropdowns, setCoins } from './store/actions';
-import BTCicon from "./images/newCOIN/BTC.svg";
+import { closeAllDropdowns, setCoins, setOrderCoins } from './store/actions';
+import defaultImg from "./images/logo.svg";
 import { useState, useEffect } from 'react';
 import { api } from './utils/api';
 
 export const App = () => {
-  //   const API_KEY = 'CZC970YKLNIquCCgW0JFxxBDvILAU27bZMImDaot'
-  // const API_SECRET = 'k4sSQ8D9jxtiBEDKKMXWIIX2hV0FuEZsicpwpCff'
-  // const FixedFloat = require("fixedfloat-api");
-
-  // const fixed = new FixedFloat(API_KEY, API_SECRET);
 
   const dispatch = useDispatch();
 
@@ -74,12 +69,16 @@ export const App = () => {
   // };
 
   useEffect(() => {
-    api.getCurrencies().then((data) => {
-      console.log(data);
-    })
-    // api.getPrice({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float"}).then((data) => {
-    //   console.log(data);
-    // })
+    api.getCurrencies()
+      .then((response) => {
+        dispatch(setCoins(response.data));
+      })
+    // api.getPrice({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float"})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     dispatch(setOrderCoins(response.data));
+    //   })
+
     // api.createOrder({"fromCcy":"BTC", "toCcy":"USDTTRC", "amount":0.5, "direction":"from", "type":"float", "toAddress":"TAzsQ9Gx8eqFNFSKbeXrbi45CuVPHzA8wr"}).then((data) => {
     //     console.log(data);
     //   })
@@ -95,7 +94,7 @@ export const App = () => {
       // api.cancelOrder({"id": "ZG3Y2F", "token": "1LBH03tPYoU2RNBEXBNcl0B6cxrHM5VXloOyTjcd", "choice":"REFUND", "address": "bc1qatuvdpzczlug7f6u5knmnpd0f3rj8j554qls0e"}).then((data) => {
       //   console.log(data);
       // })
-  });
+  }, []);
 
   return (
     <div

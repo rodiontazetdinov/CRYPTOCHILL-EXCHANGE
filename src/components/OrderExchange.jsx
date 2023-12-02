@@ -5,6 +5,7 @@ import { OrderItem } from "./OrderItem";
 import qr from "../images/icons/qr.svg";
 import close from "../images/icons/close.svg";
 import squares from "../images/icons/squares.svg";
+import warning from "../images/icons/warning.svg";
 
 // lib
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -12,16 +13,27 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import QrReader from 'react-qr-scanner';
+import { useSelector } from "react-redux";
+import { api } from "../utils/api";
 
-export const OrderExchange = ({ receivedCoin }) => {
+export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
+
   const navigate = useNavigate();
+
   const [ coinAddress, setCoinAddress ] = useState('');
+  const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [ openQR, setOpenQR ] = useState(false);
+
   const previewStyle = {
     height: '100%',
     width: '80vw',
   }
+
+  const receivedCoinName = useSelector(state => state.order.to.code);
+  const order = useSelector(state => state.order);
+  const isFixed = useSelector(state => state.isFixed);
+
   return (
     <form
       className={classNames(
@@ -33,7 +45,23 @@ export const OrderExchange = ({ receivedCoin }) => {
       )}
       onSubmit={(e) => {
         e.preventDefault();
-        navigate("/sending");
+          const dataOrder = {
+            "fromCcy": order.from.code,
+            "toCcy": order.to.code,
+            "amount": numberOfCoinsSent,
+            "direction":"from",
+            "type": isFixed ? 'fixed' : 'float',
+            "toAddress": coinAddress
+          }
+          console.log(dataOrder);
+          api.createOrder(dataOrder)
+            .then((data) => {
+              if (data.msg === "Invalid address") {
+                setInvalidAddress(true);
+              } else {
+                navigate("/sending");
+              }
+            })
       }}
     >
       {openQR && (
@@ -63,8 +91,11 @@ export const OrderExchange = ({ receivedCoin }) => {
           className="bg-[#08035B] text-white focus:outline-none w-3/4"
           type="text"
           value={coinAddress}
-          placeholder={`Ваш ${receivedCoin.name} адрес`}
-          onChange={(ev) => { setCoinAddress(ev.target.value) }}
+          placeholder={`Ваш ${receivedCoinName} адрес`}
+          onChange={(ev) => {
+            setCoinAddress(ev.target.value);
+            setInvalidAddress(false);
+          }}
         />
         <div className="flex flex-row">
           <img
@@ -87,7 +118,20 @@ export const OrderExchange = ({ receivedCoin }) => {
           />
         </div>
       </div>
-      <button type="submit" className="bg-btns py-3 text-xl rounded-xl mt-4">
+      {invalidAddress && (
+        <div className="flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-2">
+          <img src={warning} alt="" />
+          <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
+        </div>
+      )}
+      <button
+        disabled={Number(numberOfCoinsSent) <= 0 || coinAddress === ''}
+        type="submit"
+        className={classNames("py-3 text-xl rounded-xl mt-4", {
+          'bg-btns': !(Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
+          'bg-transparent border rounded-lg border-white border-solid': (Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
+        })}
+      >
         Начать обмен
       </button>
     </form>
