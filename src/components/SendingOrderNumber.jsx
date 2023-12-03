@@ -56,7 +56,7 @@ export const SendingOrderNumber = ({
   return (
     <div
       className={classNames(
-        "flex flex-col bg-order pl-6 py-8 rounded-3xl text-left space-y-4",
+        "flex flex-col bg-order px-6 py-8 rounded-3xl text-left space-y-4 min-w-[255px]",
         {
           "w-1/4": desctop || macbook,
           "w-1/2": miniTop && !phone,

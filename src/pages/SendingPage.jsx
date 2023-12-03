@@ -214,9 +214,11 @@ export const SendingPage = () => {
                 })}
               >
                 <SendingOrderNumber />
-                <SendingQr />
+                {/* <SendingQr /> */}
+                <SendingTransactionInfo />
+                
               </div>
-              <SendingInfo />
+              {/* <SendingTransactionInfo /> */}
             </div>
           )}
           {miniSending && (
