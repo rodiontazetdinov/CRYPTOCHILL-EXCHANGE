@@ -43,7 +43,7 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
     >
       <h3 className="text-3xl w-full text-left">{title}</h3>
       {/* <OrderItemCoin /> */}
-      <div className="flex flex-wrap justify-between w-full z-10 mt-3 rounded-xl bg-input">
+      <div className="flex flex-wrap h-12 justify-between w-full z-10 mt-3 rounded-xl bg-input relative">
         {!dropdownState && (
           <input
             type="text"
@@ -74,7 +74,7 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
           />
         </div>
         {(isWarning && !dropdownState) && (
-          <div className="flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-auto rounded-lg mb-2">
+          <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-auto rounded-lg mb-2">
               <img src={warning} alt="" />
               <p className="text-[#08035B]">{warningSum}</p>
           </div>
@@ -88,8 +88,17 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
       )}
       {isFocusInput && (
         <div className="flex flex-row justify-between w-full">
-          <p className="text-left text-base mt-2">{`min: ${stateCoin.min}`}</p>
-          <p className="text-left text-base mt-2">{`max: ${stateCoin.max}`}</p>
+          <p 
+            className="text-left text-base mt-2 cursor-pointer"
+            onClick={() => setAmountCoin(stateCoin.min)}
+          >{`min: ${stateCoin.min}`}</p>
+          <p
+            className="text-left text-base mt-2 cursor-pointer"
+            onClick={() => {
+              setAmountCoin(stateCoin.max);
+              console.log(stateCoin.max);
+            }}
+          >{`max: ${stateCoin.max}`}</p>
         </div>
       )}
     </div>
