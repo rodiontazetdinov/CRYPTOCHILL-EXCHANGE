@@ -1,5 +1,4 @@
 // comp
-import { OrderItem } from "./OrderItem";
 
 // img
 import qr from "../images/icons/qr.svg";
@@ -13,14 +12,16 @@ import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import QrReader from 'react-qr-scanner';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { api } from "../utils/api";
+
+import { setOrder } from "../store/actions";
 
 export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
 
   const navigate = useNavigate();
-
+const dispatch = useDispatch();
   const [ coinAddress, setCoinAddress ] = useState('');
   const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [ openQR, setOpenQR ] = useState(false);
@@ -59,7 +60,9 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
               if (data.msg === "Invalid address") {
                 setInvalidAddress(true);
               } else {
-                navigate("/sending");
+                dispatch(setOrder(data.data));
+                localStorage.setItem("order", JSON.stringify(data.data));
+                navigate(`/sending/${data.data.id}`);
               }
             })
       }}
