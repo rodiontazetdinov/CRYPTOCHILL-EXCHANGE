@@ -8,6 +8,7 @@ import loader from "../images/loader_1.svg";
 import loaderM from "../images/loader_m_1.svg";
 import loaderS from "../images/loader_s_1.svg";
 
+
 export const SendingLoader = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const iphone = useMediaQuery(

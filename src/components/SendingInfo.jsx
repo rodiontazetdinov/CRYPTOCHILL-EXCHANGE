@@ -55,7 +55,6 @@ export const SendingInfo = ({
             "p-8": !phone
         }
       )}
-      onSubmit={handleSubmit}
     >
       <div>
         <p className="text-3xl font-semibold">
