@@ -16,7 +16,7 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
   const [ isFocusInput,  setFocusInput ] = useState(false);
 
   const isFixed = useSelector(state => state.isFixed);
-  const orderFrom = useSelector(state => state.order.from);
+  const orderFrom = useSelector(state => state.creatingOrder.from);
 
   let isWarning = false;
   let warningSum = null;

@@ -23,7 +23,7 @@ export const Order = () => {
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-  const amount = useSelector(state => state.order.from.amount);
+  const amount = useSelector(state => state.creatingOrder.from.amount);
   
   const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(amount);
   

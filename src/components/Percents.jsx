@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setOrderCoins, setPercentTypeFixed, setPercentTypeFloating } from "../store/actions";
+import { setOrderCreationState, setPercentTypeFixed, setPercentTypeFloating } from "../store/actions";
 import { api } from "../utils/api";
 
 export const Percents = () => {
@@ -20,16 +20,16 @@ export const Percents = () => {
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
   // const [isActive, setIsActive] = useState(true);
   const isFixed = useSelector((state) => state.isFixed);
-  const order = useSelector((state) => state.order);
+  const creatingOrder = useSelector((state) => state.creatingOrder);
   
   const dispatch = useDispatch();
 
   const handleFixed = () => {
     dispatch(setPercentTypeFixed());
     api.getPrice({
-      fromCcy: order.from.code,
-      toCcy: order.to.code,
-      amount: order.from.amount,
+      fromCcy: creatingOrder.from.code,
+      toCcy: creatingOrder.to.code,
+      amount: creatingOrder.from.amount,
       direction: "from",
       type: 'fixed'
     });
@@ -37,12 +37,12 @@ export const Percents = () => {
   const handleFloating = () => {
     dispatch(setPercentTypeFloating());
     api.getPrice({
-      fromCcy: order.from.code,
-      toCcy: order.to.code,
-      amount: order.from.amount,
+      fromCcy: creatingOrder.from.code,
+      toCcy: creatingOrder.to.code,
+      amount: creatingOrder.from.amount,
       direction: "from",
       type: 'float'
-    }).then((response) => dispatch(setOrderCoins(response.data)))
+    }).then((response) => dispatch(setOrderCreationState(response.data)))
   }
   
   return (

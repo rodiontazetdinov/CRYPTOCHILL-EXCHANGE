@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { closeDropdown, openDropdown, setOrderCoins } from "../store/actions";
+import { closeDropdown, openDropdown, setOrderCreationState } from "../store/actions";
 import { api } from "../utils/api";
 
 export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
@@ -36,34 +36,34 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       }
 
       function checkLimit(amount) {
-        if (amount < Number(state.order.from.min)) return false
-        else if (amount > Number(state.order.from.max)) return false
+        if (amount < Number(state.creatingOrder.from.min)) return false
+        else if (amount > Number(state.creatingOrder.from.max)) return false
         return true;
       }
 
       const setStateSentCoin = (name, amount) => {
-        const from =`${amount ? amount : state.order.from.amount} ${name}`;
-        const to = state.order.to.code;
+        const from =`${amount ? amount : state.creatingOrder.from.amount} ${name}`;
+        const to = state.creatingOrder.to.code;
         getPrice(from, to)
           .then((response) => {
             if (response.data === null) {
               alert('Упс, что-то пошло не так(');
             } else {
-              dispatch(setOrderCoins(response.data));
+              dispatch(setOrderCreationState(response.data));
             }
           })
           .catch((err) => console.error(err));
       }
 
       const setStateReceivedCoin = (name) => {
-        const from = `${state.order.from.amount} ${state.order.from.code}`;
+        const from = `${state.creatingOrder.from.amount} ${state.creatingOrder.from.code}`;
         const to = name;
         getPrice(from, to)
         .then((response) => {
           if (response.data === null) {
             alert('Упс, что-то пошло не так(');
           } else {
-            dispatch(setOrderCoins(response.data));
+            dispatch(setOrderCreationState(response.data));
           }
         })
           .catch((err) => console.error(err));
@@ -106,7 +106,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       useEffect(() => {
         const timer = setTimeout(() => {
           if (Number(numberOfCoinsSent) > 0 && checkLimit(numberOfCoinsSent)) {
-            setStateSentCoin(state.order.from.code, numberOfCoinsSent);
+            setStateSentCoin(state.creatingOrder.from.code, numberOfCoinsSent);
           }
         }, 1000);
         return () => clearTimeout(timer);
@@ -122,7 +122,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
           if (response.data === null) {
             alert('Упс, что-то пошло не так(');
           } else {
-            dispatch(setOrderCoins(response.data));
+            dispatch(setOrderCreationState(response.data));
           }
         })
           .catch((err) => console.error(err));
@@ -136,23 +136,23 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               title="Отправляете"
               dropdownState={dropdownSent}
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
-              stateCoin={state.order.from}
-              setStateCoin={(name) => setStateSentCoin(name, state.order.from.amount)}
+              stateCoin={state.creatingOrder.from}
+              setStateCoin={(name) => setStateSentCoin(name, state.creatingOrder.from.amount)}
               setAmountCoin={setAmountCoin}
-              nameCoinTo={state.order.to.code}
+              nameCoinTo={state.creatingOrder.to.code}
               amount={numberOfCoinsSent}
               warningShow={true}
             />
-            {!ipadMini && <img onClick={() => swapCoin([state.order.to.amount, state.order.to.code], state.order.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
+            {!ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
             {/* <img src={orderSwitch} alt="switch"/> */}
             <OrderItem
               title="Получаете"
               dropdownState={dropdownReceived}
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
-              stateCoin={state.order.to}
+              stateCoin={state.creatingOrder.to}
               setStateCoin={setStateReceivedCoin}
-              nameCoinTo={state.order.from.code}
-              amount={state.order.to.amount}
+              nameCoinTo={state.creatingOrder.from.code}
+              amount={state.creatingOrder.to.amount}
               warningShow={false}
               float={!state.isFixed}
             />

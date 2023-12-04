@@ -3,8 +3,8 @@ export const setCoins = (listCoins) => ({
   paylode: listCoins
 });
 
-export const setOrderCoins = (dataOrder) => ({
-  type: "SET_ORDER_COINS",
+export const setOrderCreationState = (dataOrder) => ({
+  type: "SET_ORDER_CREATION_STATE",
   paylode: dataOrder
 });
   

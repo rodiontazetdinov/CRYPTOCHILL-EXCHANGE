@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOrder } from "../store/actions";
 import { SendingTransactionInfo } from "../components/SendingTransactionInfo";
 import { SendingTransactionDone } from "../components/SendingTransactionDone";
+import { SendingActionsExpiredOrder } from "../components/SendingActionsExpiredOrder";
 
 
 
@@ -182,7 +183,7 @@ export const SendingPage = () => {
   }, [order]);
 
   // switch (order.status) {
-  switch ("DONE") {
+  switch ("EXPIRED") {
     // case "PENDING" || "EXCHANGE":
     case "NEW":
       return (
@@ -270,7 +271,15 @@ export const SendingPage = () => {
                 <SendingTransactionDone />
             </div>
           )}
-          
+          <div className={classNames("flex justify-between w-full")}>
+            <div className="first:mr-6 flex-grow">
+              <SendingTransactionInfo />
+            </div>
+            <div className="flex-grow">
+              <SendingTransactionInfo />
+            </div>
+          </div>
+          <SendingLoader />
           {miniSending && (
             <div className="flex flex-col space-y-6">
               <SendingNotifications />
@@ -279,6 +288,62 @@ export const SendingPage = () => {
           )}
           {!miniSending && (
             <>
+              <div className="flex flex-row space-x-6">
+                <SendingToKnow />
+                <SendingNotifications />
+              </div>
+            </>
+          )}
+        </section>
+      );
+    case "EXPIRED":
+      return (
+        <section
+          className={classNames(
+            "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
+            {
+              "px-14": macbook || ipadMini,
+              "max-w-[1328px]": desctop,
+              // "px-14": ipadMini,
+              "px-4": iphone,
+              "items-left": miniSending,
+              "items-center": !miniSending,
+            }
+          )}
+        >
+          <SendingCoinTo />
+          {/* <div className={classNames("")}></div> */}
+          {!miniTop && (
+            <div className="flex flex-row w-full space-x-6">
+              <SendingOrderNumber />
+              <SendingInfo />
+              <SendingQr />
+            </div>
+          )}
+          {miniTop && (
+            <div className="flex flex-col w-full space-y-6">
+              <div
+                className={classNames("flex w-full", {
+                  "flex-row  space-x-6": !phone,
+                  "flex-col space-y-6": phone,
+                })}
+              >
+                <SendingOrderNumber />
+                <SendingQr />
+              </div>
+              <SendingInfo />
+            </div>
+          )}
+          {miniSending && (
+            <div className="flex flex-col space-y-6">
+              <SendingNotifications />
+              <SendingActionsExpiredOrder />
+              <SendingToKnow />
+            </div>
+          )}
+          {!miniSending && (
+            <>
+              <SendingActionsExpiredOrder />
               <div className="flex flex-row space-x-6">
                 <SendingToKnow />
                 <SendingNotifications />

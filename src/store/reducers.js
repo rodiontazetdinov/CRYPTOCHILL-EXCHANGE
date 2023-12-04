@@ -10,7 +10,7 @@ const initialDropdowns = {
   order: {},
 };
 
-const initialOrder = {
+const initialCreatingOrder = {
   from: {
     code: "BTC",
     network: "BTC",
@@ -48,7 +48,8 @@ const initialOrder = {
 
 const initialState = {
   coins: [],
-  order: initialOrder,
+  order: JSON.parse(localStorage.getItem('order')) ?? initialCreatingOrder,
+  creatingOrder: initialCreatingOrder,
   isFixed: true,
   dropdowns: { ...initialDropdowns },
 };
@@ -66,10 +67,10 @@ const rootReducer = (state = initialState, action) => {
         coins: action.paylode,
       };
 
-    case "SET_ORDER_COINS":
+    case "SET_ORDER_CREATION_STATE":
       return {
         ...state,
-        order: action.paylode,
+        creatingOrder: action.paylode,
       };
 
     case "SET_PERCENT_TYPE_FIXED":

@@ -31,8 +31,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
     width: '80vw',
   }
 
-  const receivedCoinName = useSelector(state => state.order.to.code);
-  const order = useSelector(state => state.order);
+  const receivedCoinName = useSelector(state => state.creatingOrder.to.code);
+  const creatingOrder = useSelector(state => state.creatingOrder);
   const isFixed = useSelector(state => state.isFixed);
 
   function validationAddress(address) {
@@ -60,8 +60,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
           }
 
           const dataOrder = {
-            "fromCcy": order.from.code,
-            "toCcy": order.to.code,
+            "fromCcy": creatingOrder.from.code,
+            "toCcy": creatingOrder.to.code,
             "amount": numberOfCoinsSent,
             "direction":"from",
             "type": isFixed ? 'fixed' : 'float',
