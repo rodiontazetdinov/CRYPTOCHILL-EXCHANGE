@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrder } from "../store/actions";
 import { SendingTransactionInfo } from "../components/SendingTransactionInfo";
+import { SendingTransactionDone } from "../components/SendingTransactionDone";
 
 
 
@@ -180,7 +181,8 @@ export const SendingPage = () => {
     return () => clearTimeout(timer);
   }, [order]);
 
-  switch (order.status) {
+  // switch (order.status) {
+  switch ("DONE") {
     // case "PENDING" || "EXCHANGE":
     case "NEW":
       return (
@@ -231,6 +233,52 @@ export const SendingPage = () => {
           {!miniSending && (
             <>
               <SendingLoader />
+              <div className="flex flex-row space-x-6">
+                <SendingToKnow />
+                <SendingNotifications />
+              </div>
+            </>
+          )}
+        </section>
+      );
+    case "DONE":
+      return (
+        <section
+          className={classNames(
+            "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
+            {
+              "px-14": macbook || ipadMini,
+              "max-w-[1328px]": desctop,
+              // "px-14": ipadMini,
+              "px-4": iphone,
+              "items-left": miniSending,
+              "items-center": !miniSending,
+            }
+          )}
+        >
+          <SendingCoinTo />
+          {/* <div className={classNames("")}></div> */}
+          {!miniTop && (
+            <div className="flex flex-row w-full space-x-6">
+              <SendingOrderNumber />
+              <SendingTransactionDone />
+            </div>
+          )}
+          {miniTop && (
+            <div className="flex flex-col w-full space-y-6">
+                <SendingOrderNumber />
+                <SendingTransactionDone />
+            </div>
+          )}
+          
+          {miniSending && (
+            <div className="flex flex-col space-y-6">
+              <SendingNotifications />
+              <SendingToKnow />
+            </div>
+          )}
+          {!miniSending && (
+            <>
               <div className="flex flex-row space-x-6">
                 <SendingToKnow />
                 <SendingNotifications />

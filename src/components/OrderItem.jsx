@@ -43,7 +43,12 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
     >
       <h3 className="text-3xl w-full text-left">{title}</h3>
       {/* <OrderItemCoin /> */}
-      <div className="flex flex-wrap h-12 justify-between w-full z-10 mt-3 rounded-xl bg-input relative">
+      <div className={classNames(
+        "flex flex-wrap h-12 justify-between w-full mt-3 rounded-xl bg-input relative",
+        {
+          'z-10': dropdownState
+        }
+      )}>
         {!dropdownState && (
           <input
             type="text"

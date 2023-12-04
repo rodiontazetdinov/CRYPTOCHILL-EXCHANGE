@@ -21,7 +21,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
 
   const navigate = useNavigate();
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [ coinAddress, setCoinAddress ] = useState('');
   const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [ openQR, setOpenQR ] = useState(false);
@@ -35,6 +35,13 @@ const dispatch = useDispatch();
   const order = useSelector(state => state.order);
   const isFixed = useSelector(state => state.isFixed);
 
+  function validationAddress(address) {
+    if (address.replace(/[^\d\a-zA-Z\:]/g, '').length !== 34) {
+      return false;
+    }
+    return true;
+  }
+
   return (
     <form
       className={classNames(
@@ -46,6 +53,12 @@ const dispatch = useDispatch();
       )}
       onSubmit={(e) => {
         e.preventDefault();
+
+          if (!validationAddress(coinAddress)) {
+            setInvalidAddress(true);
+            return
+          }
+
           const dataOrder = {
             "fromCcy": order.from.code,
             "toCcy": order.to.code,
@@ -89,14 +102,14 @@ const dispatch = useDispatch();
         </div>
       )}
       <h3 className="text-3xl">Назначение</h3>
-      <div className="bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-lg justify-between mt-2">
+      <div className="relative bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-lg justify-between mt-2">
         <input
           className="bg-[#08035B] text-white focus:outline-none w-3/4"
           type="text"
           value={coinAddress}
           placeholder={`Ваш ${receivedCoinName} адрес`}
           onChange={(ev) => {
-            setCoinAddress(ev.target.value);
+            setCoinAddress(ev.target.value.replace(/[^\d\a-zA-Z\:]/g, ''));
             setInvalidAddress(false);
           }}
         />
@@ -120,13 +133,13 @@ const dispatch = useDispatch();
             alt='Paste'
           />
         </div>
+        {invalidAddress && (
+          <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
+            <img src={warning} alt="" />
+            <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
+          </div>
+        )}
       </div>
-      {invalidAddress && (
-        <div className="flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-2">
-          <img src={warning} alt="" />
-          <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
-        </div>
-      )}
       <button
         disabled={Number(numberOfCoinsSent) <= 0 || coinAddress === ''}
         type="submit"

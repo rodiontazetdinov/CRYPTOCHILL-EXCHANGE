@@ -55,6 +55,20 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
           .catch((err) => console.error(err));
       }
 
+      const setStateReceivedCoin = (name) => {
+        const from = `${state.order.from.amount} ${state.order.from.code}`;
+        const to = name;
+        getPrice(from, to)
+        .then((response) => {
+          if (response.data === null) {
+            alert('Упс, что-то пошло не так(');
+          } else {
+            dispatch(setOrderCoins(response.data));
+          }
+        })
+          .catch((err) => console.error(err));
+      }
+
       function validateInput(input) {
         // Убираем все символы, кроме цифр, точек и запятых
         const sanitizedInput = input.replace(/[^0-9.,]/g, '');
@@ -100,20 +114,6 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
 
       const setAmountCoin = (event) => {
         setNumberOfCoinsSent(validateInput(event.target.value));
-      }
-
-      const setStateReceivedCoin = (name) => {
-        const from = `${state.order.from.amount} ${state.order.from.code}`;
-        const to = name;
-        getPrice(from, to)
-        .then((response) => {
-          if (response.data === null) {
-            alert('Упс, что-то пошло не так(');
-          } else {
-            dispatch(setOrderCoins(response.data));
-          }
-        })
-          .catch((err) => console.error(err));
       }
 
       const swapCoin = (from, to) => {
