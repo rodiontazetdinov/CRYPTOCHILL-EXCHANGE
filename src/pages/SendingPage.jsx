@@ -21,32 +21,20 @@ import { SendingActionsExpiredOrder } from "../components/SendingActionsExpiredO
 
 export const SendingPage = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const iphone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 744px)"
-  );
-  const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px) and (max-width : 1024px)"
-  );
-  const macbook = useMediaQuery(
-    "only screen and (min-width : 1024px) and (max-width : 1440px)"
-  );
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-  const miniSending = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 911px)"
-  );
-  const miniTop = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 1210px)"
-  );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
+  const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+  const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
+  const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
 
   const dispatch = useDispatch();
 
-  const [isWaiting, setIsWaiting] = useState(false);
-  const [isAprroved, setIsApproved] = useState(false);
-  const [isChanging, setIsChanging] = useState(false);
-  const [isDone, setIsDone] = useState(false);
+  // const [isWaiting, setIsWaiting] = useState(false);
+  // const [isAprroved, setIsApproved] = useState(false);
+  // const [isChanging, setIsChanging] = useState(false);
+  // const [isDone, setIsDone] = useState(false);
 
   const [sorder, setSorder] = useState({
     "id": "KZ9ZUZ",
@@ -133,7 +121,6 @@ export const SendingPage = () => {
 });
   const order = useSelector(state => state.order);
   const id = useParams().id;
-  console.log(id)
 
   // api.createOrder({"fromCcy":"LTC", "toCcy":"ETH", "amount":0.551857, "direction":"from", "type":"float", "toAddress":"0xa3A7913d2e76bBaE4B1b597B45F0D960f7141375"})
   //   .then((response) => {
@@ -167,25 +154,25 @@ export const SendingPage = () => {
     // console.log(1);
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      order &&
-      api.getOrder({id: order.id, token: order.token})
-    .then((response) => {
-      console.log(response);
-      dispatch(setOrder(response.data))
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    }, 30000);
-    return () => clearTimeout(timer);
-  }, [order]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     order &&
+  //     api.getOrder({id: order.id, token: order.token})
+  //   .then((response) => {
+  //     console.log(response);
+  //     dispatch(setOrder(response.data));
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   })
+  //   }, 30000);
+  //   return () => clearTimeout(timer);
+  // }, [order]);
 
   // switch (order.status) {
-  switch ("EXPIRED") {
-    // case "PENDING" || "EXCHANGE":
-    case "NEW":
+  switch (order.status) {
+    // case "NEW":
+    case "PENDING" || "EXCHANGE":
       return (
         <section
           className={classNames(
@@ -211,17 +198,17 @@ export const SendingPage = () => {
           {miniTop && (
             <div className="flex flex-col w-full space-y-6">
               <div
-                className={classNames("flex w-full", {
+                className={classNames("flex w-full items-stretch", {
                   "flex-row  space-x-6": !phone,
                   "flex-col space-y-6": phone,
                 })}
               >
                 <SendingOrderNumber />
                 {/* <SendingQr /> */}
-                <SendingTransactionInfo />
+                {/* <SendingTransactionInfo /> */}
                 
               </div>
-              {/* <SendingTransactionInfo /> */}
+              <SendingTransactionInfo />
             </div>
           )}
           {miniSending && (
@@ -271,8 +258,13 @@ export const SendingPage = () => {
                 <SendingTransactionDone />
             </div>
           )}
-          <div className={classNames("flex justify-between w-full")}>
-            <div className="first:mr-6 flex-grow">
+          <div className={classNames("flex justify-between w-full", {
+            "flex-col": ipadMini || iphone
+          })}>
+            <div className={classNames("flex-grow", {
+              "mr-6": desctop || macbook,
+              "mb-6": ipadMini || iphone
+            })}>
               <SendingTransactionInfo />
             </div>
             <div className="flex-grow">

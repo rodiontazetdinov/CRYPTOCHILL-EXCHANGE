@@ -32,7 +32,9 @@ export const SendingNotifications = () => {
       "id": order.id,
       "token": order.token,
       "email": email
-    });
+    }).then(response => {
+      console.log(response);
+    })
   }
 
   return (
@@ -42,7 +44,12 @@ export const SendingNotifications = () => {
           "text-5xl": !phone
         })}>Уведомления о статусе заказа</h3>
         <p className={classNames(" font-semibold mb-6",{" text-base": phone, "text-xl": !phone})}>Введите свой email, если хотите получать уведомления о изменении статуса этого заказа</p>
-        <input className="w-full bg-[#08035B] px-6 rounded-2xl outline-none h-12" placeholder="Ваш email" type="email" onChange={(e) => setEmail(e.target.value)} value={email}/>
+        <input
+          className="w-full bg-[#08035B] px-6 rounded-2xl outline-none h-12"
+          placeholder="Ваш email" type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
         <button type="submit" className={classNames("font-semibold text-xl px-4 py-3 bg-btns rounded-lg self-left mt-4 w-full ", {
           'mb-12': phone,
         })}>Включить уведомления</button>

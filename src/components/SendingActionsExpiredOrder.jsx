@@ -17,6 +17,13 @@ import { useMediaQuery } from '@uidotdev/usehooks';
 
 export const SendingActionsExpiredOrder = () => {
     const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+    const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+  const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
+  const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
 
     const [ isReturn, setIsReturn ] = useState(true);
     const [ coinAddress, setCoinAddress ] = useState('');
@@ -29,12 +36,20 @@ export const SendingActionsExpiredOrder = () => {
       }
 
     return (
-        <div className="bg-account px-12 py-10 rounded-3xl">
-            <div className="flex items-center text-[32px] font-bold mb-6">
+        <div className={classNames("bg-account rounded-3xl", {
+            'px-12 py-10': !iphone,
+            'px-4 py-10': iphone,
+
+        })}>
+            <div className={classNames("flex items-center text-[32px] font-bold mb-6", {
+                "text-xl": iphone
+            })}>
                 <img className="mr-2 w-10 h-10" src={warning} alt="" />
                 Я отправил средства для обмена, но мой заказ истёк, что делать?
             </div>
-            <p className=" text-left font-semibold text-2xl mb-6">Мы еще не получили вашу транзакцию, но вы можете сделать выбор, что сделать если средства по данному адресу поступят к нам на счет в течение 24 часов. Выберите 1 из вариантов:</p>
+            <p className={classNames("text-left font-semibold text-2xl mb-6", {
+                " text-base": iphone
+            })}>Мы еще не получили вашу транзакцию, но вы можете сделать выбор, что сделать если средства по данному адресу поступят к нам на счет в течение 24 часов. Выберите 1 из вариантов:</p>
             <form 
                 className="flex flex-col items-start"
                 onSubmit={(ev) => {
@@ -44,7 +59,10 @@ export const SendingActionsExpiredOrder = () => {
             >
                 <label
                     htmlFor='continue'
-                    className='flex items-center text-xl font-semibold mb-4'
+                    className={classNames('flex items-center text-left font-semibold mb-4', {
+                        "text-xl": !iphone,
+                        "text-base": iphone
+                    })}
                     onClick={() => setIsReturn(false)}
                 >
                     <input className='hidden' type="radio" name="action" id="continue" />
@@ -53,11 +71,17 @@ export const SendingActionsExpiredOrder = () => {
                 </label>
                 <label
                     htmlFor='return'
-                    className='flex items-center text-xl font-semibold mb-4'
+                    className={classNames('flex items-center text-left font-semibold mb-4', {
+                        "text-xl": !iphone,
+                        "text-base": iphone
+                    })}
                     onClick={() => setIsReturn(true)}
                 >
                     <input className='hidden' type="radio" name="action" id="return" />
-                    <img className='mr-2' src={isReturn ? selectedRadio : unselectedRadio} alt="" />
+                    <img
+                        className='mr-2'
+                        src={isReturn ? selectedRadio : unselectedRadio} alt=""
+                    />
                     Совершить возврат суммы отправленной для обмена за вычетом комиссии сети
                 </label>
 
@@ -108,7 +132,7 @@ export const SendingActionsExpiredOrder = () => {
                         </div>
                         )} */}
                     </div>
-                    <button className=" self-start bg-btns rounded-xl text-xl px-4 py-3 font-semibold whitespace-nowrap" type="submit">Сделать возврат</button>
+                    <button className="self-start bg-btns rounded-xl text-xl px-4 py-3 font-semibold whitespace-nowrap" type="submit">Сделать возврат</button>
                 </div>
                 )}
             </form>

@@ -9,9 +9,7 @@ export const SendingTransactionDone = () => {
   const miniTop = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 1210px)"
   );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
+  const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 600px)");
 
 
 //   useEffect(() => {
@@ -21,7 +19,7 @@ export const SendingTransactionDone = () => {
   return (
     <div
       className={classNames(
-        "flex flex-col bg-order rounded-3xl text-left  space-y-4 w-full",
+        "flex flex-col bg-order rounded-3xl text-left space-y-4 w-full",
         {
           "w-2/4": !miniTop,
           "w-full": miniTop,
@@ -30,16 +28,28 @@ export const SendingTransactionDone = () => {
         }
       )}
     >
-    <p className="text-5xl bg-text text-transparent bg-clip-text font-bold mt-6">
+    <p className={classNames("text-5xl bg-text text-transparent bg-clip-text font-bold mt-6", {
+      "text-5xl": !phone,
+      "text-3xl": phone
+    })}>
         Ваш Bitcoin был отправлен
     </p>
-    <p className={classNames("w-[380px]")}>Мы надеемся, что вам понравился наш сервис и будем рады, если вы поддержите нас отзывом</p>
+    <p className={classNames("max-w-[380px]", {
+      "text-base": phone
+    })}>
+      Мы надеемся, что вам понравился наш сервис и будем рады, если вы поддержите нас отзывом
+    </p>
     <div className="flex">
-        <div className="flex items-center cursor-pointer mr-4">
+        <div className={classNames("flex items-center cursor-pointer", {
+          "mr-4": !phone,
+          "text-base mr-2": phone
+        })}>
             <img className="mr-1" src={review1} alt="Icon" />
             Оставить отзыв
         </div>
-        <div className="flex items-center cursor-pointer">
+        <div className={classNames("flex items-center cursor-pointer", {
+          "text-base": phone
+        })}>
             <img className="mr-1" src={review2} alt="Icon" />
             Оставить отзыв
         </div>

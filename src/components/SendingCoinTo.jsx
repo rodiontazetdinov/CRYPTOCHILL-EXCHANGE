@@ -9,28 +9,21 @@ import arrow from "../images/pink-arrow.svg";
 
 export const SendingCoinTo = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const iphone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 500px)"
-  );
-  const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px) and (max-width : 1024px)"
-  );
-  const macbook = useMediaQuery(
-    "only screen and (min-width : 1024px) and (max-width : 1280px)"
-  );
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 600px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-
-  const miniSending = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 911px)"
-  );
-
+  const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1000px)");
 
   const order = useSelector((state) => state.order);
+  const coins = useSelector((state) => state.coins);
+  const coinFrom = coins.find((coin) => coin.code === order.from.code);
+  const coinTo = coins.find((coin) => coin.code === order.to.code);
   
   return (
     <div
       className={classNames("flex   mt-6", {
-        "flex-col justify-left ml-6 relative": miniSending && !iphone,
+        "flex-col self-start justify-left ml-6 relative": miniSending && !iphone,
         "flex-row mx-auto space-x-4": !miniSending,
         "flex-col justify-left ml-4 relative": iphone,
       })}
@@ -60,7 +53,7 @@ export const SendingCoinTo = () => {
             "order-1 mr-4": miniSending,
             "order-2": !miniSending,
           })}
-          src={btc}
+          src={coinFrom?.logo}
           alt="монета 1"
         />
       </div>
@@ -78,7 +71,7 @@ export const SendingCoinTo = () => {
             "mr-4": miniSending,
             "": !miniSending,
           })}
-          src={eth}
+          src={coinTo?.logo}
           alt="монета 2"
         />
         <div
@@ -96,7 +89,7 @@ export const SendingCoinTo = () => {
       </div>
       {miniSending && !iphone && (
         <img
-          className="w-16 h-16 absolute left-[400px] rotate-90"
+          className="w-16 h-16 absolute top-[20%] left-[500px] rotate-90"
           src={arrow}
         />
       )}
