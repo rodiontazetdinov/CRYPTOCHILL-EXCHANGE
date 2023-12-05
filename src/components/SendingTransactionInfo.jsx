@@ -15,12 +15,14 @@ import { formatDate } from "../utils/helpers";
 // import qr from "../images/sending-icons/qr.svg";
 
 export const SendingTransactionInfo = () => {
-  const miniTop = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 1210px)"
-  );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+  const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+  const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
+  const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
 
   const dispatch = useDispatch();
 
@@ -48,7 +50,10 @@ export const SendingTransactionInfo = () => {
       </p>
       <div>
         <p>TxID</p>
-        <div className="flex flex-row bg-sending-input rounded-lg max-w-[559px] px-4 py-2 items-center justify-between">
+        <div className={classNames("flex max-w-[550px] bg-sending-input rounded-lg px-4 py-2 items-center justify-between", {
+          "w-[370px]": macbook,
+          "w-[300px]": iphone
+        })}>
           <p className="text-xl leading-6  overflow-hidden truncate">
             {"dsadsaddsadsadsadsadsadsadsadsdsadsadsadsadsadsadasdsadsad"}
           </p>
@@ -107,7 +112,7 @@ export const SendingTransactionInfo = () => {
       </div>
       <div>
          <p>Сумма:</p>
-         <p className="text-blue-200">{order && formatDate(order.time.left)}</p>
+         <p className="text-blue-200">{order && `${order.from.amount} ${order.from.code}`}</p>
       </div>
       <div>
          <p>Коммисия:</p>
