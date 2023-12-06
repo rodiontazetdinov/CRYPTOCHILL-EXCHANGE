@@ -339,7 +339,7 @@ export const AboutUs = () => {
                                 'mx-2 w-[200px] ': ipadMini,
                                 "mx-0 w-full": iphone
                             })}>
-                                <img className="inline-block w-14 h-14 mb-4" src={crypto.img} alt="" />
+                                <img className="inline-block w-14 h-14 mb-4" src={crypto.logo} alt={crypto.code} />
                                 <p className="inline-block">{crypto.name}</p>
                             </li>)
                         })}
