@@ -112,7 +112,7 @@ export const SendingLoader = () => {
                   "text-2xl font-semibold": !iphone,
                 })}
               >
-                Ожидаем подтверждения сети
+                Выполняем обмен
               </p>
             </div>
             <img

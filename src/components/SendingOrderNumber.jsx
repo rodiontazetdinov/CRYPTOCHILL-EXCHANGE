@@ -34,6 +34,7 @@ export const SendingOrderNumber = ({
   );
 
   const [email, setEmail] = useState("");
+  const [isIdCopied, setIdCopied] = useState(false);
   const order = useSelector((state) => state.order);
   const [timer, setTimer] = useState(null);
 
@@ -53,24 +54,39 @@ export const SendingOrderNumber = ({
     console.log("submitted");
   };
 
+  const handleClickCopy = (text, setState) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setState(true);
+        setTimeout(() => {
+          setState(false);
+        }, 500);
+      })
+      .catch(() => {
+          alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена!');
+      })
+  };
+
   return (
     <div
       className={classNames(
-        "flex flex-col bg-order px-6 py-8 rounded-3xl text-left space-y-4 min-w-[255px] flex-grow",
-        // {
-        //   "w-1/4": desctop || macbook,
-        //   "w-1/2": miniTop && !phone,
-        //   "w-full": phone,
-        // }
+        "flex flex-col bg-order px-6 py-8 rounded-3xl text-left space-y-4 min-w-[255px] flex-grow"
       )}
-      onSubmit={handleSubmit}
     >
       <p className="text-2xl font-semibold">Номер заказа</p>
       <div className="flex flex-row items-center">
-        <p className="text-3xl font-semibold text-blue-200">
+        <p className={classNames("text-3xl font-semibold mr-1", {
+          "text-blue-200": !isIdCopied,
+          "text-[#95FF54]": isIdCopied,
+        })}>
           {order && order.id}
         </p>
-        <img src={squaresImg} alt="иконка квадраты" />
+        <img
+          className="cursor-pointer"
+          onClick={() => handleClickCopy(order.id, setIdCopied)}
+          src={squaresImg}
+          alt="иконка квадраты"
+        />
       </div>
       {order && order.status === "NEW" && (
         <div>

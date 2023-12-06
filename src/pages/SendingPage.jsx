@@ -171,8 +171,7 @@ export const SendingPage = () => {
 
   // switch (order.status) {
   switch (order.status) {
-    // case "NEW":
-    case "PENDING" || "EXCHANGE":
+    case "NEW":
       return (
         <section
           className={classNames(
@@ -192,7 +191,68 @@ export const SendingPage = () => {
           {!miniTop && (
             <div className="flex flex-row w-full space-x-6">
               <SendingOrderNumber />
-              <SendingTransactionInfo />
+              <SendingInfo />
+              <SendingQr />
+            </div>
+          )}
+          {miniTop && (
+            <div className="flex flex-col w-full space-y-6">
+              <div
+                className={classNames("flex w-full", {
+                  "flex-row  space-x-6": !phone,
+                  "flex-col space-y-6": phone,
+                })}
+              >
+                <SendingOrderNumber />
+                <SendingQr />
+              </div>
+              <SendingInfo />
+            </div>
+          )}
+          {miniSending && (
+            <div className="flex flex-col space-y-6">
+              <SendingNotifications />
+              <SendingLoader />
+              <SendingToKnow />
+            </div>
+          )}
+          {!miniSending && (
+            <>
+              <SendingLoader />
+              <div className="flex flex-row space-x-6">
+                <SendingToKnow />
+                <SendingNotifications />
+              </div>
+            </>
+          )}
+        </section>
+      );
+    case "PENDING":
+    case "EXCHANGE":
+      return (
+        <section
+          className={classNames(
+            "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
+            {
+              "px-14": macbook || ipadMini,
+              "max-w-[1328px]": desctop,
+              // "px-14": ipadMini,
+              "px-4": iphone,
+              "items-left": miniSending,
+              "items-center": !miniSending,
+            }
+          )}
+        >
+          <SendingCoinTo />
+          {/* <div className={classNames("")}></div> */}
+          {!miniTop && (
+            <div className="flex flex-row w-full space-x-6">
+              <SendingOrderNumber />
+              <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              />
             </div>
           )}
           {miniTop && (
@@ -205,10 +265,18 @@ export const SendingPage = () => {
               >
                 <SendingOrderNumber />
                 {/* <SendingQr /> */}
-                {/* <SendingTransactionInfo /> */}
+                {/* <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              /> */}
                 
               </div>
-              <SendingTransactionInfo />
+              <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              />
             </div>
           )}
           {miniSending && (
@@ -261,14 +329,20 @@ export const SendingPage = () => {
           <div className={classNames("flex justify-between w-full", {
             "flex-col": ipadMini || iphone
           })}>
-            <div className={classNames("flex-grow", {
+            <div className={classNames("", {
               "mr-6": desctop || macbook,
               "mb-6": ipadMini || iphone
             })}>
-              <SendingTransactionInfo />
+              <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+              />
             </div>
-            <div className="flex-grow">
-              <SendingTransactionInfo />
+            <div className="">
+              <SendingTransactionInfo
+                title={'Информация о принятой транзакции'}
+                dataCoin={order.to}
+              />
             </div>
           </div>
           <SendingLoader />
@@ -401,6 +475,344 @@ export const SendingPage = () => {
         </section>
       );
   }
-
-  
 };
+
+// PENDING
+// {
+//   "id": "1HZPQP",
+//   "type": "float",
+//   "email": "",
+//   "status": "PENDING",
+//   "time": {
+//       "reg": 1701777259,
+//       "start": 1701777348,
+//       "finish": null,
+//       "update": 1701777680,
+//       "expiration": 1701779059,
+//       "left": 1368
+//   },
+//   "from": {
+//       "code": "LTC",
+//       "coin": "LTC",
+//       "network": "LTC",
+//       "name": "Litecoin",
+//       "alias": "litecoin",
+//       "amount": "0.01631000",
+//       "address": "ltc1qvyffzgz7l7meq56xlag7kkgrghpqpfrr2sdhx6",
+//       "addressAlt": null,
+//       "tag": "",
+//       "tagName": null,
+//       "reqConfirmations": 2,
+//       "maxConfirmations": 12,
+//       "tx": {
+//           "id": "d368a9398be6f8b9a2867d33bad28ca86189ae321369c211a63b49127132b5a0",
+//           "amount": "0.01631000",
+//           "fee": "0.00000169",
+//           "ccyfee": "LTC",
+//           "timeReg": 1701777348,
+//           "timeBlock": null,
+//           "confirmations": "0"
+//       }
+//   },
+//   "to": {
+//       "code": "TRX",
+//       "coin": "TRX",
+//       "network": "TRX",
+//       "name": "Tron",
+//       "alias": "tron",
+//       "amount": "10.44900000",
+//       "address": "TFmiVeSoRg5kzLtHrmdmrpyrTXB3Xgh2xv",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "back": {
+//       "code": "",
+//       "coin": null,
+//       "network": null,
+//       "name": null,
+//       "alias": null,
+//       "amount": null,
+//       "address": "",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "emergency": {
+//       "status": [],
+//       "choice": "NONE",
+//       "repeat": "0"
+//   },
+//   "token": "WOY0pdz4Fy50KaRiCjQWsjE9hxhs5VHx9uvN8PwQ"
+// }
+
+// DONE
+// {
+//   "id": "1HZPQP",
+//   "type": "float",
+//   "email": "",
+//   "status": "DONE",
+//   "time": {
+//       "reg": 1701777259,
+//       "start": 1701778512,
+//       "finish": 1701778533,
+//       "update": 1701778533,
+//       "expiration": 1701779059,
+//       "left": 222
+//   },
+//   "from": {
+//       "code": "LTC",
+//       "coin": "LTC",
+//       "network": "LTC",
+//       "name": "Litecoin",
+//       "alias": "litecoin",
+//       "amount": "0.01631000",
+//       "address": "ltc1qvyffzgz7l7meq56xlag7kkgrghpqpfrr2sdhx6",
+//       "addressAlt": null,
+//       "tag": "",
+//       "tagName": null,
+//       "reqConfirmations": 2,
+//       "maxConfirmations": 12,
+//       "tx": {
+//           "id": "d368a9398be6f8b9a2867d33bad28ca86189ae321369c211a63b49127132b5a0",
+//           "amount": "0.01631000",
+//           "fee": "0.00000169",
+//           "ccyfee": "LTC",
+//           "timeReg": 1701777348,
+//           "timeBlock": 1701778241,
+//           "confirmations": "6"
+//       }
+//   },
+//   "to": {
+//       "code": "TRX",
+//       "coin": "TRX",
+//       "network": "TRX",
+//       "name": "Tron",
+//       "alias": "tron",
+//       "amount": "10.44800000",
+//       "address": "TFmiVeSoRg5kzLtHrmdmrpyrTXB3Xgh2xv",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": "bccc316c9c51a0a7c5b83fa1b4c4759f675c47b417a2e7cbf958ecf45bd763f4",
+//           "amount": "10.44800000",
+//           "fee": "0.00000000",
+//           "ccyfee": "TRX",
+//           "timeReg": 1701778526,
+//           "timeBlock": 1701778527,
+//           "confirmations": "5"
+//       }
+//   },
+//   "back": {
+//       "code": "",
+//       "coin": null,
+//       "network": null,
+//       "name": null,
+//       "alias": null,
+//       "amount": null,
+//       "address": "",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "emergency": {
+//       "status": [],
+//       "choice": "NONE",
+//       "repeat": "0"
+//   },
+//   "token": "WOY0pdz4Fy50KaRiCjQWsjE9hxhs5VHx9uvN8PwQ"
+// }
+
+// EXCHANGE
+// {
+//   "id": "1HZPQP",
+//   "type": "float",
+//   "email": "",
+//   "status": "EXCHANGE",
+//   "time": {
+//       "reg": 1701777259,
+//       "start": 1701778512,
+//       "finish": null,
+//       "update": 1701778512,
+//       "expiration": 1701779059,
+//       "left": 540
+//   },
+//   "from": {
+//       "code": "LTC",
+//       "coin": "LTC",
+//       "network": "LTC",
+//       "name": "Litecoin",
+//       "alias": "litecoin",
+//       "amount": "0.01631000",
+//       "address": "ltc1qvyffzgz7l7meq56xlag7kkgrghpqpfrr2sdhx6",
+//       "addressAlt": null,
+//       "tag": "",
+//       "tagName": null,
+//       "reqConfirmations": 2,
+//       "maxConfirmations": 12,
+//       "tx": {
+//           "id": "d368a9398be6f8b9a2867d33bad28ca86189ae321369c211a63b49127132b5a0",
+//           "amount": "0.01631000",
+//           "fee": "0.00000169",
+//           "ccyfee": "LTC",
+//           "timeReg": 1701777348,
+//           "timeBlock": 1701778241,
+//           "confirmations": "3"
+//       }
+//   },
+//   "to": {
+//       "code": "TRX",
+//       "coin": "TRX",
+//       "network": "TRX",
+//       "name": "Tron",
+//       "alias": "tron",
+//       "amount": "10.44800000",
+//       "address": "TFmiVeSoRg5kzLtHrmdmrpyrTXB3Xgh2xv",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "back": {
+//       "code": "",
+//       "coin": null,
+//       "network": null,
+//       "name": null,
+//       "alias": null,
+//       "amount": null,
+//       "address": "",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "emergency": {
+//       "status": [],
+//       "choice": "NONE",
+//       "repeat": "0"
+//   },
+//   "token": "WOY0pdz4Fy50KaRiCjQWsjE9hxhs5VHx9uvN8PwQ"
+// }
+
+// WITHDRAW
+// {
+//   "id": "23G1SP",
+//   "type": "float",
+//   "email": "rodiontazetdinov@yandex.ru",
+//   "status": "WITHDRAW",
+//   "time": {
+//       "reg": 1701779082,
+//       "start": 1701779828,
+//       "finish": null,
+//       "update": 1701779828,
+//       "expiration": 1701780882,
+//       "left": 1054
+//   },
+//   "from": {
+//       "code": "LTC",
+//       "coin": "LTC",
+//       "network": "LTC",
+//       "name": "Litecoin",
+//       "alias": "litecoin",
+//       "amount": "0.01632000",
+//       "address": "ltc1qp9dt2h5lcr8qkyctmdm0tlhgrd30rxz707fdml",
+//       "addressAlt": null,
+//       "tag": "",
+//       "tagName": null,
+//       "reqConfirmations": 2,
+//       "maxConfirmations": 12,
+//       "tx": {
+//           "id": "7271aed187159698d36372a2e84d484ae595e289076f27d33e298be7443ae770",
+//           "amount": "0.01632000",
+//           "fee": "0.00000169",
+//           "ccyfee": "LTC",
+//           "timeReg": 1701779219,
+//           "timeBlock": 1701779611,
+//           "confirmations": "2"
+//       }
+//   },
+//   "to": {
+//       "code": "TRX",
+//       "coin": "TRX",
+//       "network": "TRX",
+//       "name": "Tron",
+//       "alias": "tron",
+//       "amount": "10.46700000",
+//       "address": "TFmiVeSoRg5kzLtHrmdmrpyrTXB3Xgh2xv",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": "099d8f7ee5f07a4e764a75be60b7a7ef6e659304b66ec1b697b7e5c81fa05812",
+//           "amount": "10.46700000",
+//           "fee": "0.00000000",
+//           "ccyfee": "TRX",
+//           "timeReg": 1701779828,
+//           "timeBlock": 1701779828,
+//           "confirmations": "0"
+//       }
+//   },
+//   "back": {
+//       "code": "",
+//       "coin": null,
+//       "network": null,
+//       "name": null,
+//       "alias": null,
+//       "amount": null,
+//       "address": "",
+//       "tag": "",
+//       "tagName": null,
+//       "tx": {
+//           "id": null,
+//           "amount": null,
+//           "fee": null,
+//           "ccyfee": null,
+//           "timeReg": null,
+//           "timeBlock": null,
+//           "confirmations": null
+//       }
+//   },
+//   "emergency": {
+//       "status": [],
+//       "choice": "NONE",
+//       "repeat": "0"
+//   },
+//   "token": "MTusuMJgiAB3foQo23g4MqvOSAHKSAXtDBVtex6f"
+// }

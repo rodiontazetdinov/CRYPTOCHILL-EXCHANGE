@@ -118,7 +118,7 @@ export const SendingActionsExpiredOrder = () => {
                             navigator.clipboard.readText()
                                 .then((clipText) => setCoinAddress(clipText))
                                 .catch((err) => {
-                                alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                                    alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
                                 })
                             }}
                             src={squares}

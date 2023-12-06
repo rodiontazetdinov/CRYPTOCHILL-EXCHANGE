@@ -14,7 +14,7 @@ import { formatDate } from "../utils/helpers";
 
 // import qr from "../images/sending-icons/qr.svg";
 
-export const SendingTransactionInfo = () => {
+export const SendingTransactionInfo = ({ title, dataCoin, dataCoinTo }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
   const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
   const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
@@ -26,12 +26,28 @@ export const SendingTransactionInfo = () => {
 
   const dispatch = useDispatch();
 
-  const order = useSelector((state) => state.order);
-  const [confirmations, setConfirmations] = useState(4);
+  // const order = useSelector((state) => state.order);
+  // const [confirmations, setConfirmations] = useState(4);
 
-  useEffect(() => {
-    // setTimer(order && order.time.left);
-  }, [order]);
+  // useEffect(() => {
+  //   // setTimer(order && order.time.left);
+  // }, [order]);
+
+  const getStrData = (sec) => {
+    const date = new Date(Number(sec) * 1000);
+
+    const dateStr = date.toLocaleString("ru", {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
+    const timeStr = date.toLocaleString("ru", {
+        hour: 'numeric',
+        minute: 'numeric',
+    });
+
+    return `${dateStr}, ${timeStr}`;
+  }
 
   return (
     <div
@@ -46,7 +62,7 @@ export const SendingTransactionInfo = () => {
       )}
     >
       <p className="text-2xl font-semibold">
-        Информация об отправленной транзакции
+        {title}
       </p>
       <div>
         <p>TxID</p>
@@ -55,7 +71,7 @@ export const SendingTransactionInfo = () => {
           "w-[300px]": iphone
         })}>
           <p className="text-xl leading-6  overflow-hidden truncate">
-            {"dsadsaddsadsadsadsadsadsadsadsdsadsadsadsadsadsadasdsadsad"}
+            {dataCoin && dataCoin.tx.id}
           </p>
           <img
             className="cursor-pointer ml-2"
@@ -63,7 +79,7 @@ export const SendingTransactionInfo = () => {
             alt="иконка квадраты"
             onClick={() => {
               navigator.clipboard
-                .writeText(order && order.from.tx.id)
+                .writeText(dataCoin && dataCoin.tx.id)
                 .then((clipText) => console.log(clipText))
                 .catch((err) => {
                   console.log(err);
@@ -97,31 +113,33 @@ export const SendingTransactionInfo = () => {
       </div>
       <div>
          <p>Время отправки:</p>
-         <p className="text-blue-200">{order && formatDate(order.time.left)}</p>
+         <p className="text-blue-200">{dataCoin && getStrData(dataCoin.tx.timeReg)}</p>
       </div>
       <div>
          <p>Попадание в блок:</p>
-         <p className="text-blue-200">{order && formatDate(order.time.left)}</p>
+         <p className="text-blue-200">{dataCoin && (dataCoin.tx.timeBlock ? getStrData(dataCoin.tx.timeBlock) : '-')}</p>
       </div>
       <div>
          <p>Подтверждения:</p>
          <p className={classNames("text-blue-200", {
-            "text-red-500":  confirmations <= 0,
-            "text-lime-300": confirmations > 0
-         })}>{confirmations}</p>
+            "text-red-500":  Number(dataCoin && dataCoin.tx.confirmations) <= 0,
+            "text-lime-300": Number(dataCoin && dataCoin.tx.confirmations) > 0
+         })}>{dataCoin && dataCoin.tx.confirmations}</p>
       </div>
       <div>
          <p>Сумма:</p>
-         <p className="text-blue-200">{order && `${order.from.amount} ${order.from.code}`}</p>
+         <p className="text-blue-200">{dataCoin && `${dataCoin.tx.amount} ${dataCoin.code}`}</p>
       </div>
       <div>
          <p>Коммисия:</p>
-         <p className="text-blue-200">{order && formatDate(order.time.left)}</p>
+         <p className="text-blue-200">{dataCoin && `${dataCoin.tx.fee} ${dataCoin.code}`}</p>
       </div>
-      <div>
-         <p>Адресс подтверждения:</p>
-         <p className="text-blue-200">{order && formatDate(order.time.left)}</p>
-      </div>
+      {dataCoinTo && (
+        <div>
+          <p>{`Адрес получения ${dataCoinTo.code}:`}</p>
+          <p className="text-blue-200">{dataCoinTo && dataCoinTo.address}</p>
+        </div>
+      )}
     </div>
   );
 };
