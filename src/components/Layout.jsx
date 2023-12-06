@@ -3,14 +3,10 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
-export const Layout = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOpen }) => {
+export const Layout = ({ isLoggedIn }) => {
   return (
       <>
-        <Header
-          isLoggedIn={isLoggedIn}
-          dropdownMainMenuOpen={dropdownMainMenuOpen}
-          setDropdownMainMenuOpen={setDropdownMainMenuOpen}
-        />
+        <Header isLoggedIn={isLoggedIn} />
         <Outlet />
         <Footer />
       </>

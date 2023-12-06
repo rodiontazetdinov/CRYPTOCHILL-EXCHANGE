@@ -73,7 +73,7 @@ export const TablePartnerExchanges = ({ exchanges, title }) => {
                         <span>Заказ</span>
                     </div>
 
-                    <div className="snap-mandatory scroll-smooth snap-x overflow-x-scroll flex w-full">
+                    <div className="snap-mandatory scroll-smooth snap-x overflow-x-scroll flex w-full no-scrollbar">
                         {exchanges.length === 0 && (
                             <div className="bg-order rounded-2xl w-full text-center py-4">
                                 <span className="rounded-2xl">Нет данных</span>

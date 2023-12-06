@@ -86,20 +86,20 @@ export const Footer = ({ isLoggedIn }) => {
             <div>
               <h4 className="text-left text-2xl mb-4">CRYPTOCHILL</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base">О нас</li>
-                <li className="text-base">Наш бренд</li>
-                <li className="text-base">Партнерская программа</li>
-                <li className="text-base">Условия использования</li>
-                <li className="text-base">Политика конфиденциальности</li>
+                <li className="text-base"><Link to="/about">О нас</Link></li>
+                <li className="text-base"><Link to="/">Наш бренд</Link></li>
+                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                <li className="text-base"><Link to="/">Условия использования</Link></li>
+                <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base">Блог</li>
-                <li className="text-base">XMR to BTC</li>
-                <li className="text-base">ETH to BTC</li>
-                <li className="text-base">LTC to ETH</li>
+                <li className="text-base"><Link to="/blog">Блог</Link></li>
+                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
+                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
+                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
               </ul>
             </div>
             <div
@@ -174,20 +174,20 @@ export const Footer = ({ isLoggedIn }) => {
             <div>
               <h4 className="text-left text-2xl mb-4">CRYPTOCHILL</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base">О нас</li>
-                <li className="text-base">Наш бренд</li>
-                <li className="text-base">Партнерская программа</li>
-                <li className="text-base">Условия использования</li>
-                <li className="text-base">Политика конфиденциальности</li>
+                <li className="text-base"><Link to="/about">О нас</Link></li>
+                <li className="text-base"><Link to="/">Наш бренд</Link></li>
+                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                <li className="text-base"><Link to="/">Условия использования</Link></li>
+                <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base">Блог</li>
-                <li className="text-base">XMR to BTC</li>
-                <li className="text-base">ETH to BTC</li>
-                <li className="text-base">LTC to ETH</li>
+                <li className="text-base"><Link to="/blog">Блог</Link></li>
+                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
+                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
+                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
               </ul>
             </div>
             <div

@@ -21,7 +21,7 @@ export const FaqSeqtionItem = ({ question, answer }) => {
   return (
     <div className="flex flex-row items-center mb-4">
       <div
-        className="flex flex-col justify-start text-left w-full"
+        className="flex flex-col justify-start text-left w-full cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <h3

@@ -7,52 +7,45 @@ import partner from "../images/account-icons/partner.svg";
 import moneyBack from "../images/account-icons/money-back.svg";
 import apiManagement from "../images/account-icons/api-management.svg";
 import exit from "../images/account-icons/exit.svg";
+import classNames from "classnames";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export const AccountDropdown = () => {
+  const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1280px)");
+
+  const accountMenuData = [
+    {name: 'Персональные данные', to: "account", icon: personal},
+    {name: 'История обменов', to: "/account/history", icon: history},
+    {name: 'Адресная книга', to: "/account/adress-book", icon: adressBook},
+    {name: 'Партнерская программа', to: "/account/partner", icon: partner},
+    {name: 'Выводы средств', to: "/account/money-back", icon: moneyBack},
+    {name: 'API management', to: "/account/api-management", icon: apiManagement},
+    {name: 'Выйти', to: "/account/exit", icon: exit},
+  ]
+
     return (
-        <ul className="flex flex-col  absolute bg-drop text-base right-7 top-12 w-max p-2">
-            <li >
-              <Link to="/account" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={personal} alt="иконка персональных данных" />
-              Персональные данные
+        <ul className={classNames("flex flex-col absolute bg-drop backdrop-blur text-base top-12 py-1 z-10", {
+          "w-max right-0 rounded-2xl": !iphone,
+          "w-screen -right-4 rounded-b-2xl": iphone
+        })}>
+          {accountMenuData.map((menuItem) => { return (
+            <li className="flex w-full whitespace-nowrap cursor-pointer">
+              <Link to={menuItem.to} className={classNames("flex flex-row w-full whitespace-nowrap px-4 py-1", {
+                "justify-end": iphone,
+              })}>
+                {!iphone && (
+                  <img className="mr-1 w-6 h-6" src={menuItem.icon} alt="иконка персональных данных" />
+                )}
+                {menuItem.name}
+                {iphone && (
+                  <img className="ml-1 w-6 h-6" src={menuItem.icon} alt="иконка персональных данных" />
+                )}
               </Link>
             </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/account/history" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={history} alt="иконка истории обменов" />
-              История обменов
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/account/adress-book" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={adressBook} alt="иконка истории обменов" />
-              Адресная книга
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/account/partner" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={partner} alt="иконка истории обменов" />
-              Партнерская программа
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to={"/account/money-back"} className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={moneyBack} alt="иконка истории обменов" />
-              Выводы средств
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to={"/account/api-management"} className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={apiManagement} alt="иконка истории обменов" />
-              API management
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap">
-              <Link to={"/account/exit"} className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-1 w-6 h-6" src={exit} alt="иконка истории обменов" />
-              Выйти
-              </Link>
-            </li>
-          </ul>
+          )})}
+        </ul>
     )
 }

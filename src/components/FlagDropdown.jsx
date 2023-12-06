@@ -7,38 +7,24 @@ import georgia from "../images/ge-flag.svg";
 import poland from "../images/pl-flag.svg";
 
 export const FlagDropdown = () => {
+
+    const flagMenuData = [
+      {name: 'Русский', to: "/", icon: russia},
+      {name: 'English', to: "/", icon: england},
+      {name: 'Украïнська', to: "/", icon: ukraine},
+      {name: 'Georgian', to: "/", icon: georgia},
+      {name: 'Polish', to: "/", icon: poland},
+    ]
     return (
-        <ul className="flex flex-col bg-drop absolute text-base left-2 top-12 min-w-[224px] p-2">
-            <li >
-              <Link to="/personal-data" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-2 w-6 h-6" src={russia} alt="иконка персональных данных" />
-              Русский
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/history" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-2 w-6 h-6" src={england} alt="иконка истории обменов" />
-              English
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/adress-book" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-2 w-6 h-6" src={ukraine} alt="иконка истории обменов" />
-              Украïнська
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to="/partner" className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-2 w-6 h-6" src={georgia} alt="иконка истории обменов" />
-              Georgian
-              </Link>
-            </li>
-            <li className="flex flex-row items-center whitespace-nowrap mb-2">
-              <Link to={"/money-back"} className="flex flex-row items-center whitespace-nowrap mb-2">
-              <img className="mr-2 w-6 h-6" src={poland} alt="иконка истории обменов" />
-              Polish
-              </Link>
-            </li>
-          </ul>
+        <ul className="flex flex-col absolute min-w-[240px] rounded-2xl bg-drop backdrop-blur text-base left-0 top-12 w-max py-1 z-10">
+            {flagMenuData.map((menuItem) => { return (
+              <li className="flex flex-row items-center whitespace-nowrap cursor-pointer">
+                <Link to={menuItem.to} className="flex w-full items-center whitespace-nowrap px-4 py-1">
+                  <img className="mr-1 w-11 rounded-lg" src={menuItem.icon} alt="иконка персональных данных" />
+                  {menuItem.name}
+                </Link>
+              </li>
+            )})}
+        </ul>
     )
 }

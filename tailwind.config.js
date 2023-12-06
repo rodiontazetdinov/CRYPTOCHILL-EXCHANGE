@@ -16,7 +16,8 @@ module.exports = {
         'main-bg': '#060423',
         'input':'#08035B',
         'drop': 'rgba(6, 4, 35, 0.70)',
-        'account': 'rgba(6, 4, 35, 0.70)'
+        'account': 'rgba(6, 4, 35, 0.70)',
+        'sending-input': 'rgba(6, 4, 35, 0.40)',
       },
       maxWidth: {
         '1328': '1328px',

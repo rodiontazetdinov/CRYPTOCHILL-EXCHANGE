@@ -8,9 +8,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { closeDropdown, openDropdown } from "../store/actions";
 
 
-export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOpen }) => {
+export const Header = ({ isLoggedIn }) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
   const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
@@ -18,8 +20,16 @@ export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOp
   const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1328px)");
   const desctop = useMediaQuery("only screen and (min-width : 1328px)");
 
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const dropdownMainMenuOpen = useSelector(state => state.dropdowns.mainMenu);
+  const dropdownAccountOpen = useSelector(state => state.dropdowns.account);
+  const dropdownLanguageOpen = useSelector(state => state.dropdowns.flag);
+  const dispatch = useDispatch();
+
+  if (dropdownMainMenuOpen || dropdownAccountOpen || dropdownLanguageOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
 
   return (
     <header
@@ -40,19 +50,9 @@ export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOp
         <div className="flex flex-row justify-between w-full mt-5">
           <Navbar />
           <div className="flex flex-row items-center h-16">
-            <LanguageMenu
-              isLanguageOpen={isLanguageOpen}
-              setIsLanguageOpen={setIsLanguageOpen}
-              isAccountOpen={isAccountOpen}
-              setIsAccountOpen={setIsAccountOpen}
-            />
+            <LanguageMenu />
             {!isLoggedIn && (
-              <AccountMenu
-                isLanguageOpen={isLanguageOpen}
-                setIsLanguageOpen={setIsLanguageOpen}
-                isAccountOpen={isAccountOpen}
-                setIsAccountOpen={setIsAccountOpen}
-              />
+              <AccountMenu />
             )}
             {isLoggedIn && <AuthMenu />}
           </div>
@@ -62,19 +62,9 @@ export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOp
         <>
           <Navbar />
           <div className="flex flex-row items-center h-16">
-            <LanguageMenu
-              isLanguageOpen={isLanguageOpen}
-              setIsLanguageOpen={setIsLanguageOpen}
-              isAccountOpen={isAccountOpen}
-              setIsAccountOpen={setIsAccountOpen}
-            />
+            <LanguageMenu />
             {!isLoggedIn && (
-              <AccountMenu
-                isLanguageOpen={isLanguageOpen}
-                setIsLanguageOpen={setIsLanguageOpen}
-                isAccountOpen={isAccountOpen}
-                setIsAccountOpen={setIsAccountOpen}
-              />
+              <AccountMenu />
             )}
             {isLoggedIn && <AuthMenu />}
           </div>
@@ -89,32 +79,28 @@ export const Header = ({ isLoggedIn, dropdownMainMenuOpen, setDropdownMainMenuOp
             </Link>
             <button
               onClick={(ev) => {
-                setDropdownMainMenuOpen((prev) => !prev);
+                dispatch(dropdownMainMenuOpen ? closeDropdown('mainMenu') : openDropdown('mainMenu'));
                 ev.stopPropagation();
               }}
             >
               <img src={burger} alt="burger" />
             </button>
             {dropdownMainMenuOpen && (
-              <div className="absolute top-full -left-4 w-screen rounded-b-3xl bg-[#060423B2] backdrop-blur z-10 p-4">
-                <Navbar />
-              </div>
+              <>
+                <div className="absolute top-full -left-4 w-screen h-screen backdrop-blur z-10"></div>
+                <div className="absolute top-full -left-4 w-screen rounded-b-3xl bg-[#060423B2] backdrop-blur z-10 p-4">
+                  <Navbar />
+                </div>
+              </>
             )}
           </div>
-          <div className="flex flex-row items-center h-16 justify-between mt-7">
-            <LanguageMenu
-              isLanguageOpen={isLanguageOpen}
-              setIsLanguageOpen={setIsLanguageOpen}
-              isAccountOpen={isAccountOpen}
-              setIsAccountOpen={setIsAccountOpen}
-            />
+          <div className="flex flex-row items-center h-16 justify-between mt-7 relative">
+            {(dropdownLanguageOpen || dropdownAccountOpen) && (
+              <div className="absolute top-full -left-4 w-screen h-screen backdrop-blur z-10"></div>
+            )}
+            <LanguageMenu />
             {!isLoggedIn && (
-              <AccountMenu
-                isLanguageOpen={isLanguageOpen}
-                setIsLanguageOpen={setIsLanguageOpen}
-                isAccountOpen={isAccountOpen}
-                setIsAccountOpen={setIsAccountOpen}
-              />
+              <AccountMenu />
             )}
             {isLoggedIn && <AuthMenu />}
           </div>

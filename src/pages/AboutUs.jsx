@@ -17,6 +17,7 @@ import cryptoImg6 from "../images/about-us-img/cryptocurrencies/6.svg";
 // Libraries
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useSelector } from "react-redux";
 
 export const AboutUs = () => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
@@ -196,6 +197,8 @@ export const AboutUs = () => {
 
     ]
 
+    const coins = useSelector(state => state.coins);
+
     return (
         <section>
             <div className={classNames(
@@ -218,15 +221,20 @@ export const AboutUs = () => {
                             "text-3xl": iphone,
                             "text-5xl": !iphone,
                         })}>О нас</h3>
-                        <p className="text-2xl text-transparent bg-text bg-clip-text">Cryptochill был запущен командой блокчейн специалистов c большим опытом в разработке многофункциональных веб-приложений. Нас объединяет идея создания лучшей в своем классе платформы обмена цифровых активов, отвечающей всем потребностям криптосообщества.</p>
+                        <p className={classNames("text-transparent bg-text bg-clip-text", {
+                            "text-2xl": !iphone,
+                            "text-base": iphone
+                        })}>Cryptochill был запущен командой блокчейн специалистов c большим опытом в разработке многофункциональных веб-приложений. Нас объединяет идея создания лучшей в своем классе платформы обмена цифровых активов, отвечающей всем потребностям криптосообщества.</p>
                     </div>
+                    
                     <div className={classNames("w-2/5 flex pt-2 pb-6", {
                         "justify-center": desctop,
                         "w-1/3 justify-center": macbook,
                         "justify-end w-full": ipadMini,
                         "justify-center w-full": iphone
                     })}>
-                        <div className={classNames("relative w-[325px]", {
+                        <div className={classNames("relative", {
+                            "w-[325px]": desctop || macbook,
                             "w-44 mr-10 mt-4": ipadMini,
                             "w-44 mt-4": iphone
                         })}>
@@ -307,9 +315,9 @@ export const AboutUs = () => {
                 </div>
             )}
 
-            <div className="bg-main-bg w-full">
+            <div className="bg-main-bg w-full pb-4">
                 <div className={classNames(
-                    "mx-auto max-w-1328 text-white font-semibold text-left mb-16", {
+                    "mx-auto max-w-1328 text-white font-semibold text-left", {
                     "max-w-1328 min-h-[657px]": desctop,
                     "max-w-main-container min-h-[657px]": macbook,
                     "max-w-tablet-container": ipadMini,
@@ -324,7 +332,7 @@ export const AboutUs = () => {
                     <ul className={classNames("flex flex-wrap justify-between", {
                         "justify-evenly": !desctop,
                     })}>
-                        {cryptocurrencies.map((crypto, index) => {
+                        {coins.map((crypto, index) => {
                             return (<li className={classNames(" bg-order rounded-2xl flex flex-col items-center mb-6 pt-6 pb-5", {
                                 'w-[200px]': desctop,
                                 'mx-2 w-[200px]': macbook,
