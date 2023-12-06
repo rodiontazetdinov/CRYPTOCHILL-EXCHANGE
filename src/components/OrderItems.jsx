@@ -66,7 +66,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
             dispatch(setOrderCreationState(response.data));
           }
         })
-          .catch((err) => console.error(err));
+        .catch((err) => console.error(err));
       }
 
       function validateInput(input) {
