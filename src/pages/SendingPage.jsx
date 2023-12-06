@@ -154,20 +154,20 @@ export const SendingPage = () => {
     // console.log(1);
   }, []);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     order &&
-  //     api.getOrder({id: order.id, token: order.token})
-  //   .then((response) => {
-  //     console.log(response);
-  //     dispatch(setOrder(response.data));
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   })
-  //   }, 30000);
-  //   return () => clearTimeout(timer);
-  // }, [order]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      order &&
+      api.getOrder({id: order.id, token: order.token})
+    .then((response) => {
+      console.log(response);
+      dispatch(setOrder(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [order]);
 
   // switch (order.status) {
   switch (order.status) {
