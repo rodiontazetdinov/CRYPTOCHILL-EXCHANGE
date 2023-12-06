@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "http://193.149.187.207/api",
+  "homepage": "http://193.149.187.207",
   "private": true,
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
