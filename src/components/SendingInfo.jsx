@@ -37,11 +37,26 @@ export const SendingInfo = ({
   );
 
   const [isActive, setIsActive] = useState(true);
+  const [isAddressSentCopied, setAddressSentCopied] = useState(false);
+  const [isAddressRecCopied, setAddressRecCopied] = useState(false);
   const order = useSelector((state) => state.order);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitted");
+  };
+
+  const handleClickCopy = (text, setState) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setState(true);
+        setTimeout(() => {
+          setState(false);
+        }, 500);
+      })
+      .catch(() => {
+          alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена!');
+      })
   };
 
   return (
@@ -65,19 +80,19 @@ export const SendingInfo = ({
             "text-xl items-start": phone,
             "text-2xl items-center": !phone
         })}>
-          <p className="break-all">{order && order.from.address}</p>
-          <img className="cursor-pointer" src={squares} alt="иконка квадраты" onClick={() => {
-            navigator.clipboard.writeText(order && order.from.address)
-              .then((clipText) => console.log(clipText))
-              .catch((err) => {
-                console.log(err)
-                alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
-              })
-          }}/>
+          <p 
+            className={classNames("break-all", {
+              "text-[#95FF54]": isAddressSentCopied
+            })}
+          >{order && order.from.address}</p>
+          <img
+            className="cursor-pointer"
+            src={squares}
+            alt="иконка квадраты"
+            onClick={() => handleClickCopy(order && order.from.address, setAddressSentCopied)}
+          />
         </div>
-        <p className={classNames("text-blue-200 mt-4 text-base",{
-
-        })}>
+        <p className={classNames("text-blue-200 mt-4 text-base")}>
           Курс будет зафиксирован после получения подтверждений сети
         </p>
       </div>
@@ -92,16 +107,13 @@ export const SendingInfo = ({
             "text-xl items-start": phone,
             "text-2xl items-center": !phone
         })}>
-          <p className="break-all">{order && order.to.address}</p>
+          <p
+            className={classNames("break-all", {
+              "text-[#95FF54]": isAddressRecCopied
+            })}
+          >{order && order.to.address}</p>
           <img className="cursor-pointer" src={squares} alt="иконка квадраты" 
-          onClick={() => {
-            navigator.clipboard.writeText(order && order.to.address)
-              .then((clipText) => console.log(clipText))
-              .catch((err) => {
-                console.log(err)
-                alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
-              })
-          }}/>
+          onClick={() => handleClickCopy(order && order.to.address, setAddressRecCopied)}/>
         </div>
       </div>
     </div>
