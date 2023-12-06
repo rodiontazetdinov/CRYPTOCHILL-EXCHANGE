@@ -4,6 +4,7 @@ import classNames from "classnames";
 import review1 from "../images/review1.svg";
 import review2 from "../images/review2.svg";
 import pictureDone from "../images/picture-done.png";
+import { useSelector } from "react-redux";
 
 export const SendingTransactionDone = () => {
   const miniTop = useMediaQuery(
@@ -11,6 +12,7 @@ export const SendingTransactionDone = () => {
   );
   const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 600px)");
 
+  const coinFrom = useSelector(state => state.order.from); 
 
 //   useEffect(() => {
 //     // setTimer(order && order.time.left);
@@ -32,7 +34,7 @@ export const SendingTransactionDone = () => {
       "text-5xl": !phone,
       "text-3xl": phone
     })}>
-        Ваш Bitcoin был отправлен
+        {`Ваш ${coinFrom.code} был отправлен`}
     </p>
     <p className={classNames("max-w-[380px]", {
       "text-base": phone
