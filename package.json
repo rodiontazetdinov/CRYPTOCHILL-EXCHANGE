@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage": "https://rodiontazetdinov.github.io/CRYPTOCHILL-EXCHANGE",
+  "homepage": "http://193.149.187.207",
   "private": true,
   "dependencies": {
     "@splidejs/react-splide": "^0.7.12",
