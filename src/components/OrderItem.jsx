@@ -13,6 +13,8 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
     "only screen and (min-width : 1024px)"
   );
 
+  const iphone = useMediaQuery("only screen and (max-width : 410px)");
+
   const [ isFocusInput,  setFocusInput ] = useState(false);
 
   const isFixed = useSelector(state => state.isFixed);
@@ -33,7 +35,7 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
   return (
     <div
       className={classNames(
-        "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-[24px]",
+        "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-[24px] ",
         {
           "mt-2 w-[288px]": ipadMini,
           "mt-2 w-full max-w-mobile-container": miniOrder,
@@ -44,29 +46,33 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
       <h3 className="text-3xl w-full text-left">{title}</h3>
       {/* <OrderItemCoin /> */}
       <div className={classNames(
-        "flex flex-wrap h-12 justify-between w-full mt-3 rounded-xl bg-input relative",
+        "flex h-12 justify-between w-full mt-3 rounded-xl bg-input relative",
         {
           'z-10': dropdownState
         }
       )}>
         {!dropdownState && (
-          <input
-            type="text"
-            className={classNames(
-              "flex-grow block bg-transparent outline-none font-mono text-2xl py-2 pl-6 pr-1 text-[#D7DFFF] no-scrollbar",
-              {
-                "max-w-[180px]": laptop,
-                "max-w-[140px]": ipadMini,
-              }
-            )}
-            onFocus={() => setFocusInput(true)}
-            onBlur={() => setFocusInput(false)}
-            onChange={(ev) => setAmountCoin(ev)}
-            value={`${float ? '≈' : ''}${amount}`}
-            maxLength={17}
-          />
+          <div className="flex-grow">
+            <input
+              type="text"
+              className={classNames(
+                "w-full bg-transparent outline-none font-mono text-2xl py-2 pl-6 pr-1 text-[#D7DFFF] no-scrollbar",
+                // {
+                //   "max-w-[180px]": laptop,
+                //   "max-w-[140px]": ipadMini,
+                //   "max-w-[60%]": miniOrder,
+                //   "max-w-[45%]": iphone,
+                // }
+              )}
+              onFocus={() => setFocusInput(true)}
+              onBlur={() => setFocusInput(false)}
+              onChange={(ev) => setAmountCoin(ev)}
+              value={`${float ? '≈' : ''}${amount}`}
+              maxLength={17}
+            />
+          </div>
         )}
-        <div className={classNames("min-w-[100px]", {
+        <div className={classNames("min-w-[120px]", {
           "w-full": dropdownState
         })}>
           <DropdownListCoins
@@ -79,10 +85,10 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
           />
         </div>
         {(isWarning && !dropdownState) && (
-          <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-auto rounded-lg mb-2">
-              <img src={warning} alt="" />
-              <p className="text-[#08035B]">{warningSum}</p>
-          </div>
+        <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-auto rounded-lg mb-2">
+            <img src={warning} alt="" />
+            <p className="text-[#08035B]">{warningSum}</p>
+        </div>
         )}
       </div>
       {!isFocusInput && (
