@@ -40,26 +40,29 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
         else if (amount > Number(state.creatingOrder.from.max)) return false
         return true;
       }
+      
+      const setStateCoin = (name, which='from') => {
+        if (name === state.creatingOrder.to.code) {
+          
+        }
 
-      const setStateSentCoin = (name, amount) => {
-        const from =`${amount ? amount : numberOfCoinsSent} ${name}`;
-        const to = state.creatingOrder.to.code;
-        console.log(name);
-        getPrice(from, to)
-          .then((response) => {
-            if (response.data === null) {
-              alert('Упс, что-то пошло не так(');
-            } else {
-              dispatch(setOrderCreationState(response.data));
-            }
-          })
-          .catch((err) => console.error(err));
-      }
+        let from, to;
+        switch (which) {
+          case 'to':
+            // Если монеты одинаковые прост меняем местами
+            const fromCoinName = name === state.creatingOrder.from.code ? state.creatingOrder.to.code : state.creatingOrder.from.code;
+            from = `${numberOfCoinsSent} ${fromCoinName}`;
+            to = name;
+            break;
+          default:
+            const toCoinName = name === state.creatingOrder.to.code ? state.creatingOrder.from.code : state.creatingOrder.to.code;
+            from =`${numberOfCoinsSent} ${name}`;
+            to = toCoinName;
+            break;
+        }
 
-      const setStateReceivedCoin = (name) => {
-        const from = `${numberOfCoinsSent} ${state.creatingOrder.from.code}`;
-        const to = name;
-        console.log(name);
+        console.log(from, to);
+
         getPrice(from, to)
         .then((response) => {
           if (response.data === null) {
@@ -108,7 +111,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       useEffect(() => {
         const timer = setTimeout(() => {
           if (Number(numberOfCoinsSent) > 0 && checkLimit(numberOfCoinsSent)) {
-            setStateSentCoin(state.creatingOrder.from.code, numberOfCoinsSent);
+            setStateCoin(state.creatingOrder.from.code);
           }
         }, 1000);
         return () => clearTimeout(timer);
@@ -139,7 +142,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               dropdownState={dropdownSent}
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
               stateCoin={state.creatingOrder.from}
-              setStateCoin={(name) => setStateSentCoin(name, state.creatingOrder.from.amount)}
+              setStateCoin={setStateCoin}
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
               amount={numberOfCoinsSent}
@@ -152,7 +155,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               dropdownState={dropdownReceived}
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateCoin={state.creatingOrder.to}
-              setStateCoin={setStateReceivedCoin}
+              setStateCoin={(name) => setStateCoin(name, 'to')}
               nameCoinTo={state.creatingOrder.from.code}
               amount={state.creatingOrder.to.amount}
               warningShow={false}
