@@ -72,7 +72,9 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             .then((data) => {
               console.log(data);
               if (data.msg === "Invalid address") {
-                setInvalidAddress(true);
+                setInvalidAddress('неверный адрес');
+              }else if (data.code > 0){
+                setInvalidAddress(data.msg);
               } else {
                 dispatch(setOrder(data.data));
                 localStorage.setItem("order", JSON.stringify(data.data));
@@ -140,7 +142,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
         {invalidAddress && (
           <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
             <img src={warning} alt="" />
-            <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
+            <p className="text-[#08035B] ml-2">{invalidAddress}</p>
           </div>
         )}
       </div>
