@@ -22,29 +22,29 @@ export const SendingCoinTo = () => {
   
   return (
     <div
-      className={classNames("flex   mt-6", {
+      className={classNames("flex mt-6", {
         "flex-col self-start justify-left ml-6 relative": miniSending && !iphone,
         "flex-row mx-auto space-x-4": !miniSending,
-        "flex-col justify-left ml-4 relative": iphone,
+        "flex-col justify-left ml-2 relative": iphone,
       })}
     >
       <div
-        className={classNames("flex flex-row ", {
+        className={classNames("flex flex-row", {
           "mb-4": miniSending,
           "space-x-4": !miniSending,
         })}
       >
         <div
-          className={classNames(" flex flex-col ", {
+          className={classNames("flex flex-col flex-grow", {
             "order-2 text-left": miniSending,
             "order-1 text-right space-y-1": !miniSending,
           })}
         >
           <p className="text-xl font-semibold">Вы отправляете</p>
           <p className="text-xl font-semibold">
-            <span className="font-mono text-2xl">{order && order.from.amount}</span> {order && order.from.code}
+            <span className="font-mono text-2xl leading-10">{order && order.from.amount}</span> {order && order.from.code}
           </p>
-          <p className="text-base">{order && order.from.address}</p>
+          <p className="break-all text-base text-[#D7DFFF]">{order && order.from.address}</p>
         </div>
         <img
           className={classNames("w-20 h-20", {
@@ -59,8 +59,8 @@ export const SendingCoinTo = () => {
       </div>
       {!miniSending && <img className="w-16 h-16" src={arrow} />}
       <div
-        className={classNames("flex flex-row ", {
-          "": miniSending,
+        className={classNames("flex flex-row", {
+          "w-full": miniSending,
           "space-x-4": !miniSending,
         })}
       >
@@ -75,16 +75,16 @@ export const SendingCoinTo = () => {
           alt="монета 2"
         />
         <div
-          className={classNames("text-left flex flex-col ", {
+          className={classNames("text-left flex flex-col", {
             "": miniSending,
             "space-y-1": !miniSending,
           })}
         >
           <p className="text-xl font-semibold">Вы получаете</p>
           <p className="text-xl font-semibold">
-            <span className="font-mono text-2xl">{order && order.to.amount}</span> {order && order.to.code}
+            <span className="font-mono text-2xl leading-10">{order && order.to.amount}</span> {order && order.to.code}
           </p>
-          <p className="text-base">{order && order.to.address}</p>
+          <p className="break-all text-base text-[#D7DFFF]">{order && order.to.address}</p>
         </div>
       </div>
       {miniSending && !iphone && (

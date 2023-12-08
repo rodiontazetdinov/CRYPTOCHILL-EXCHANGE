@@ -42,8 +42,9 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       }
 
       const setStateSentCoin = (name, amount) => {
-        const from =`${amount ? amount : state.creatingOrder.from.amount} ${name}`;
+        const from =`${amount ? amount : numberOfCoinsSent} ${name}`;
         const to = state.creatingOrder.to.code;
+        console.log(name);
         getPrice(from, to)
           .then((response) => {
             if (response.data === null) {
@@ -56,8 +57,9 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       }
 
       const setStateReceivedCoin = (name) => {
-        const from = `${state.creatingOrder.from.amount} ${state.creatingOrder.from.code}`;
+        const from = `${numberOfCoinsSent} ${state.creatingOrder.from.code}`;
         const to = name;
+        console.log(name);
         getPrice(from, to)
         .then((response) => {
           if (response.data === null) {
