@@ -54,10 +54,10 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
       onSubmit={(e) => {
         e.preventDefault();
 
-          if (!validationAddress(coinAddress)) {
-            setInvalidAddress(true);
-            return
-          }
+          // if (!validationAddress(coinAddress)) {
+          //   setInvalidAddress(true);
+          //   return
+          // }
 
           const dataOrder = {
             "fromCcy": creatingOrder.from.code,
@@ -67,9 +67,10 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             "type": isFixed ? 'fixed' : 'float',
             "toAddress": coinAddress
           }
-          console.log(dataOrder);
+          
           api.createOrder(dataOrder)
             .then((data) => {
+              console.log(data);
               if (data.msg === "Invalid address") {
                 setInvalidAddress(true);
               } else {
@@ -124,7 +125,10 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             className="cursor-pointer"
             onClick={() => {
               navigator.clipboard.readText()
-                .then((clipText) => setCoinAddress(clipText))
+                .then((clipText) => {
+                  console.log(clipText);
+                  setCoinAddress(clipText)
+                })
                 .catch((err) => {
                   alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
                 })
