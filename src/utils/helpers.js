@@ -22,3 +22,27 @@ export function formatDate(timestamp) {
 
   return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
+
+export function processOrderErrors(errors) {
+  if (!Array.isArray(errors) || errors.length === 0) {
+    return "Creating an order is possible.";
+  }
+
+  const errorMessages = {
+    MAINTENANCE_FROM: "Сеть приостановлена на техническое обслуживание",
+    MAINTENANCE_TO: "Сеть приостановлена на техническое обслуживание",
+    OFFLINE_FROM: "Монета недоступна",
+    OFFLINE_TO: "Монета недоступна",
+    RESERVE_FROM: "Недостаточно монет в резерве для обмена",
+    RESERVE_TO: "Недостаточно монет в резерве для обмена",
+    LIMIT_MIN: "Сумма меньше минимального лимита.",
+    LIMIT_MAX: "Сумма больше максимального лимита.",
+  };
+
+  const errorMessageList = errors.map((error) => {
+    const message = errorMessages[error];
+    return message ? `${error}: ${message}` : `Неизвестная ошибка: ${error}`;
+  });
+
+  return errorMessageList.join("\n");
+}

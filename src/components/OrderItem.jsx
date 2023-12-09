@@ -6,28 +6,38 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import warning from "../images/icons/warning.svg";
 
-export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownState, setDropdownState, nameCoinTo, warningShow, float, setAmountCoin=(() => {}) }) => {
+import { processOrderErrors } from "../utils/helpers";
+
+export const OrderItem = ({
+  title,
+  amount,
+  stateCoin,
+  setStateCoin,
+  dropdownState,
+  setDropdownState,
+  nameCoinTo,
+  which,
+  float,
+  setAmountCoin=(() => {})
+}) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
-  const laptop = useMediaQuery(
-    "only screen and (min-width : 1024px)"
-  );
-
+  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
   const iphone = useMediaQuery("only screen and (max-width : 410px)");
 
   const [ isFocusInput,  setFocusInput ] = useState(false);
 
+  const errors = useSelector(state => state.creatingOrder.errors);
   const isFixed = useSelector(state => state.isFixed);
   const orderFrom = useSelector(state => state.creatingOrder.from);
+  
+  const errorsWhich = errors && errors.filter((err) => err.split('_')[1] === which);
 
-  let isWarning = false;
   let warningSum = null;
-  if (warningShow) {
+  if (which === 'FROM') {
     if (Number(orderFrom.max) < amount) {
-        isWarning = true;
         warningSum = `Максимальная сумма для обмена ${orderFrom.max} ${orderFrom.code}`;
     } else if (Number(orderFrom.min) > amount) {
-        isWarning = true;
         warningSum = `Минимальная сумма для обмена ${orderFrom.min} ${orderFrom.code}`
     }
   }
@@ -57,12 +67,9 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
               type="text"
               className={classNames(
                 "w-full bg-transparent outline-none font-mono text-2xl py-2 pl-6 pr-1 text-[#D7DFFF] no-scrollbar",
-                // {
-                //   "max-w-[180px]": laptop,
-                //   "max-w-[140px]": ipadMini,
-                //   "max-w-[60%]": miniOrder,
-                //   "max-w-[45%]": iphone,
-                // }
+                {
+                  'text-[#d9d6ff80]': errorsWhich && errorsWhich.length > 0
+                }
               )}
               onFocus={() => setFocusInput(true)}
               onBlur={() => setFocusInput(false)}
@@ -84,13 +91,17 @@ export const OrderItem = ({ title, amount, stateCoin, setStateCoin, dropdownStat
             amount={amount}
           />
         </div>
-        {(isWarning && !dropdownState) && (
-        <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-auto rounded-lg mb-2">
+        {(((errorsWhich && errorsWhich.length > 0) || warningSum) && !dropdownState) && (
+        <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-[5%] rounded-lg mb-2">
             <img src={warning} alt="" />
-            <p className="text-[#08035B]">{warningSum}</p>
+            <p className="text-[#08035B]">
+              {(errorsWhich.length > 0) && processOrderErrors(errorsWhich)}
+              {warningSum && warningSum}
+            </p>
         </div>
         )}
       </div>
+
       {!isFocusInput && (
         <div className="flex flex-row justify-between w-full">
           <p className="text-left text-base mt-2">{`1 ${stateCoin.code} ${isFixed ? '=' : '≈'} ${stateCoin.rate} ${nameCoinTo}`}</p>
