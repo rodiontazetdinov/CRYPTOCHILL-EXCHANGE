@@ -12,12 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeDropdown, openDropdown, setOrderCreationState } from "../store/actions";
 import { api } from "../utils/api";
 
+
 export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
 
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
       const state = useSelector(state => state);
-
+      
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
 
@@ -42,10 +43,6 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       }
       
       const setStateCoin = (name, which='from') => {
-        if (name === state.creatingOrder.to.code) {
-          
-        }
-
         let from, to;
         switch (which) {
           case 'to':
@@ -132,6 +129,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
         })
           .catch((err) => console.error(err));
       }
+
       
     return (
         <div className={classNames(" flex flex-row items-center mt-10 w-full",{
@@ -146,7 +144,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
               amount={numberOfCoinsSent}
-              warningShow={true}
+              which="FROM"
             />
             {!ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
             {/* <img src={orderSwitch} alt="switch"/> */}
@@ -158,7 +156,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               setStateCoin={(name) => setStateCoin(name, 'to')}
               nameCoinTo={state.creatingOrder.from.code}
               amount={state.creatingOrder.to.amount}
-              warningShow={false}
+              which="TO"
               float={!state.isFixed}
             />
         </div>
