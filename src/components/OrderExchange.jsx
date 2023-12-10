@@ -19,10 +19,16 @@ import { setOrder } from "../store/actions";
 
 export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
+  const macbook = useMediaQuery("only screen and (max-width : 1024px)");
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
+  const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [ coinAddress, setCoinAddress ] = useState('');
+  const [ coinMemo, setCoinMemo ] = useState('');
   const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [ openQR, setOpenQR ] = useState(false);
 
@@ -31,7 +37,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
     width: '80vw',
   }
 
-  const receivedCoinName = useSelector(state => state.creatingOrder.to.code);
+  const receivedCoin = useSelector(state => state.creatingOrder.to);
   const creatingOrder = useSelector(state => state.creatingOrder);
   const isFixed = useSelector(state => state.isFixed);
 
@@ -105,45 +111,84 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
         </div>
       )}
       <h3 className="text-3xl">Назначение</h3>
-      <div className="relative bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-lg justify-between mt-2">
-        <input
-          className="bg-[#08035B] text-white focus:outline-none w-3/4"
-          type="text"
-          value={coinAddress}
-          placeholder={`Ваш ${receivedCoinName} адрес`}
-          onChange={(ev) => {
-            setCoinAddress(ev.target.value.replace(/[^\d\a-zA-Z\:]/g, ''));
-            setInvalidAddress(false);
-          }}
-        />
-        <div className="flex flex-row">
-          <img
-            onClick={() => setOpenQR(true)}
-            className="mr-3 cursor-pointer"
-            src={qr}
-            alt='QR'
-          />
-          <img
-            className="cursor-pointer"
-            onClick={() => {
-              navigator.clipboard.readText()
-                .then((clipText) => {
-                  console.log(clipText);
-                  setCoinAddress(clipText)
-                })
-                .catch((err) => {
-                  alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
-                })
+      <div className={classNames("flex", {
+        'flex-col': macbook
+      })}>
+        <div className={classNames("relative bg-[#08035B] flex flex-row flex-grow py-3 px-6 rounded-xl justify-between mt-2", {
+          'mr-4': !macbook,
+          'mr-0 mb-10': macbook
+        })}>
+          <input
+            className="bg-[#08035B] text-white focus:outline-none w-3/4"
+            type="text"
+            value={coinAddress}
+            placeholder={`Ваш ${receivedCoin.code} адрес`}
+            onChange={(ev) => {
+              setCoinAddress(ev.target.value.replace(/[^\d\a-zA-Z\:]/g, ''));
+              setInvalidAddress(false);
             }}
-            src={squares}
-            alt='Paste'
           />
-        </div>
-        {invalidAddress && (
-          <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
-            <img src={warning} alt="" />
-            <p className="text-[#08035B] ml-2">{invalidAddress}</p>
+          <div className="flex flex-row">
+            <img
+              onClick={() => setOpenQR(true)}
+              className="mr-3 cursor-pointer"
+              src={qr}
+              alt='QR'
+            />
+            <img
+              className="cursor-pointer"
+              onClick={() => {
+                navigator.clipboard.readText()
+                  .then((clipText) => {
+                    console.log(clipText);
+                    setCoinAddress(clipText)
+                  })
+                  .catch((err) => {
+                    alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                  })
+              }}
+              src={squares}
+              alt='Paste'
+            />
           </div>
+          {invalidAddress && (
+            <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
+              <img src={warning} alt="" />
+              <p className="text-[#08035B] ml-2">{invalidAddress}</p>
+            </div>
+          )}
+        </div>
+        {(receivedCoin.code === 'TON') && (
+          <div className="relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between mt-2">
+          <p className={classNames("absolute -top-9 text-xl font-semibold whitespace-nowrap", {
+            'right-0': !macbook,
+            'left-0': macbook
+          })}>Destination tag (optional)</p>
+          <input
+            className="bg-[#08035B] text-white focus:outline-none w-[160px]"
+            type="text"
+            value={coinMemo}
+            placeholder={`Destination tag`}
+            onChange={ev => setCoinMemo(ev.target.value)}
+          />
+          <div className="flex flex-row">
+            <img
+              className="cursor-pointer"
+              onClick={() => {
+                navigator.clipboard.readText()
+                  .then((clipText) => {
+                    console.log(clipText);
+                    setCoinAddress(clipText)
+                  })
+                  .catch((err) => {
+                    alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                  })
+              }}
+              src={squares}
+              alt='Paste'
+            />
+          </div>
+        </div>
         )}
       </div>
       <button

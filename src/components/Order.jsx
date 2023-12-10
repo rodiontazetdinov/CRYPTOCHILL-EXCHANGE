@@ -11,15 +11,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const Order = () => {
-  const iphone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 744px)"
-  );
-  const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px) and (max-width : 1024px)"
-  );
-  const laptop = useMediaQuery(
-    "only screen and (min-width : 1024px)"
-  );
+  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
