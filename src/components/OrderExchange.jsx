@@ -37,7 +37,9 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
     width: '80vw',
   }
 
+  const coins = useSelector(state => state.coins);
   const receivedCoin = useSelector(state => state.creatingOrder.to);
+  const receivedCoinTag = coins.find((coin) => coin.code === receivedCoin.code).tag;
   const creatingOrder = useSelector(state => state.creatingOrder);
   const isFixed = useSelector(state => state.isFixed);
 
@@ -158,7 +160,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             </div>
           )}
         </div>
-        {(receivedCoin.code === 'TON') && (
+        {receivedCoinTag && (
           <div className="relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between mt-2">
           <p className={classNames("absolute -top-9 text-xl font-semibold whitespace-nowrap", {
             'right-0': !macbook,
