@@ -41,7 +41,7 @@ export function processOrderErrors(errors) {
 
   const errorMessageList = errors.map((error) => {
     const message = errorMessages[error];
-    return message ? `${error}: ${message}` : `Неизвестная ошибка: ${error}`;
+    return message ? `${message}` : `Неизвестная ошибка: ${error}`;
   });
 
   return errorMessageList.join("\n");
