@@ -46,3 +46,17 @@ export function processOrderErrors(errors) {
 
   return errorMessageList.join("\n");
 }
+
+// достаёт число из троки
+export function extractAmountFromString(inputString) {
+  // Ищем все числа в строке, включая целые и с плавающей точкой
+  const matches = inputString.match(/(\d+(\.\d+)?)/);
+
+  // Если нашли совпадение, возвращаем первое найденное число
+  if (matches && matches.length > 0) {
+      return matches[0];
+  }
+
+  // Если не найдено, возвращаем null или что-то по умолчанию
+  return null;
+}
