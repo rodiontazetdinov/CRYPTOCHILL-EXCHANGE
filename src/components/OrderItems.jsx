@@ -5,7 +5,7 @@ import { OrderItem } from "./OrderItem";
 import orderSwitch from '../images/order-switch.svg';
 
 // lib
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,6 +66,9 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
             alert('Упс, что-то пошло не так(');
           } else {
             dispatch(setOrderCreationState(response.data));
+            if (response.data.to.amount < 0) {
+              setAmountCoin(response.data.from.min);
+            }
           }
         })
         .catch((err) => console.error(err));
