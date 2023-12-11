@@ -5,7 +5,7 @@ import { OrderItem } from "./OrderItem";
 import orderSwitch from '../images/order-switch.svg';
 
 // lib
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";

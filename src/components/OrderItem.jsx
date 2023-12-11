@@ -1,12 +1,13 @@
-import { OrderItemCoin } from "./OrderItemCoin";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
-import { DropdownListCoins } from "./DropdownListCoins";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import warning from "../images/icons/warning.svg";
 
-import { processOrderErrors } from "../utils/helpers";
+import { DropdownListCoins } from "./DropdownListCoins";
+import { OrderItemCoin } from "./OrderItemCoin";
+import { processOrderErrors, extractAmountFromString } from "../utils/helpers";
+
+import warning from "../images/icons/warning.svg";
 
 export const OrderItem = ({
   title,
@@ -100,7 +101,7 @@ export const OrderItem = ({
             <img src={warning} alt="" />
             <p className="text-[#08035B]">
               {(errorsWhich.length > 0) && processOrderErrors(errorsWhich)}
-              {warningSum && warningSum}
+              {warningSum && <span className="cursor-pointer" onClick={() => setAmountCoin(extractAmountFromString(warningSum))}>{warningSum}</span>}
             </p>
         </div>
         )}
