@@ -39,7 +39,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
 
   const coins = useSelector(state => state.coins);
   const receivedCoin = useSelector(state => state.creatingOrder.to);
-  const receivedCoinTag = coins.find((coin) => coin.code === receivedCoin.code).tag;
+  const receivedCoinTag = coins.find((coin) => coin.code === receivedCoin.code)?.tag;
   const creatingOrder = useSelector(state => state.creatingOrder);
   const isFixed = useSelector(state => state.isFixed);
 
@@ -116,10 +116,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
       <div className={classNames("flex", {
         'flex-col': macbook
       })}>
-        <div className={classNames("relative bg-[#08035B] flex flex-row flex-grow py-3 px-6 rounded-xl justify-between mt-2", {
-          'mr-4': !macbook,
-          'mr-0 mb-10': macbook
-        })}>
+        <div className={classNames("relative bg-[#08035B] flex flex-row flex-grow py-3 px-6 rounded-xl justify-between mt-2")}>
           <input
             className="bg-[#08035B] text-white focus:outline-none w-3/4"
             type="text"
@@ -161,7 +158,10 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
           )}
         </div>
         {receivedCoinTag && (
-          <div className="relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between mt-2">
+          <div className={classNames("relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between", {
+            'mt-2 ml-4': !macbook,
+            'mt-12': macbook
+          })}>
           <p className={classNames("absolute -top-9 text-xl font-semibold whitespace-nowrap", {
             'right-0': !macbook,
             'left-0': macbook

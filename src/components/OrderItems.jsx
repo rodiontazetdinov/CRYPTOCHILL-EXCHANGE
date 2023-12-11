@@ -114,12 +114,12 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
         return () => clearTimeout(timer);
       }, [numberOfCoinsSent]);
 
-      const setAmountCoin = (event) => {
-        setNumberOfCoinsSent(validateInput(event.target.value));
+      const setAmountCoin = (amount) => {
+        setNumberOfCoinsSent(validateInput(amount));
       }
 
       const swapCoin = (from, to) => {
-        getPrice(`${from[0]} ${from[1]}`, to)
+        getPrice(`${numberOfCoinsSent} ${from[1]}`, to)
         .then((response) => {
           if (response.data === null) {
             alert('Упс, что-то пошло не так(');
@@ -127,7 +127,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
             dispatch(setOrderCreationState(response.data));
           }
         })
-          .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
       }
 
       

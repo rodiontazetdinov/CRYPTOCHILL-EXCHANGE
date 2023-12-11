@@ -72,8 +72,12 @@ export const OrderItem = ({
                 }
               )}
               onFocus={() => setFocusInput(true)}
-              onBlur={() => setFocusInput(false)}
-              onChange={(ev) => setAmountCoin(ev)}
+              onBlur={(ev) => {
+                setTimeout(() => {
+                  setFocusInput(false);
+                }, 1000);
+              }}
+              onChange={(ev) => setAmountCoin(ev.target.value)}
               value={`${float ? '≈' : ''}${amount}`}
               maxLength={17}
             />
@@ -116,10 +120,7 @@ export const OrderItem = ({
           >{`min: ${stateCoin.min}`}</p>
           <p
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => {
-              setAmountCoin(stateCoin.max);
-              console.log(stateCoin.max);
-            }}
+            onClick={() => setAmountCoin(stateCoin.max)}
           >{`max: ${stateCoin.max}`}</p>
         </div>
       )}
