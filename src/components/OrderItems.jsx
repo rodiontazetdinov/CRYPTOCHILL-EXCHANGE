@@ -74,6 +74,7 @@ export const OrderItems = ({
         let fromCcy = coinSend;
         let toCcy = coinRecv;
 
+        // Если название коинов одинаковое, меняем их местами:
         if (fromCcy === state.creatingOrder.to.code) {
           toCcy = state.creatingOrder.from.code;
         } else if (toCcy === state.creatingOrder.from.code) {
@@ -90,6 +91,9 @@ export const OrderItems = ({
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
+                  if (response.data.to.amount < 0) {
+                    setAmountCoin(response.data.from.min);
+                  }
                 }
               })
               .catch((err) => console.error(err));
