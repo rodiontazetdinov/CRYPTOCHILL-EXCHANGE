@@ -5,73 +5,34 @@ import { OrderItem } from "./OrderItem";
 import orderSwitch from '../images/order-switch.svg';
 
 // lib
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { closeDropdown, openDropdown, setOrderCreationState } from "../store/actions";
+import { closeDropdown, openDropdown, setCoins, setOrderCreationState } from "../store/actions";
 import { api } from "../utils/api";
 
 
-export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
-
+export const OrderItems = ({
+  numberOfCoinsSent,
+  setNumberOfCoinsSent,
+}) => {
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
       const state = useSelector(state => state);
+
+      const [ coinSend, setCoinSent ] = useState(state.creatingOrder.from.code);
+      const [ coinRecv, setCoinRecv ] = useState(state.creatingOrder.to.code);
       
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
 
       const dispatch = useDispatch();
 
-      const getPrice = (from, to) => {
-        const [amount, name] = from.split(' ');
-        const type = state.isFixed ? 'fixed' : 'float';
-        return api.getPrice({
-          fromCcy: name,
-          toCcy: to,
-          amount,
-          direction: "from",
-          type
-        });
-      }
-
       function checkLimit(amount) {
         if (amount < Number(state.creatingOrder.from.min)) return false
         else if (amount > Number(state.creatingOrder.from.max)) return false
         return true;
-      }
-      
-      const setStateCoin = (name, which='from') => {
-        let from, to;
-        switch (which) {
-          case 'to':
-            // Если монеты одинаковые прост меняем местами
-            const fromCoinName = name === state.creatingOrder.from.code ? state.creatingOrder.to.code : state.creatingOrder.from.code;
-            from = `${numberOfCoinsSent} ${fromCoinName}`;
-            to = name;
-            break;
-          default:
-            const toCoinName = name === state.creatingOrder.to.code ? state.creatingOrder.from.code : state.creatingOrder.to.code;
-            from =`${numberOfCoinsSent} ${name}`;
-            to = toCoinName;
-            break;
-        }
-
-        console.log(from, to);
-
-        getPrice(from, to)
-        .then((response) => {
-          if (response.data === null) {
-            alert('Упс, что-то пошло не так(');
-          } else {
-            dispatch(setOrderCreationState(response.data));
-            if (response.data.to.amount < 0) {
-              setAmountCoin(response.data.from.min);
-            }
-          }
-        })
-        .catch((err) => console.error(err));
       }
 
       function validateInput(input) {
@@ -109,31 +70,51 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
       }
 
       useEffect(() => {
+        const amount = numberOfCoinsSent;
+        let fromCcy = coinSend;
+        let toCcy = coinRecv;
+
+        if (fromCcy === state.creatingOrder.to.code) {
+          toCcy = state.creatingOrder.from.code;
+        } else if (toCcy === state.creatingOrder.from.code) {
+          fromCcy = state.creatingOrder.to.code;
+        }
+
         const timer = setTimeout(() => {
-          if (Number(numberOfCoinsSent) > 0 && checkLimit(numberOfCoinsSent)) {
-            setStateCoin(state.creatingOrder.from.code);
+          if (Number(amount) > 0 && checkLimit(amount)) {
+            const type = state.isFixed ? 'fixed' : 'float';
+
+            api.getPrice({ fromCcy, toCcy, amount, direction: "from", type })
+              .then((response) => {
+                if (response.data === null) {
+                  alert('Упс, что-то пошло не так(');
+                } else {
+                  dispatch(setOrderCreationState(response.data));
+                }
+              })
+              .catch((err) => console.error(err));
           }
         }, 1000);
         return () => clearTimeout(timer);
-      }, [numberOfCoinsSent]);
+        
+      }, [numberOfCoinsSent, coinSend, coinRecv]);
 
       const setAmountCoin = (amount) => {
-        setNumberOfCoinsSent(validateInput(amount));
+        if (amount < state.creatingOrder.from.min) {
+          setNumberOfCoinsSent(validateInput(state.creatingOrder.from.min));
+        } else if (amount > state.creatingOrder.from.max) {
+          setNumberOfCoinsSent(validateInput(state.creatingOrder.from.max));
+        } else {
+          setNumberOfCoinsSent(validateInput(amount));
+        }
       }
 
-      const swapCoin = (from, to) => {
-        getPrice(`${numberOfCoinsSent} ${from[1]}`, to)
-        .then((response) => {
-          if (response.data === null) {
-            alert('Упс, что-то пошло не так(');
-          } else {
-            dispatch(setOrderCreationState(response.data));
-          }
-        })
-        .catch((err) => console.error(err))
+      const swapCoin = () => {
+        setNumberOfCoinsSent(state.creatingOrder.to.amount);
+        setCoinSent(state.creatingOrder.to.code);
+        setCoinRecv(state.creatingOrder.from.code)
       }
-
-      
+   
     return (
         <div className={classNames(" flex flex-row items-center mt-10 w-full",{
             "flex-col": ipadMini,
@@ -143,7 +124,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               dropdownState={dropdownSent}
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
               stateCoin={state.creatingOrder.from}
-              setStateCoin={setStateCoin}
+              setStateCoin={setCoinSent}
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
               amount={numberOfCoinsSent}
@@ -156,7 +137,7 @@ export const OrderItems = ({ numberOfCoinsSent, setNumberOfCoinsSent }) => {
               dropdownState={dropdownReceived}
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateCoin={state.creatingOrder.to}
-              setStateCoin={(name) => setStateCoin(name, 'to')}
+              setStateCoin={setCoinRecv}
               nameCoinTo={state.creatingOrder.from.code}
               amount={state.creatingOrder.to.amount}
               which="TO"

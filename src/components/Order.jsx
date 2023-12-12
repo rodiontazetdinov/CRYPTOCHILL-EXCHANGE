@@ -17,9 +17,11 @@ export const Order = () => {
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-  const amount = useSelector(state => state.creatingOrder.from.amount);
+  const order = useSelector(state => state.creatingOrder);
   
-  const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(amount);
+  const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(order.from.amount);
+  const [ coinSend, setCoinSent ] = useState(order.from.code);
+  const [ coinRecv, setCoinRecv ] = useState(order.to.code);
   
   return (
     <div className={classNames("flex flex-col items-center",{
@@ -31,7 +33,15 @@ export const Order = () => {
     })}>
       <h2 className="text-center text-3xl">Тип заказа</h2>
       <Percents />
-      <OrderItems numberOfCoinsSent={numberOfCoinsSent} setNumberOfCoinsSent={setNumberOfCoinsSent}/>
+      <OrderItems
+        numberOfCoinsSent={numberOfCoinsSent}
+        setNumberOfCoinsSent={setNumberOfCoinsSent}
+        coinSend={coinSend}
+        setCoinSent={setCoinSent}
+        coinRecv={coinRecv}
+        setCoinRecv={setCoinRecv}
+
+      />
       <OrderExchange numberOfCoinsSent={numberOfCoinsSent}/>
       <p className="text-base font-light mt-4">
         Используя сайт и создавая обмен, вы соглашаетесь<br/> с <a href="#" className="font-normal">Условиями
