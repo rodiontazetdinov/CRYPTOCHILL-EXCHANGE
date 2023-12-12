@@ -67,13 +67,21 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
           //   return
           // }
 
-          const dataOrder = {
+          const dataOrder = coinMemo ? {
             "fromCcy": creatingOrder.from.code,
             "toCcy": creatingOrder.to.code,
             "amount": numberOfCoinsSent,
             "direction":"from",
             "type": isFixed ? 'fixed' : 'float',
-            "toAddress": coinAddress
+            "toAddress": coinAddress,
+            "tag": coinMemo
+          } : {
+            "fromCcy": creatingOrder.from.code,
+            "toCcy": creatingOrder.to.code,
+            "amount": numberOfCoinsSent,
+            "direction":"from",
+            "type": isFixed ? 'fixed' : 'float',
+            "toAddress": coinAddress,
           }
           
           api.createOrder(dataOrder)
@@ -179,8 +187,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
               onClick={() => {
                 navigator.clipboard.readText()
                   .then((clipText) => {
-                    console.log(clipText);
-                    setCoinAddress(clipText)
+                    setCoinMemo(clipText)
                   })
                   .catch((err) => {
                     alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
