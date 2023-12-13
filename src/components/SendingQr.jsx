@@ -23,11 +23,6 @@ export const SendingQr = () => {
   const [qrWithAmount, setQrWithAmount] = useState('');
   const [qrWithAddress, setQrWithAddress] = useState('');
 
-  useEffect(() => {
-    // setTimer(order && order.time.left);
-    
-  }, [order]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitted");
@@ -37,6 +32,7 @@ export const SendingQr = () => {
     order &&
     api.getQr({id: order.id, token: order.token, choice: "EXCHANGE"})
     .then((response) => {
+      console.log(response);
       response.data.map((item) => {
         if (item.title === 'With amount') {
           setQrWithAmount(item.src)
