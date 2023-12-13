@@ -1,4 +1,3 @@
-
 // img
 import warning from '../images/icons/warningRed.svg';
 import qr from "../images/icons/qr.svg";
@@ -34,8 +33,8 @@ export const SendingActionsExpiredOrder = () => {
     const previewStyle = {
         height: '100%',
         width: '80vw',
-      }
-
+    }
+    
     return (
         <div className={classNames("bg-account rounded-3xl", {
             'px-12 py-10': !iphone,
@@ -93,8 +92,8 @@ export const SendingActionsExpiredOrder = () => {
                 {isReturn && (
                 <div className={classNames('flex w-full justify-between', { "flex-col": !desctop })}>
                     <div className={classNames("relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between", {
-                        "w-[82%]": desctop,
-                        "w-[62%]": desctop && order.to.tag,
+                        "w-[62%]": (desctop && order.from.tag),
+                        "w-[80%]": (desctop && !order.from.tag),
                         "mb-4 w-[90%]": macbook,
                         'mb-4 w-full': ipadMini,
                         'mb-4': iphone,

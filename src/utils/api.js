@@ -14,6 +14,11 @@ class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
     }
+
+    /**
+     * Retrieves the list of currencies.
+     * @returns {Promise} A promise that resolves with the list of currencies.
+     */
     getCurrencies() {
         return this._request(`${this._baseUrl}/ccies`, {
             method: 'POST',
