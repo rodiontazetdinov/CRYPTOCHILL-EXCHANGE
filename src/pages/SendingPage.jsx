@@ -32,6 +32,7 @@ export const SendingPage = () => {
   const dispatch = useDispatch();
 
   const [localOrder, setLocalOrder] = useState(JSON.parse(localStorage.getItem('order')) || {});
+  
   const order = useSelector(state => state.order);
   const id = useParams().id;
 

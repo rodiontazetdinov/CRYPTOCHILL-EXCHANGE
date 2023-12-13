@@ -41,6 +41,7 @@ export const SendingInfo = ({
   const [isAddressSentCopied, setAddressSentCopied] = useState(false);
   const [isAddressRecCopied, setAddressRecCopied] = useState(false);
   const [isSummSentCopied, setSummSentCopied] = useState(false);
+  const [isTagMemoCopied, setTagMemoCopied] = useState(false);
   const order = useSelector((state) => state.order);
 
   const handleSubmit = (event) => {
@@ -48,6 +49,7 @@ export const SendingInfo = ({
     console.log("submitted");
   };
 
+  // console.log(order.to.teg);
   return (
     <div
       className={classNames(
@@ -95,14 +97,14 @@ export const SendingInfo = ({
           Курс будет зафиксирован после получения подтверждений сети
         </p>
       </div>
-      <div>
+      <div className="mt-6">
         <p className={classNames("text-blue-200 text-xl font-semibold",{
             "text-2xl": phone,
             "text-3xl": !phone
         })}>
           Адрес получения {order && order.to.code}
         </p>
-        <div className={classNames("flex flex-row font-semibold space-x-2 mt-6",{
+        <div className={classNames("flex flex-row font-semibold space-x-2",{
             "text-xl items-start": phone,
             "text-2xl items-center": !phone
         })}>
@@ -115,6 +117,30 @@ export const SendingInfo = ({
           onClick={() => handleClickCopy(order && order.to.address, setAddressRecCopied)}/>
         </div>
       </div>
+      
+      {/* MEMO */}
+      {order.to.tag && (
+        <div className="mt-2">
+          <p className={classNames("text-blue-200 text-xl font-semibold",{
+              "text-2xl": phone,
+              "text-3xl": !phone
+          })}>
+            {order.to.tagName}
+          </p>
+          <div className={classNames("flex flex-row font-semibold space-x-2",{
+              "text-xl items-start": phone,
+              "text-2xl items-center": !phone
+          })}>
+            <p
+              className={classNames("break-all", {
+                "text-[#95FF54]": isTagMemoCopied
+              })}
+            >{order.to.tag}</p>
+            <img className="cursor-pointer" src={squares} alt="иконка квадраты" 
+            onClick={() => handleClickCopy(order.to.tag, setTagMemoCopied)}/>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

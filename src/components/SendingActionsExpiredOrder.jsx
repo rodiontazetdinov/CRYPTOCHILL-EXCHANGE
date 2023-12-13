@@ -18,17 +18,18 @@ import { useMediaQuery } from '@uidotdev/usehooks';
 export const SendingActionsExpiredOrder = () => {
     const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
     const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
-  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-  const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
-  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-  const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
-  const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
+    const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+    const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+    const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
+    const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+    const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
+    const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
 
     const [ isReturn, setIsReturn ] = useState(true);
     const [ coinAddress, setCoinAddress ] = useState('');
     const [ openQR, setOpenQR ] = useState(false);
     const order = useSelector(state => state.order);
+    const [ memoTag, setMemoTag ] = useState('');
 
     const previewStyle = {
         height: '100%',
@@ -59,7 +60,7 @@ export const SendingActionsExpiredOrder = () => {
             >
                 <label
                     htmlFor='continue'
-                    className={classNames('flex items-center text-left font-semibold mb-4', {
+                    className={classNames('flex items-center text-left font-semibold mb-4 cursor-pointer', {
                         "text-xl": !iphone,
                         "text-base": iphone
                     })}
@@ -71,7 +72,7 @@ export const SendingActionsExpiredOrder = () => {
                 </label>
                 <label
                     htmlFor='return'
-                    className={classNames('flex items-center text-left font-semibold mb-4', {
+                    className={classNames('flex items-center text-left font-semibold mb-4 cursor-pointer', {
                         "text-xl": !iphone,
                         "text-base": iphone
                     })}
@@ -90,10 +91,13 @@ export const SendingActionsExpiredOrder = () => {
                 )}
 
                 {isReturn && (
-                <div className={classNames('flex w-full', { "flex-col": miniSending })}>
-                    <div className={classNames("relative bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-xl justify-between", {
-                        "mr-8": !miniSending,
-                        "mb-4": miniSending
+                <div className={classNames('flex w-full justify-between', { "flex-col": !desctop })}>
+                    <div className={classNames("relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between", {
+                        "w-[82%]": desctop,
+                        "w-[62%]": desctop && order.to.tag,
+                        "mb-4 w-[90%]": macbook,
+                        'mb-4 w-full': ipadMini,
+                        'mb-4': iphone,
                     })}>
                         <input
                         className="bg-[#08035B] text-white focus:outline-none w-3/4"
@@ -132,6 +136,38 @@ export const SendingActionsExpiredOrder = () => {
                         </div>
                         )} */}
                     </div>
+                    {order.from.tag && (
+                        <div className={classNames("bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between", {
+                            'mb-4 w-[30%]': macbook,
+                            'mb-4 w-[50%]': ipadMini,
+                            'mb-4': iphone,
+
+                        })}>
+                            <input
+                                className="bg-[#08035B] text-white focus:outline-none w-[160px]"
+                                type="text"
+                                value={memoTag}
+                                placeholder={`Destination tag`}
+                                onChange={ev => setMemoTag(ev.target.value)}
+                            />
+                            <div className="flex flex-row">
+                                <img
+                                className="cursor-pointer"
+                                onClick={() => {
+                                    navigator.clipboard.readText()
+                                    .then((clipText) => {
+                                        setMemoTag(clipText)
+                                    })
+                                    .catch((err) => {
+                                        alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                                    })
+                                }}
+                                src={squares}
+                                alt='Paste'
+                                />
+                            </div>
+                        </div>
+                    )}
                     <button className="self-start bg-btns rounded-xl text-xl px-4 py-3 font-semibold whitespace-nowrap" type="submit">Сделать возврат</button>
                 </div>
                 )}

@@ -197,7 +197,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
               alt='Paste'
             />
           </div>
-        </div>
+          </div>
         )}
       </div>
       <button
