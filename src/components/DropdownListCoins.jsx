@@ -76,7 +76,7 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
                         </div>
                     ) : (
                         <div className="flex w-full justify-between items-center cursor-pointer">
-                            <span className="flex overflow-hidden w-[70px]">
+                            <span className="flex overflow-hidden">
                                 <img className="mr-1 w-[26px]" src={selectedCoin?.logo} alt="Coin" />
                                 {selectedCoin?.coin}
                             </span>

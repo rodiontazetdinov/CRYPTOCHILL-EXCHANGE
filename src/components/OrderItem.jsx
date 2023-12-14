@@ -84,7 +84,7 @@ export const OrderItem = ({
             />
           </div>
         )}
-        <div className={classNames("min-w-[120px]", {
+        <div className={classNames("min-w-[125px]", {
           "w-full": dropdownState
         })}>
           <DropdownListCoins
