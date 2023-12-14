@@ -41,8 +41,10 @@ export const SendingInfo = ({
   const [isAddressSentCopied, setAddressSentCopied] = useState(false);
   const [isAddressRecCopied, setAddressRecCopied] = useState(false);
   const [isSummSentCopied, setSummSentCopied] = useState(false);
-  const [isTagMemoCopied, setTagMemoCopied] = useState(false);
+  const [isToTagMemoCopied, setToTagMemoCopied] = useState(false);
+  const [isFromTagMemoCopied, setFromTagMemoCopied] = useState(false);
   const order = useSelector((state) => state.order);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -77,7 +79,7 @@ export const SendingInfo = ({
           </span>
           {phone && <br/>} {` на адрес`}
         </p>
-        <div className={classNames("flex flex-row font-semibold space-x-2  mt-6",{
+        <div className={classNames("flex flex-row font-semibold space-x-2 mt-2",{
             "text-xl items-start": phone,
             "text-2xl items-center": !phone
         })}>
@@ -93,6 +95,24 @@ export const SendingInfo = ({
             onClick={() => handleClickCopy(order && order.from.address, setAddressSentCopied)}
           />
         </div>
+        {order.from.tag && (
+          <p className="mt-2 text-xl font-semibold">в поле
+            <span className="text-red-500 mx-2 text-2xl">MEMO/Comment обязательно</span>
+            укажите:
+            <span className={classNames("flex font-mono cursor-pointer text-2xl", {
+              "text-blue-200": !isFromTagMemoCopied,
+              "text-[#95FF54]": isFromTagMemoCopied
+            })}>
+              {order.from.tag}
+              <img
+                className="ml-1 cursor-pointer"
+                src={squares}
+                alt="иконка квадраты"
+                onClick={() => handleClickCopy(order.from.tag, setFromTagMemoCopied)}
+              />
+            </span>
+          </p>
+        )}
         <p className={classNames("text-blue-200 mt-4 text-base")}>
           Курс будет зафиксирован после получения подтверждений сети
         </p>
@@ -133,11 +153,11 @@ export const SendingInfo = ({
           })}>
             <p
               className={classNames("break-all", {
-                "text-[#95FF54]": isTagMemoCopied
+                "text-[#95FF54]": isToTagMemoCopied
               })}
             >{order.to.tag}</p>
             <img className="cursor-pointer" src={squares} alt="иконка квадраты" 
-            onClick={() => handleClickCopy(order.to.tag, setTagMemoCopied)}/>
+            onClick={() => handleClickCopy(order.to.tag, setToTagMemoCopied)}/>
           </div>
         </div>
       )}
