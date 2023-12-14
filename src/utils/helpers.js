@@ -106,3 +106,16 @@ export function withdrawFromOrders(id) {
   return null;
   }
 
+  export function handleClickCopy(text, setState) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setState(true);
+        setTimeout(() => {
+          setState(false);
+        }, 500);
+      })
+      .catch(() => {
+          alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена!');
+      })
+  };
+

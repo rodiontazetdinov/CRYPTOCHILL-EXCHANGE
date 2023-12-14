@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { formatSeconds, formatDate } from "../utils/helpers";
+import { formatSeconds, formatDate, handleClickCopy } from "../utils/helpers";
 
 import squaresImg from "../images/icons/squares.svg";
 
@@ -52,19 +52,6 @@ export const SendingOrderNumber = ({
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitted");
-  };
-
-  const handleClickCopy = (text, setState) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        setState(true);
-        setTimeout(() => {
-          setState(false);
-        }, 500);
-      })
-      .catch(() => {
-          alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена!');
-      })
   };
 
   return (

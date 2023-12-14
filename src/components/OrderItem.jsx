@@ -84,7 +84,7 @@ export const OrderItem = ({
             />
           </div>
         )}
-        <div className={classNames("min-w-[120px]", {
+        <div className={classNames("min-w-[125px]", {
           "w-full": dropdownState
         })}>
           <DropdownListCoins
@@ -94,6 +94,7 @@ export const OrderItem = ({
             stateCoin={stateCoin}
             setStateCoin={setStateCoin}
             amount={amount}
+            which={which}
           />
         </div>
         {(((errorsWhich && errorsWhich.length > 0) || warningSum) && !dropdownState) && (
