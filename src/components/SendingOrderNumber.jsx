@@ -96,7 +96,7 @@ export const SendingOrderNumber = ({
           </p>
         </div>
       )}
-      {order && (order.status === "PENDING" || order.status === "EXCHANGE") && (
+      {order && (order.status === "PENDING" || order.status === "EXCHANGE" || order.status === "WITHDRAW") && (
         <div>
           <p className="text-2xl font-semibold">Статус заказа</p>
           <p className="text-2xl font-bold text-blue-200">
@@ -108,7 +108,7 @@ export const SendingOrderNumber = ({
         <div>
           <p className="text-2xl font-semibold">Статус заказа</p>
           <p className="text-2xl font-bold text-lime-300">
-            {"Завершено"}
+            {order.emergency.choice === "REFUND" ? "Возвращено" :"Завершено"}
           </p>
         </div>
       )}
@@ -117,6 +117,14 @@ export const SendingOrderNumber = ({
           <p className="text-2xl font-semibold">Статус заказа</p>
           <p className="text-2xl font-bold text-red-500">
             {"Заказ истёк"}
+          </p>
+        </div>
+      )}
+      {order && order.status === "EMERGENCY" && (
+        <div>
+          <p className="text-2xl font-semibold">Статус заказа</p>
+          <p className="text-2xl font-bold text-red-500">
+            {"Ответ пользователя"}
           </p>
         </div>
       )}
@@ -132,7 +140,7 @@ export const SendingOrderNumber = ({
           {formatDate(order && order.time.reg)}
         </p>
       </div>
-      {order && order.status === "PENDING" && (
+      {order && (order.status === "PENDING" || order.status === "EMERGENCY") && (
         <div>
           <p className="text-2xl font-semibold">Время получения</p>
           <p className="text-2xl font-semibold text-blue-200">

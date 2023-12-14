@@ -13,6 +13,7 @@ export const SendingTransactionDone = () => {
   const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 600px)");
 
   const coinFrom = useSelector(state => state.order.from); 
+  const order = useSelector(state => state.order);
 
 //   useEffect(() => {
 //     // setTimer(order && order.time.left);
@@ -34,7 +35,7 @@ export const SendingTransactionDone = () => {
       "text-5xl": !phone,
       "text-3xl": phone
     })}>
-        {`Ваш ${coinFrom.code} был отправлен`}
+        {order && order.emergency.choice === "REFUND" ? `Ваш ${coinFrom.code} был возвращен` : `Ваш ${coinFrom.code} был отправлен`}
     </p>
     <p className={classNames("max-w-[380px]", {
       "text-base": phone
