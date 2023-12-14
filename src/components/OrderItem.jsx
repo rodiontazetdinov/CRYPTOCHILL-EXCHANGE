@@ -94,6 +94,7 @@ export const OrderItem = ({
             stateCoin={stateCoin}
             setStateCoin={setStateCoin}
             amount={amount}
+            which={which}
           />
         </div>
         {(((errorsWhich && errorsWhich.length > 0) || warningSum) && !dropdownState) && (

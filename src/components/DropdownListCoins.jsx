@@ -11,7 +11,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdownState, setDropdownState}) => {
+export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdownState, setDropdownState, which}) => {
     const iphone = useMediaQuery("only screen and (min-width : 343px) and (max-width : 744px)");
     const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
@@ -77,7 +77,7 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
                     ) : (
                         <div className="flex w-full justify-between items-center cursor-pointer">
                             <span className="flex overflow-hidden">
-                                <img className="mr-1 w-[26px]" src={selectedCoin?.logo} alt="Coin" />
+                                <img className="mr-1 w-[26px] h-[26px]" src={selectedCoin?.logo} alt="Coin" />
                                 {selectedCoin?.coin}
                             </span>
                             <button>
@@ -95,17 +95,26 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
                     <>
                         <p className="text-[#D7DFFF] text-base font-normal border-t border-[#2B23AC] py-2 mt-2 mx-4">Популярные валюты</p>
                         <ul>
-                            {popularCoins.map((coin, i) => { return (
+                            {popularCoins.map((coin, i) => { 
+                                console.log(coin.recv, coin.send);
+                                return (
                                 <li
                                     key={i}
-                                    className="flex justify-between text-base font-normal hover:bg-[#81a2d637] last:mb-0 hover:cursor-pointer px-4 py-1"
+                                    className={classNames("flex text-left justify-between text-base font-normal hover:bg-[#81a2d637] last:mb-0 hover:cursor-pointer px-4 py-1", {
+                                        'text-[#d7dfff80]': which === 'FROM' ? coin.recv === 0 : coin.send === 0
+                                    })}
                                     onClick={() => setStateCoin(coin.code)}
                                 >
                                     <div className="flex">
-                                        <img className="w-7 mr-1" src={coin.logo} alt={coin.code} />
+                                        <img className="h-[26px] w-[26px] mr-1" src={coin.logo} alt={coin.code} />
                                         <span>{coin.name}</span>
                                     </div>
-                                    <span>{coin.code}</span>
+                                    <span
+                                        style={{ color: coin.color + ((which === 'FROM' ? coin.recv === 0 : coin.send === 0) ? 'bb' : '')}}
+                                    >{coin.code}</span>
+                                    {(which === 'FROM' ? coin.recv === 0 : coin.send === 0) && (
+                                        <div className="absolute right-0 w-full h-full bg-[#07006c70]"></div>
+                                    )}
                                 </li>
                             )})}
                         </ul>
@@ -116,14 +125,21 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
                         {filteredCoins.map((coin, i) => { return (
                             <li
                                 key={i}
-                                className="flex justify-between items-center text-base font-normal hover:bg-[#81a2d637] last:mb-0 hover:cursor-pointer px-4 py-2"
+                                className={classNames("relative flex text-left justify-between items-center text-base font-normal hover:bg-[#81a2d637] last:mb-0 hover:cursor-pointer px-4 py-2", {
+                                    'text-[#d7dfffbb]': which === 'FROM' ? coin.recv === 0 : coin.send === 0
+                                })}
                                 onClick={() => setStateCoin(coin.code)}
                             >
                                 <div className="flex items-center">
-                                    <img className="w-[26px] mr-1" src={coin.logo} alt={coin.code} />
+                                    <img className="w-[26px] h-[26px] mr-1 text-[#D7DFFF]" src={coin.logo} alt={coin.code} />
                                     <span>{coin.name}</span>
                                 </div>
-                                <span>{coin.code}</span>
+                                <span
+                                    style={{ color: coin.color + ((which === 'FROM' ? coin.recv === 0 : coin.send === 0) ? 'bb' : '')}}
+                                >{coin.code}</span>
+                                {(which === 'FROM' ? coin.recv === 0 : coin.send === 0) && (
+                                    <div className="absolute right-0 w-full h-full bg-[#07006c70]"></div>
+                                )}
                             </li>
                         )})}
                     </ul>

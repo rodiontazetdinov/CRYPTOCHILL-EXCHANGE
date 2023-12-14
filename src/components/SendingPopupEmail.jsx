@@ -104,7 +104,6 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
                                 "mb-2": iphone,
                             })}
                             type="submit"
-                            // value={"Подтвердить"}
                         >Подтвердить</button>
                         <button
                             className="flex-grow h-12 border border-white rounded-xl font-semibold text-xl"
