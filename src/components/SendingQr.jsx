@@ -32,7 +32,6 @@ export const SendingQr = () => {
     order &&
     api.getQr({id: order.id, token: order.token, choice: "EXCHANGE"})
     .then((response) => {
-      console.log(response);
       response.data.map((item) => {
         if (item.title === 'With amount') {
           setQrWithAmount(item.src)

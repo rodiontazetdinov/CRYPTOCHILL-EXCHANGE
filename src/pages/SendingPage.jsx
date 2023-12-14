@@ -9,6 +9,7 @@ import { SendingNotifications } from "../components/SendingNotifications";
 import { SendingOrderNumber } from "../components/SendingOrderNumber";
 import { SendingQr } from "../components/SendingQr";
 import { SendingInfo } from "../components/SendingInfo";
+import { SendingError } from "../components/SendingError";
 import { api } from "../utils/api";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,9 @@ import { setOrder } from "../store/actions";
 import { SendingTransactionInfo } from "../components/SendingTransactionInfo";
 import { SendingTransactionDone } from "../components/SendingTransactionDone";
 import { SendingActionsExpiredOrder } from "../components/SendingActionsExpiredOrder";
+import { addToOrders, withdrawFromOrders } from "../utils/helpers";
+import { SendingTransactionBack } from "../components/SendingTransactionBack";
+import { SendingAllert } from "../components/SendingAllert";
 
 
 
@@ -31,31 +35,9 @@ export const SendingPage = () => {
 
   const dispatch = useDispatch();
 
-  const [localOrder, setLocalOrder] = useState(JSON.parse(localStorage.getItem('order')) || {});
+  const [localOrder, setLocalOrder] = useState(withdrawFromOrders(useParams().id) || {});
   const order = useSelector(state => state.order);
-  const id = useParams().id;
-
-  // useEffect(() => {
-    // api.createOrder({"fromCcy":"LTC", "toCcy":"ETH", "amount":0.551857, "direction":"from", "type":"float", "toAddress":"0xa3A7913d2e76bBaE4B1b597B45F0D960f7141375"})
-    // .then((response) => {
-    //   console.log(response);
-    //   dispatch(setOrder(response.data))
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // })
-    // api.getOrder({id: order && order.id, token: order && order.token})
-    // api.getOrder({id: "22GG5Q", token: "MVq6IAbZ6W3nsWDq3xXDEfxCXcoL58KrZMMRAsxL"})
-    // .then((response) => {
-    //   console.log(response);
-    //   dispatch(setOrder(response.data))
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // })
-    
-    // console.log(1);
-  // }, []);
+  // const id = useParams().id;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,6 +47,7 @@ export const SendingPage = () => {
       console.log(response);
       dispatch(setOrder(response.data));
       localStorage.setItem("order", JSON.stringify(response.data));
+      addToOrders(response.data);
     })
     .catch((error) => {
       console.log(error);
@@ -73,7 +56,6 @@ export const SendingPage = () => {
     return () => clearTimeout(timer);
   }, [order]);
 
-  // switch (order.status) {
   switch (order.status) {
     case "NEW":
       return (
@@ -92,6 +74,7 @@ export const SendingPage = () => {
         >
           <SendingCoinTo />
           {/* <div className={classNames("")}></div> */}
+          <SendingAllert/>
           {!miniTop && (
             <div className="flex flex-row w-full space-x-6">
               <SendingOrderNumber />
@@ -132,7 +115,6 @@ export const SendingPage = () => {
         </section>
       );
     case "PENDING":
-    case "WITHDRAW":
     case "EXCHANGE":
       return (
         <section
@@ -202,6 +184,76 @@ export const SendingPage = () => {
           )}
         </section>
       );
+      case "WITHDRAW":
+      return (
+        <section
+          className={classNames(
+            "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
+            {
+              "px-14": macbook || ipadMini,
+              "max-w-[1328px]": desctop,
+              // "px-14": ipadMini,
+              "px-4": iphone,
+              "items-left": miniSending,
+              "items-center": !miniSending,
+            }
+          )}
+        >
+          <SendingCoinTo />
+          <SendingAllert/>
+          {/* <div className={classNames("")}></div> */}
+          {!miniTop && (
+            <div className="flex flex-row w-full space-x-6">
+              <SendingOrderNumber />
+              <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              />
+            </div>
+          )}
+          {miniTop && (
+            <div className="flex flex-col w-full space-y-6">
+              <div
+                className={classNames("flex w-full items-stretch", {
+                  "flex-row  space-x-6": !phone,
+                  "flex-col space-y-6": phone,
+                })}
+              >
+                <SendingOrderNumber />
+                {/* <SendingQr /> */}
+                {/* <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              /> */}
+                
+              </div>
+              <SendingTransactionInfo
+                title={'Информация об отправленной транзакции'}
+                dataCoin={order.from}
+                dataCoinTo={order.to}
+              />
+            </div>
+          )}
+          {miniSending && (
+            <div className="flex flex-col space-y-6">
+              <SendingNotifications />
+              <SendingLoader />
+              <SendingToKnow />
+            </div>
+          )}
+          {!miniSending && (
+            <>
+              <SendingLoader />
+              <div className="flex flex-row space-x-6">
+                <SendingToKnow />
+                <SendingNotifications />
+              </div>
+            </>
+          )}
+        </section>
+      );
     case "DONE":
       return (
         <section
@@ -218,7 +270,6 @@ export const SendingPage = () => {
           )}
         >
           <SendingCoinTo />
-          {/* <div className={classNames("")}></div> */}
           {!miniTop && (
             <div className="flex flex-row w-full space-x-6">
               <SendingOrderNumber />
@@ -243,12 +294,11 @@ export const SendingPage = () => {
                 dataCoin={order.from}
               />
             </div>
-            <div className="">
-              <SendingTransactionInfo
+              {order && order.emergency.choice !== "REFUND" && <SendingTransactionInfo
                 title={'Информация о принятой транзакции'}
                 dataCoin={order.to}
-              />
-            </div>
+              />}
+              {order && order.emergency.choice === "REFUND" && <SendingTransactionBack order={order}/>}
           </div>
           <SendingLoader />
           {miniSending && (
@@ -267,6 +317,7 @@ export const SendingPage = () => {
           )}
         </section>
       );
+      // case "WITHDRAW":
     case "EXPIRED":
       return (
         <section
@@ -283,7 +334,6 @@ export const SendingPage = () => {
           )}
         >
           <SendingCoinTo />
-          {/* <div className={classNames("")}></div> */}
           {!miniTop && (
             <div className="flex flex-row w-full space-x-6">
               <SendingOrderNumber />
@@ -308,13 +358,15 @@ export const SendingPage = () => {
           {miniSending && (
             <div className="flex flex-col space-y-6">
               <SendingNotifications />
-              <SendingActionsExpiredOrder />
+              {order && order.emergency.choice === "NONE" && <SendingActionsExpiredOrder />}
+              {order && order.emergency.choice !== "NONE" && <SendingAllert/>}
               <SendingToKnow />
             </div>
           )}
           {!miniSending && (
             <>
-              <SendingActionsExpiredOrder />
+              {order && order.emergency.choice === "NONE" && <SendingActionsExpiredOrder />}
+              {order && order.emergency.choice !== "NONE" && <SendingAllert/>}
               <div className="flex flex-row space-x-6">
                 <SendingToKnow />
                 <SendingNotifications />
@@ -325,60 +377,61 @@ export const SendingPage = () => {
       );
     default:
       return (
-        // <section
-        //   className={classNames(
-        //     "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
-        //     {
-        //       "px-14": macbook || ipadMini,
-        //       "max-w-[1328px]": desctop,
-        //       // "px-14": ipadMini,
-        //       "px-4": iphone,
-        //       "items-left": miniSending,
-        //       "items-center": !miniSending,
-        //     }
-        //   )}
-        // >
-        //   <SendingCoinTo />
-        //   {/* <div className={classNames("")}></div> */}
-        //   {!miniTop && (
-        //     <div className="flex flex-row w-full space-x-6">
-        //       <SendingOrderNumber />
-        //       <SendingInfo />
-        //       <SendingQr />
-        //     </div>
-        //   )}
-        //   {miniTop && (
-        //     <div className="flex flex-col w-full space-y-6">
-        //       <div
-        //         className={classNames("flex w-full", {
-        //           "flex-row  space-x-6": !phone,
-        //           "flex-col space-y-6": phone,
-        //         })}
-        //       >
-        //         <SendingOrderNumber />
-        //         <SendingQr />
-        //       </div>
-        //       <SendingInfo />
-        //     </div>
-        //   )}
-        //   {miniSending && (
-        //     <div className="flex flex-col space-y-6">
-        //       <SendingNotifications />
-        //       <SendingLoader />
-        //       <SendingToKnow />
-        //     </div>
-        //   )}
-        //   {!miniSending && (
-        //     <>
-        //       <SendingLoader />
-        //       <div className="flex flex-row space-x-6">
-        //         <SendingToKnow />
-        //         <SendingNotifications />
-        //       </div>
-        //     </>
-        //   )}
-        // </section>
-        <h1> ПРИВЕТ МИР</h1>
+        <section
+          className={classNames(
+            "flex flex-col self-center mx-auto w-full space-y-8 pb-12",
+            {
+              "px-14": macbook || ipadMini,
+              "max-w-[1328px]": desctop,
+              // "px-14": ipadMini,
+              "px-4": iphone,
+              "items-left": miniSending,
+              "items-center": !miniSending,
+            }
+          )}
+        >
+          <SendingCoinTo />
+          <SendingError />
+          {!miniTop && (
+            <div className="flex flex-row w-full space-x-6">
+              <SendingOrderNumber />
+              {/* <SendingInfo /> */}
+              <SendingTransactionInfo title={'Информация о транзакции'} dataCoin={order.from}/>
+              {/* <SendingQr /> */}
+            </div>
+          )}
+          {miniTop && (
+            <div className="flex flex-col w-full space-y-6">
+              <div
+                className={classNames("flex w-full", {
+                  "flex-row  space-x-6": !phone,
+                  "flex-col space-y-6": phone,
+                })}
+              >
+                <SendingOrderNumber />
+                {/* <SendingQr /> */}
+              </div>
+              {/* <SendingInfo /> */}
+              <SendingTransactionInfo title={'Информация о транзакции'} dataCoin={order.from}/>
+            </div>
+          )}
+          {miniSending && (
+            <div className="flex flex-col space-y-6">
+              <SendingNotifications />
+              <SendingLoader />
+              <SendingToKnow />
+            </div>
+          )}
+          {!miniSending && (
+            <>
+              <SendingLoader />
+              <div className="flex flex-row space-x-6">
+                <SendingToKnow />
+                <SendingNotifications />
+              </div>
+            </>
+          )}
+        </section>
       );
   }
 };

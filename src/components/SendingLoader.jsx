@@ -94,6 +94,35 @@ export const SendingLoader = () => {
           />
         </>
       )}
+            {order && order.status === "EMERGENCY" && (
+        <>
+          <div className="flex flex-row items-center justify-center">
+            <img
+              className={classNames("mr-3", {
+                "w-12 h-12": !iphone,
+                "w-6 h-6": iphone,
+              })}
+              src={aprove}
+              alt="иконка ожидания обмена"
+            />
+            <p
+              className={classNames("", {
+                "text-base font-normal": iphone,
+                "text-2xl font-semibold": !iphone,
+              })}
+            >
+              Ожидаем ответ от пользователя
+            </p>
+          </div>
+          <img
+            className=" max-w-[1023px] mt-6"
+            src={
+              ipadMini ? loaderAproveM : iphone ? loaderAproveS : loaderAprove
+            }
+            alt="загрузка"
+          />
+        </>
+      )}
       {order &&
         (order.status === "EXCHANGE" || order.status === "WITHDRAW") && (
           <>
@@ -145,7 +174,7 @@ export const SendingLoader = () => {
                 "text-2xl font-semibold": !iphone,
               })}
             >
-              Обмен завершен
+              {order.emergency.choice === "REFUND" ? "Возвращено" : "Обмен завершен"}
             </p>
           </div>
           <img
