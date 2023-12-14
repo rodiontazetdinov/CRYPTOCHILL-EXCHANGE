@@ -88,7 +88,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             .then((data) => {
               console.log(data);
               if (data.msg === "Invalid address") {
-                setInvalidAddress('неверный адрес');
+                setInvalidAddress('Неверный адрес');
               }else if (data.code > 0){
                 setInvalidAddress(data.msg);
               } else {
@@ -148,7 +148,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                 navigator.clipboard.readText()
                   .then((clipText) => {
                     console.log(clipText);
-                    setCoinAddress(clipText)
+                    setInvalidAddress(false);
+                    setCoinAddress(clipText.replace(/[^\d\a-zA-Z\:]/g, ''))
                   })
                   .catch((err) => {
                     alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
@@ -204,8 +205,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
         disabled={Number(numberOfCoinsSent) <= 0 || coinAddress === ''}
         type="submit"
         className={classNames("py-3 text-xl rounded-xl mt-4", {
-          'bg-btns': !(Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
-          'bg-transparent border rounded-lg border-white border-solid': (Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
+          'bg-btns': !(Number(numberOfCoinsSent) <= 0 || coinAddress === '' || creatingOrder?.errors.length > 0),
+          'bg-transparent border rounded-lg border-white border-solid': (Number(numberOfCoinsSent) <= 0 || coinAddress === '' || creatingOrder?.errors.length > 0),
         })}
       >
         Начать обмен
