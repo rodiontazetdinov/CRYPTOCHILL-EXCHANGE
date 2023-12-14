@@ -16,14 +16,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { api } from "../utils/api";
 
 import { setOrder } from "../store/actions";
+import { addToOrders } from "../utils/helpers";
 
 export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
   const macbook = useMediaQuery("only screen and (max-width : 1024px)");
-  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
-  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
-  const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -93,6 +90,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                 setInvalidAddress(data.msg);
               } else {
                 dispatch(setOrder(data.data));
+                addToOrders(data.data);
                 localStorage.setItem("order", JSON.stringify(data.data));
                 navigate(`/sending/${data.data.id}`);
               }
