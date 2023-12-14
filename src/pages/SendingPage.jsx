@@ -16,6 +16,7 @@ import { setOrder } from "../store/actions";
 import { SendingTransactionInfo } from "../components/SendingTransactionInfo";
 import { SendingTransactionDone } from "../components/SendingTransactionDone";
 import { SendingActionsExpiredOrder } from "../components/SendingActionsExpiredOrder";
+import { SendingPopupEmail } from "../components/SendingPopupEmail";
 
 
 
@@ -32,6 +33,7 @@ export const SendingPage = () => {
   const dispatch = useDispatch();
 
   const [localOrder, setLocalOrder] = useState(JSON.parse(localStorage.getItem('order')) || {});
+  const [popupEmailOpen, setPopupEmailOpen] = useState(true);
   
   const order = useSelector(state => state.order);
   const id = useParams().id;
@@ -91,6 +93,12 @@ export const SendingPage = () => {
             }
           )}
         >
+          {/* POPUP EMAIL */}
+          {popupEmailOpen && (
+            <SendingPopupEmail setPopupEmailOpen={setPopupEmailOpen}/>
+          )}
+          {/* POPUP EMAIL */}
+
           <SendingCoinTo />
           {/* <div className={classNames("")}></div> */}
           {!miniTop && (
@@ -282,6 +290,11 @@ export const SendingPage = () => {
             }
           )}
         >
+          {/* POPUP EMAIL */}
+          {popupEmailOpen && (
+            <SendingPopupEmail setPopupEmailOpen={setPopupEmailOpen}/>
+          )}
+          {/* POPUP EMAIL */}
           <SendingCoinTo />
           {/* <div className={classNames("")}></div> */}
           {!miniTop && (
