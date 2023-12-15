@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setOrder } from "../store/actions";
 import { api } from "../utils/api";
 
-// import qr from "../images/sending-icons/qr.svg";
+import qr from "../images/sending-icons/qr.svg";
 
 export const SendingQr = () => {
 
@@ -16,12 +16,26 @@ export const SendingQr = () => {
         "only screen and (min-width : 320px) and (max-width : 585px)"
       );
 
-      const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const [isActive, setIsActive] = useState(true);
   const order = useSelector((state) => state.order);
-  const [qrWithAmount, setQrWithAmount] = useState('');
-  const [qrWithAddress, setQrWithAddress] = useState('');
+
+  const [listOfQRs, setListOfQRs] = useState([{
+      "title": "QR еще не сгенерирован",
+      "src": qr,
+      "checked": true
+  }]);
+
+  const handleActiveQR = (nameQR) => {
+    setListOfQRs(listOfQRs.map((item) => {
+      if (item.title === nameQR) {
+        item.checked = true;
+      } else {
+        item.checked = false;
+      }
+      return item;
+    }))
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,13 +46,12 @@ export const SendingQr = () => {
     order &&
     api.getQr({id: order.id, token: order.token, choice: "EXCHANGE"})
     .then((response) => {
-      response.data.map((item) => {
-        if (item.title === 'With amount') {
-          setQrWithAmount(item.src)
-        } else if (item.title === 'Address') {
-          setQrWithAddress(item.src)
-        }
-      })
+      const listQR = response.data.map((item, index) => {
+          item.checked = index === 0 ? true : false;
+          return item;
+      });
+
+      setListOfQRs(listQR);
     })
     .catch((error) => {
       console.log(error);
@@ -47,21 +60,28 @@ export const SendingQr = () => {
 
   return (
     <div
-      className={classNames("flex flex-col bg-order px-8 py-8 rounded-3xl text-left space-y-4",{
+      className={classNames("flex flex-col bg-order px-6 py-8 rounded-3xl text-left space-y-4", {
           "w-1/2": miniTop && !phone,
           "w-1/4": !miniTop,
           'w-full': phone,
       })}
       onSubmit={handleSubmit}
     >
-      <img className="bg-white p-6 rounded-2xl" src={order && isActive ? qrWithAmount : qrWithAddress} alt="qr код"/>
-      <div className="flex flex-row items-center w-full px-2 py-1 bg-purple-800 rounded-2xl space-x-2 h-12">
-        <button className={classNames("text-xl font-semibold flex items-center w-full text-center justify-center h-full",{
-            'bg-btns rounded-xl': !isActive
-        })} onClick={() => setIsActive((prev) => !prev)}>адрес</button>
-        <button className={classNames("text-xl font-semibold flex items-center w-full text-center justify-center h-full",{
-            'bg-btns rounded-xl': isActive
-        })} onClick={() => setIsActive((prev) => !prev)}>с суммой</button>
+      <img className="bg-white p-6 rounded-2xl" src={listOfQRs.find((qr) => qr.checked)?.src} alt="qr код"/>
+      <div className="flex flex-row items-center w-full px-1 py-1 bg-purple-800 rounded-2xl space-x-2 h-12">
+        {listOfQRs.map((item) => {
+          return (
+            <button
+              key={item.title}
+              className={classNames(" font-semibold flex items-center w-full text-center justify-center h-full", {
+                'bg-btns rounded-xl': item.checked,
+                'text-xl': listOfQRs.length < 3,
+                'text-sm': listOfQRs.length >= 3,
+              })} 
+              onClick={() => handleActiveQR(item.title)}
+            >{item.title === "With amount" ? "С суммой" : item.title === "Address" ? "Адрес" : item.title}</button>
+          );
+        })}
       </div>
     </div>
   );
