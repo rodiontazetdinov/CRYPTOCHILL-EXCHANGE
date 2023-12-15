@@ -2,11 +2,8 @@ import "@splidejs/react-splide/css/core";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 
-import lightning from '../images/sending-icons/lightning.svg';
-import bitcoin from '../images/sending-icons/bitcoin.svg';
-import time from '../images/sending-icons/time.svg';
-import segwit from '../images/sending-icons/segwit.svg';
-import calculator from '../images/sending-icons/calc.svg';
+import { useSelector } from "react-redux";
+import { toKnow } from "../utils/constants";
 
 export const SendingToKnow = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
@@ -21,13 +18,35 @@ export const SendingToKnow = () => {
   );
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
 
-    const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+  const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+
+  const coinFrom = useSelector(state => state.order.from);
+
+  const currentCoinToKnow = toKnow.find((item) => item.code === coinFrom.code);
+
+  const createLinkInText = (text) => {
+    if (text.indexOf('[') !== -1) {
+      const textLink = text.slice(text.indexOf('[') + 1, text.indexOf(']'));
+      const [textBeforeLink, textAfterLink] = text.split('[' + textLink + ']');
+      const link = textAfterLink.slice(1, textAfterLink.indexOf(')'));
+      const textEnd = textAfterLink.slice(textAfterLink.indexOf(')') + 1);
+      return (
+        <p className="text-base">
+          {textBeforeLink.trim()}
+          <a className="mx-1 text-blue-200" href={link} target="_blank" rel="noreferrer">{textLink.trim()}</a>
+          {textEnd.trim()}
+        </p>
+      )
+      
+    }
+    return <p className="text-base">{text}</p>;
+  }
 
   return (
     <div className={classNames("flex flex-col bg-order rounded-3xl px-8",{
         'flex-col justify-left  relative': miniSending && !iphone,
         'flex-row mx-auto ': !miniSending,
-        "flex-col justify-left  relative": iphone,
+        "flex-col justify-left relative": iphone,
         "pb-[104px]": desctop,
         "pb-12": !desctop,
       })}>
@@ -36,40 +55,12 @@ export const SendingToKnow = () => {
           "text-5xl font-bold": !iphone,
         })}>Что нужно знать?</h3>
         <ul className="space-y-4 text-left">
-            <li className="flex flex-row space-x-4">
-                <img className={classNames("",{"w-8 h-8": iphone})} src={lightning} alt="иконка молния" />
-                <p className="text-base">Нужно всего 1 подтверждение блокчейна Bitcoin для осуществления обмена</p>
-            </li>
-            <li className="flex flex-row space-x-4">
-                <img className={classNames("",{"w-8 h-8": iphone})} src={bitcoin} alt="иконка биткойна" />
-                <p className="">Скорость подтверждения транзакции Bitcoin
- зависит от уровня загруженности сети блокчейн,
-подробнее в нашей статье
-</p>
-            </li>
-            <li className="flex flex-row space-x-4">
-                <img className={classNames("",{"w-8 h-8": iphone})} src={segwit} alt="иконка segwit" />
-                <p className="">Мы используем segwit адреса Bitcoin для более
- быстрых и дешёвых транзакций, если ваш кошелёк
- не поддерживает этот тип адресов, обратитесь в
-техподдержку для смены адреса
-</p>
-            </li>
-            <li className="flex flex-row space-x-4">
-                <img className={classNames("",{"w-8 h-8": iphone})} src={calculator} alt="иконка калькулятора" />
-                <p className="">Если сумма отправленной вами транзакции будет
-отличаться от первоначальной суммы указанной в
-заказе с плавающим курсом, заказ будет
- автоматически пересчитан.
-</p>
-            </li>
-            <li className="flex flex-row space-x-4">
-                <img className={classNames("",{"w-8 h-8": iphone})} src={time} alt="иконка таймера" />
-                <p className="">Если ваша транзакция поступит после истечения
- заказа, но в течение 24 часов, то данная транзакция
- автоматически отобразится в заказе. Вы сможете
- самостоятельно продолжить заказ или осуществить возврат средств.</p>
-            </li>
+            {currentCoinToKnow.listToKnow.map((item) => (
+                <li className="flex flex-row space-x-4">
+                    <img className={classNames("",{"w-8 h-8": iphone})} src={item.icon} alt="иконка" />
+                    <p className="text-base">{createLinkInText(item.text)}</p>
+                </li>
+            ))}
         </ul>
     </div>
   );

@@ -16,14 +16,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { api } from "../utils/api";
 
 import { setOrder } from "../store/actions";
+import { addToOrders } from "../utils/helpers";
 
 export const OrderExchange = ({ numberOfCoinsSent }) => {
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
   const macbook = useMediaQuery("only screen and (max-width : 1024px)");
-  const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
-  const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
-  const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -88,11 +85,12 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             .then((data) => {
               console.log(data);
               if (data.msg === "Invalid address") {
-                setInvalidAddress('неверный адрес');
+                setInvalidAddress('Неверный адрес');
               }else if (data.code > 0){
                 setInvalidAddress(data.msg);
               } else {
                 dispatch(setOrder(data.data));
+                addToOrders(data.data);
                 localStorage.setItem("order", JSON.stringify(data.data));
                 navigate(`/sending/${data.data.id}`);
               }
@@ -148,7 +146,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                 navigator.clipboard.readText()
                   .then((clipText) => {
                     console.log(clipText);
-                    setCoinAddress(clipText)
+                    setInvalidAddress(false);
+                    setCoinAddress(clipText.replace(/[^\d\a-zA-Z\:]/g, ''))
                   })
                   .catch((err) => {
                     alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
@@ -197,15 +196,15 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
               alt='Paste'
             />
           </div>
-        </div>
+          </div>
         )}
       </div>
       <button
         disabled={Number(numberOfCoinsSent) <= 0 || coinAddress === ''}
         type="submit"
         className={classNames("py-3 text-xl rounded-xl mt-4", {
-          'bg-btns': !(Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
-          'bg-transparent border rounded-lg border-white border-solid': (Number(numberOfCoinsSent) <= 0 || coinAddress === ''),
+          'bg-btns': !(Number(numberOfCoinsSent) <= 0 || coinAddress === '' || creatingOrder?.errors.length > 0),
+          'bg-transparent border rounded-lg border-white border-solid': (Number(numberOfCoinsSent) <= 0 || coinAddress === '' || creatingOrder?.errors.length > 0),
         })}
       >
         Начать обмен

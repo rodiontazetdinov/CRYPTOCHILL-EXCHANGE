@@ -29,12 +29,6 @@ export const OrderItems = ({
 
       const dispatch = useDispatch();
 
-      function checkLimit(amount) {
-        if (amount < Number(state.creatingOrder.from.min)) return false
-        else if (amount > Number(state.creatingOrder.from.max)) return false
-        return true;
-      }
-
       function validateInput(input) {
         // Убираем все символы, кроме цифр, точек и запятых
         const sanitizedInput = input.replace(/[^0-9.,]/g, '');
@@ -82,7 +76,7 @@ export const OrderItems = ({
         }
 
         const timer = setTimeout(() => {
-          if (Number(amount) > 0 && checkLimit(amount)) {
+          if (Number(amount) > 0) {
             const type = state.isFixed ? 'fixed' : 'float';
 
             api.getPrice({ fromCcy, toCcy, amount, direction: "from", type })
@@ -91,7 +85,7 @@ export const OrderItems = ({
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
-                  if (response.data.to.amount < 0) {
+                  if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
                     setAmountCoin(response.data.from.min);
                   }
                 }
@@ -104,13 +98,7 @@ export const OrderItems = ({
       }, [numberOfCoinsSent, coinSend, coinRecv]);
 
       const setAmountCoin = (amount) => {
-        if (amount < state.creatingOrder.from.min) {
-          setNumberOfCoinsSent(validateInput(state.creatingOrder.from.min));
-        } else if (amount > state.creatingOrder.from.max) {
-          setNumberOfCoinsSent(validateInput(state.creatingOrder.from.max));
-        } else {
           setNumberOfCoinsSent(validateInput(amount));
-        }
       }
 
       const swapCoin = () => {

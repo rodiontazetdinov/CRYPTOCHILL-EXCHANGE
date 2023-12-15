@@ -60,3 +60,62 @@ export function extractAmountFromString(inputString) {
   // Если не найдено, возвращаем null или что-то по умолчанию
   return null;
 }
+
+export function addToOrders(obj) {
+  // проверяем наличие массива orders в localStorage
+  let orders = localStorage.getItem('orders');
+  if (orders) {
+    // парсим массив orders из localStorage
+    orders = JSON.parse(orders);
+    // проверяем наличие объекта с таким же id
+    const index = orders.findIndex(order => order.id === obj.id);
+    if (index !== -1) {
+      // перезаписываем объект, если есть такой id
+      orders[index] = obj;
+    } else {
+      // добавляем объект в массив
+      orders.push(obj);
+    }
+  } else {
+    // создаем новый массив с объектом
+    orders = [obj];
+  }
+  // записываем обновленный массив в localStorage
+  localStorage.setItem('orders', JSON.stringify(orders));
+  // возвращаем новый массив
+  return orders;
+}
+
+export function withdrawFromOrders(id) {
+  // Получаем массив заказов из localStorage
+  let orders = JSON.parse(localStorage.getItem('orders'));
+  
+  // Если массив существует
+  if (Array.isArray(orders)) {
+  // Проходимся по каждому объекту в массиве
+  for (let i = 0; i < orders.length; i++){
+  // Если находим объект с указанным id
+  if (orders[i].id === id){
+  // Возвращаем найденный объект
+  return orders[i];
+  }
+  }
+  }
+  
+  // Если ничего не найдено, возвращаем null
+  return null;
+  }
+
+  export function handleClickCopy(text, setState) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setState(true);
+        setTimeout(() => {
+          setState(false);
+        }, 500);
+      })
+      .catch(() => {
+          alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена!');
+      })
+  };
+
