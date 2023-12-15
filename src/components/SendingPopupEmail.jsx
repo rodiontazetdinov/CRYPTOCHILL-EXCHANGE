@@ -4,7 +4,7 @@ import checkedImg from "../images/icons/bi_check.svg";
 // libraries
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { api } from "../utils/api";
 import { useSelector } from "react-redux";
 
@@ -18,6 +18,7 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
     const [email, setEmail] = useState("");
     const [cancelAlert, setCancelAlert] = useState(false);
     const order = useSelector(state => state.order);
+    const formRef = useRef();
 
     /**
      * Закрывает всплывающее окно, если цель события имеет класс «js-close-popup».
@@ -41,7 +42,6 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
      */
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('submitted email');
 
         // Выполняет вызов API для обновления адреса электронной почты, связанного с заказом
         api.setEmail({
@@ -49,10 +49,17 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
             "token": order.token,
             "email": email
         }).then(response => {
-            console.log(response);
+            setPopupEmailOpen(false);
         }).catch(error => {
+
             console.log(error);
         })
+    }
+
+    const createEventSubmit = (e) => {
+        e.preventDefault();
+        const submitEvent = new Event("submit", { cancelable: true, bubbles: true });
+        formRef.current.dispatchEvent(submitEvent);
     }
 
     return (
@@ -70,6 +77,7 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
                 })}>Email уведомление о статусе заказа</h3>
                 <p className="mt-2">Введите свой действующий email для получения уведомлений об  изменении статуса этого заказа. Любые изменения данных заказа возможны только через подтверждения с email указанного в заказе</p>
                 <form
+                    ref={formRef}
                     className="flex flex-col space-y-4"
                     onSubmit={handleSubmit}
                 >
@@ -103,7 +111,7 @@ export const SendingPopupEmail = ({ setPopupEmailOpen }) => {
                                 "mr-2": !iphone,
                                 "mb-2": iphone,
                             })}
-                            type="submit"
+                            onClick={createEventSubmit}
                         >Подтвердить</button>
                         <button
                             className="flex-grow h-12 border border-white rounded-xl font-semibold text-xl"

@@ -43,6 +43,8 @@ export const SendingPage = () => {
     "only screen and (min-width : 320px) and (max-width : 585px)"
   );
 
+
+
   const dispatch = useDispatch();
 
   const [localOrder, setLocalOrder] = useState(
@@ -65,11 +67,26 @@ export const SendingPage = () => {
           .catch((error) => {
             console.log(error);
           });
-    }, 1000);
+    }, 111000);
     return () => clearTimeout(timer);
   }, [order]);
 
-  switch (order.status) {
+  useEffect(() => {
+    order &&
+      api
+        .getOrder({ id: localOrder.id, token: localOrder.token })
+        .then((response) => {
+          console.log(response);
+          dispatch(setOrder(response.data));
+          localStorage.setItem("order", JSON.stringify(response.data));
+          addToOrders(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }, []);
+
+  switch (order && order.status) {
     case "NEW":
       return (
         <section
