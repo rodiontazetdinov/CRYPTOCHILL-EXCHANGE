@@ -95,8 +95,7 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
                     <>
                         <p className="text-[#D7DFFF] text-base font-normal border-t border-[#2B23AC] py-2 mt-2 mx-4">Популярные валюты</p>
                         <ul>
-                            {popularCoins.map((coin, i) => { 
-                                console.log(coin.recv, coin.send);
+                            {popularCoins.map((coin, i) => {
                                 return (
                                 <li
                                     key={i}
