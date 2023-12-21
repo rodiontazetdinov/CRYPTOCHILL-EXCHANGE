@@ -100,7 +100,7 @@ export const SendingInfo = () => {
         )}
         {!isFixed && (
           <p className={classNames("text-blue-200 mt-4 text-base")}>
-            Курс будет зафиксирован после получения подтверждений сети
+            {`Курс будет зафиксирован после получения ${order && order.from.reqConfirmations} подтверждений сети`}
           </p>
         )}
         {isFixed && (
