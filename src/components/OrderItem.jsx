@@ -34,12 +34,21 @@ export const OrderItem = ({
   
   const errorsWhich = errors && errors.filter((err) => err.split('_')[1] === which);
 
-  let warningSum = null;
+  let isWarningSum = null;
+  let textWarningSum = null;
   if (which === 'FROM') {
     if (Number(orderFrom.max) < amount) {
-        warningSum = `Максимальная сумма для обмена ${orderFrom.max} ${orderFrom.code}`;
+        textWarningSum = <span
+          className="cursor-pointer"
+          onClick={() => setAmountCoin(orderFrom.max)}
+        >Максимальная сумма для обмена <span className="underline">{orderFrom.max}</span> <span>{orderFrom.code}</span></span>
+        isWarningSum = true;
     } else if (Number(orderFrom.min) > amount) {
-        warningSum = `Минимальная сумма для обмена ${orderFrom.min} ${orderFrom.code}`
+        textWarningSum = <span
+          className="cursor-pointer"
+          onClick={() => setAmountCoin(orderFrom.min)}
+        >Минимальная сумма для обмена <span className="underline">{orderFrom.min}</span> <span>{orderFrom.code}</span></span>
+        isWarningSum = true;
     }
   }
 
@@ -97,12 +106,14 @@ export const OrderItem = ({
             which={which}
           />
         </div>
-        {(((errorsWhich && errorsWhich.length > 0) || warningSum) && !dropdownState) && (
+        {(((errorsWhich && errorsWhich.length > 0) || isWarningSum) && !dropdownState) && (
         <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-[5%] rounded-lg mb-2">
             <img src={warning} alt="" />
             <p className="text-[#08035B]">
-              {(errorsWhich.length > 0) && processOrderErrors(errorsWhich)}
-              {warningSum && <span className="cursor-pointer" onClick={() => setAmountCoin(extractAmountFromString(warningSum))}>{warningSum}</span>}
+              {(!isWarningSum && (errorsWhich.length > 0)) && processOrderErrors(errorsWhich)}
+              {isWarningSum && (
+                textWarningSum
+              )}
             </p>
         </div>
         )}
