@@ -17,10 +17,9 @@ export const DropdownListCoins = ({ selectName, stateCoin, setStateCoin, dropdow
     const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1280px)");
     const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
-    console.log(stateCoin);
+
     const coins = useSelector(state => state.coins);
     const selectedCoin = coins.find((coin) => coin.code === stateCoin);
-    console.log(selectedCoin);
 
     const [ fieldSearchCoin, setFieldSearchCoin ] = useState('');
 
