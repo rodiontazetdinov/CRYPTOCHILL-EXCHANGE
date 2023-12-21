@@ -5,15 +5,12 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 
 // img
-import ETHicon from "../images/coins/eth.svg";
-import BTCicon from "../images/coins/btc.svg";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export const Order = () => {
   const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
   const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
-  const laptop = useMediaQuery("only screen and (min-width : 1024px)");
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
   const desctop = useMediaQuery("only screen and (min-width : 1280px)");
 
@@ -24,7 +21,7 @@ export const Order = () => {
   const [ coinRecv, setCoinRecv ] = useState(order.to.code);
   
   return (
-    <div className={classNames("flex flex-col items-center",{
+    <div className={classNames("flex flex-col items-center relative",{
       "max-w-[696px] px-6 rounded-[64px]": ipadMini,
       "w-[912px] px-24 rounded-[80px]": macbook,
       "px-24 rounded-[80px]": desctop,

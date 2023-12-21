@@ -34,6 +34,9 @@ module.exports = {
       fontFamily: {
         'mono': ['Space Mono', 'sans'],
       },
+      top: {
+        '353': '353px',
+      },
     },
   },
   plugins: [],

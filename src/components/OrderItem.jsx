@@ -48,7 +48,7 @@ export const OrderItem = ({
       className={classNames(
         "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-[24px] ",
         {
-          "mt-2 w-[288px]": ipadMini,
+          "mt-2 w-full": ipadMini,
           "mt-2 w-full max-w-mobile-container": miniOrder,
           "w-[347px]": laptop,
         }
