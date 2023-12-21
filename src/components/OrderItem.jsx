@@ -31,6 +31,7 @@ export const OrderItem = ({
   const errors = useSelector(state => state.creatingOrder.errors);
   const isFixed = useSelector(state => state.isFixed);
   const orderFrom = useSelector(state => state.creatingOrder.from);
+  const currentCoin = useSelector(state => which === 'FROM' ? state.creatingOrder.from : state.creatingOrder.to);
   
   const errorsWhich = errors && errors.filter((err) => err.split('_')[1] === which);
 
@@ -121,20 +122,20 @@ export const OrderItem = ({
 
       {!isFocusInput && (
         <div className="flex flex-row justify-between w-full">
-          <p className="text-left text-base mt-2">{`1 ${stateCoin.code} ${isFixed ? '=' : '≈'} ${stateCoin.rate} ${nameCoinTo}`}</p>
-          <p className="text-left text-base mt-2">{`${stateCoin.usd}$`}</p>
+          <p className="text-left text-base mt-2">{`1 ${currentCoin.code} ${isFixed ? '=' : '≈'} ${currentCoin.rate} ${nameCoinTo}`}</p>
+          <p className="text-left text-base mt-2">{`${currentCoin.usd}$`}</p>
         </div>
       )}
       {isFocusInput && (
         <div className="flex flex-row justify-between w-full">
           <p 
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(stateCoin.min)}
-          >{`min: ${stateCoin.min}`}</p>
+            onClick={() => setAmountCoin(currentCoin.min)}
+          >{`min: ${currentCoin.min}`}</p>
           <p
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(stateCoin.max)}
-          >{`max: ${stateCoin.max}`}</p>
+            onClick={() => setAmountCoin(currentCoin.max)}
+          >{`max: ${currentCoin.max}`}</p>
         </div>
       )}
     </div>
