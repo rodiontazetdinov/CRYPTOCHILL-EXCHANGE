@@ -179,6 +179,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             value={coinMemo}
             placeholder={`Destination tag`}
             onChange={ev => setCoinMemo(ev.target.value)}
+            maxLength={20}
           />
           <div className="flex flex-row">
             <img

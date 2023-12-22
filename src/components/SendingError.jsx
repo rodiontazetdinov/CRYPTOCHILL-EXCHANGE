@@ -63,6 +63,7 @@ export const SendingError = () => {
   const [coinAddress, setCoinAddress] = useState("");
   const [openQR, setOpenQR] = useState(false);
   const order = useSelector((state) => state.order);
+  const [memoTag, setMemoTag] = useState("");
 
   const previewStyle = {
     height: "100%",
@@ -207,12 +208,21 @@ export const SendingError = () => {
             // SUBMIT
             isReturn
               ? api
-                  .cancelOrder({
-                    id: order.id,
-                    token: order.token,
-                    choice: "REFUND",
-                    address: coinAddress,
-                  })
+                  .cancelOrder((memoTag === "") ?
+                    {
+                      id: order.id,
+                      token: order.token,
+                      choice: "REFUND",
+                      address: coinAddress,
+                    } :
+                    {
+                      id: order.id,
+                      token: order.token,
+                      choice: "REFUND",
+                      address: coinAddress,
+                      tag: memoTag,
+                    }
+                  )
                   .then((res) => {
                     console.log(res);
                   })
@@ -289,14 +299,17 @@ export const SendingError = () => {
 
           {isReturn && (
             <div
-              className={classNames("flex w-full", { "flex-col": miniSending })}
+              className={classNames("flex w-full justify-between", { "flex-col": !desctop })}
             >
               <div
                 className={classNames(
-                  "relative bg-[#08035B] flex flex-row w-full py-3 px-6 rounded-xl justify-between",
+                  "bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between",
                   {
-                    "mr-8": !miniSending,
-                    "mb-4": miniSending,
+                    "w-[62%]": desctop && order.from.tag,
+                    "w-[80%]": desctop && !order.from.tag,
+                    "mb-4 w-[90%]": macbook,
+                    "mb-4 w-full": ipadMini,
+                    "mb-4": iphone,
                   }
                 )}
               >
@@ -342,6 +355,46 @@ export const SendingError = () => {
                         </div>
                         )} */}
               </div>
+              {order.from.tag && (
+                <div
+                  className={classNames(
+                    "bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between",
+                    {
+                      "mb-4 w-[30%]": macbook,
+                      "mb-4 w-[50%]": ipadMini,
+                      "mb-4": iphone,
+                    }
+                  )}
+                >
+                  <input
+                    className="bg-[#08035B] text-white focus:outline-none w-[160px]"
+                    type="text"
+                    value={memoTag}
+                    placeholder={`Destination tag`}
+                    onChange={(ev) => setMemoTag(ev.target.value)}
+                    maxLength={20}
+                  />
+                  <div className="flex flex-row">
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard
+                          .readText()
+                          .then((clipText) => {
+                            setMemoTag(clipText);
+                          })
+                          .catch((err) => {
+                            alert(
+                              "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                            );
+                          });
+                      }}
+                      src={squares}
+                      alt="Paste"
+                    />
+                  </div>
+                </div>
+              )}
               <button
                 className="self-start bg-btns rounded-xl text-xl px-4 py-3 font-semibold whitespace-nowrap"
                 type="submit"
