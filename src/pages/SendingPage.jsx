@@ -71,7 +71,7 @@ export const SendingPage = () => {
           .catch((error) => {
             console.log(error);
           });
-    }, 111000);
+    }, 11000);
     return () => clearTimeout(timer);
   }, [order]);
 
