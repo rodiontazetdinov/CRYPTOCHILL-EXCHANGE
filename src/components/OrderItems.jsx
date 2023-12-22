@@ -17,6 +17,10 @@ import { api } from "../utils/api";
 export const OrderItems = ({
   numberOfCoinsSent,
   setNumberOfCoinsSent,
+  numberOfCoinsRecv,
+  setNumberOfCoinsRecv,
+  isInputInSentCoin,
+  setInputInSentCoin
 }) => {
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
@@ -65,7 +69,8 @@ export const OrderItems = ({
       }
 
       useEffect(() => {
-        const amount = numberOfCoinsSent;
+        const amount = isInputInSentCoin ? numberOfCoinsSent : numberOfCoinsRecv;
+        const direction = isInputInSentCoin ? 'from' : 'to';
         let fromCcy = coinSend;
         let toCcy = coinRecv;
 
@@ -82,26 +87,32 @@ export const OrderItems = ({
           if (Number(amount) > 0) {
             const type = state.isFixed ? 'fixed' : 'float';
 
-            api.getPrice({ fromCcy, toCcy, amount, direction: "from", type })
+            api.getPrice({ fromCcy, toCcy, amount, direction, type })
               .then((response) => {
                 if (response.data === null) {
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
-                  if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
-                    setAmountCoin(response.data.from.min);
-                  }
+                  setNumberOfCoinsSent(response.data.from.amount);
+                  setNumberOfCoinsRecv(response.data.to.amount);
+                  // if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
+                  //   setAmountCoin(response.data.from.min, true);
+                  // }
                 }
               })
               .catch((err) => console.error(err));
           }
         }, 1000);
         return () => clearTimeout(timer);
-        
-      }, [numberOfCoinsSent, coinSend, coinRecv]);
+      }, [numberOfCoinsSent, numberOfCoinsRecv, coinSend, coinRecv]);
 
-      const setAmountCoin = (amount) => {
-          setNumberOfCoinsSent(validateInput(amount));
+      const setAmountCoin = (amount, witch) => {
+          console.log(amount);
+          if (witch) {
+            setNumberOfCoinsSent(validateInput(amount));
+          } else {
+            setNumberOfCoinsRecv(validateInput(amount));
+          }
       }
 
       const swapCoin = () => {
@@ -122,7 +133,8 @@ export const OrderItems = ({
               setStateCoin={setCoinSent}
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
-              amount={numberOfCoinsSent}
+              amount={isInputInSentCoin ? numberOfCoinsSent : state.creatingOrder.from.amount}
+              setInputInSentCoin={setInputInSentCoin}
               which="FROM"
             />
             {!ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
@@ -133,8 +145,10 @@ export const OrderItems = ({
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
               stateCoin={coinRecv}
               setStateCoin={setCoinRecv}
+              setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.from.code}
-              amount={state.creatingOrder.to.amount}
+              amount={!isInputInSentCoin ? numberOfCoinsRecv : state.creatingOrder.to.amount}
+              setInputInSentCoin={setInputInSentCoin}
               which="TO"
               float={!state.isFixed}
             />

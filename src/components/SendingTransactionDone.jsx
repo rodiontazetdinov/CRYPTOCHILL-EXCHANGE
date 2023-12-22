@@ -35,7 +35,7 @@ export const SendingTransactionDone = () => {
       "text-5xl": !phone,
       "text-3xl": phone
     })}>
-        {order && order.emergency.choice === "REFUND" ? `Ваш ${coinFrom.code} был возвращен` : `Ваш ${coinFrom.code} был отправлен`}
+        {order && order.emergency.choice === "REFUND" ? `Ваш ${order.to.code} был возвращен` : `Ваш ${order.to.code} был отправлен`}
     </p>
     <p className={classNames("max-w-[380px]", {
       "text-base": phone
