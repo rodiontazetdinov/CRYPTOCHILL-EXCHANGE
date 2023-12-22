@@ -13,6 +13,7 @@ export const DropdownListCoins = ({
   setDropdownState,
   which,
 }) => {
+
   const coins = useSelector((state) => state.coins);
   const selectedCoin = coins?.find((coin) => coin.code === stateCoin);
 
