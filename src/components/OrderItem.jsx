@@ -16,10 +16,11 @@ export const OrderItem = ({
   setStateCoin,
   dropdownState,
   setDropdownState,
+  setAmountCoin,
   nameCoinTo,
+  setInputInSentCoin,
   which,
   float,
-  setAmountCoin=(() => {})
 }) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
@@ -31,15 +32,31 @@ export const OrderItem = ({
   const errors = useSelector(state => state.creatingOrder.errors);
   const isFixed = useSelector(state => state.isFixed);
   const orderFrom = useSelector(state => state.creatingOrder.from);
+  const currentCoin = useSelector(state => which === 'FROM' ? state.creatingOrder.from : state.creatingOrder.to);
   
   const errorsWhich = errors && errors.filter((err) => err.split('_')[1] === which);
 
-  let warningSum = null;
+  let isWarningSum = null;
+  let textWarningSum = null;
   if (which === 'FROM') {
     if (Number(orderFrom.max) < amount) {
-        warningSum = `Максимальная сумма для обмена ${orderFrom.max} ${orderFrom.code}`;
+        textWarningSum = <span
+          className="cursor-pointer"
+          onClick={() => {
+            setInputInSentCoin(true);
+            setAmountCoin(orderFrom.max, which === 'FROM' ? true : false);
+          }}
+        >Максимальная сумма для обмена <span className="underline">{orderFrom.max}</span> <span>{orderFrom.code}</span></span>
+        isWarningSum = true;
     } else if (Number(orderFrom.min) > amount) {
-        warningSum = `Минимальная сумма для обмена ${orderFrom.min} ${orderFrom.code}`
+        textWarningSum = <span
+          className="cursor-pointer"
+          onClick={() => {
+            setInputInSentCoin(true);
+            setAmountCoin(orderFrom.min, which === 'FROM' ? true : false);
+          }}
+        >Минимальная сумма для обмена <span className="underline">{orderFrom.min}</span> <span>{orderFrom.code}</span></span>
+        isWarningSum = true;
     }
   }
 
@@ -48,7 +65,7 @@ export const OrderItem = ({
       className={classNames(
         "bg-white bg-opacity-20 flex flex-col items-center p-3 rounded-[24px] ",
         {
-          "mt-2 w-[288px]": ipadMini,
+          "mt-2 w-full": ipadMini,
           "mt-2 w-full max-w-mobile-container": miniOrder,
           "w-[347px]": laptop,
         }
@@ -72,13 +89,18 @@ export const OrderItem = ({
                   'text-[#d9d6ff80]': errorsWhich && errorsWhich.length > 0
                 }
               )}
-              onFocus={() => setFocusInput(true)}
+              onFocus={() => {
+                setFocusInput(true);
+                setInputInSentCoin(which === 'FROM' ? true : false);
+              }}
               onBlur={(ev) => {
                 setTimeout(() => {
                   setFocusInput(false);
                 }, 1000);
               }}
-              onChange={(ev) => setAmountCoin(ev.target.value)}
+              onChange={(ev) => {
+                setAmountCoin(ev.target.value, which === 'FROM' ? true : false);
+              }}
               value={`${float ? '≈' : ''}${amount}`}
               maxLength={17}
             />
@@ -97,12 +119,14 @@ export const OrderItem = ({
             which={which}
           />
         </div>
-        {(((errorsWhich && errorsWhich.length > 0) || warningSum) && !dropdownState) && (
+        {(((errorsWhich && errorsWhich.length > 0) || isWarningSum) && !dropdownState) && (
         <div className="absolute top-14 flex justify-between items-center px-3 py-1 bg-[#FF5454] w-[90%] mx-[5%] rounded-lg mb-2">
             <img src={warning} alt="" />
             <p className="text-[#08035B]">
-              {(errorsWhich.length > 0) && processOrderErrors(errorsWhich)}
-              {warningSum && <span className="cursor-pointer" onClick={() => setAmountCoin(extractAmountFromString(warningSum))}>{warningSum}</span>}
+              {(!isWarningSum && (errorsWhich.length > 0)) && processOrderErrors(errorsWhich)}
+              {isWarningSum && (
+                textWarningSum
+              )}
             </p>
         </div>
         )}
@@ -110,20 +134,20 @@ export const OrderItem = ({
 
       {!isFocusInput && (
         <div className="flex flex-row justify-between w-full">
-          <p className="text-left text-base mt-2">{`1 ${stateCoin.code} ${isFixed ? '=' : '≈'} ${stateCoin.rate} ${nameCoinTo}`}</p>
-          <p className="text-left text-base mt-2">{`${stateCoin.usd}$`}</p>
+          <p className="text-left text-base mt-2">{`1 ${currentCoin.code} ${isFixed ? '=' : '≈'} ${currentCoin.rate} ${nameCoinTo}`}</p>
+          <p className="text-left text-base mt-2">{`${currentCoin.usd}$`}</p>
         </div>
       )}
       {isFocusInput && (
         <div className="flex flex-row justify-between w-full">
           <p 
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(stateCoin.min)}
-          >{`min: ${stateCoin.min}`}</p>
+            onClick={() => setAmountCoin(currentCoin.min, which === 'FROM' ? true : false)}
+          >{`min: ${currentCoin.min}`}</p>
           <p
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(stateCoin.max)}
-          >{`max: ${stateCoin.max}`}</p>
+            onClick={() => setAmountCoin(currentCoin.max, which === 'FROM' ? true : false)}
+          >{`max: ${currentCoin.max}`}</p>
         </div>
       )}
     </div>

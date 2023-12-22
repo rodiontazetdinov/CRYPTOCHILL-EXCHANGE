@@ -21,6 +21,7 @@ import { addToOrders, withdrawFromOrders } from "../utils/helpers";
 import { SendingTransactionBack } from "../components/SendingTransactionBack";
 import { SendingAllert } from "../components/SendingAllert";
 import { SendingPopupEmail } from "../components/SendingPopupEmail";
+import { SendingPopupXRPWarning } from "../components/SendingPopupXRPWarning";
 
 export const SendingPage = () => {
   const iphone = useMediaQuery(
@@ -51,7 +52,10 @@ export const SendingPage = () => {
     withdrawFromOrders(useParams().id) || {}
   );
   const [popupEmailOpen, setPopupEmailOpen] = useState(true);
+  const [popupXRPWarning, setPopupXRPWarning] = useState(false);
   const order = useSelector((state) => state.order);
+
+  // setPopupXRPWarning(order.from.code === "XRP" ? true : false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -67,11 +71,12 @@ export const SendingPage = () => {
           .catch((error) => {
             console.log(error);
           });
-    }, 111000);
+    }, 11000);
     return () => clearTimeout(timer);
   }, [order]);
 
   useEffect(() => {
+    setPopupXRPWarning(order.from.code === "XRP" ? true : false);
     order &&
       api
         .getOrder({ id: localOrder.id, token: localOrder.token })
@@ -104,6 +109,9 @@ export const SendingPage = () => {
         >
           {popupEmailOpen && (
             <SendingPopupEmail setPopupEmailOpen={setPopupEmailOpen} />
+          )}
+          {(popupXRPWarning && !popupEmailOpen) && (
+            <SendingPopupXRPWarning setPopupXRPWarning={setPopupXRPWarning} />
           )}
           <SendingCoinTo />
           <SendingAllert />

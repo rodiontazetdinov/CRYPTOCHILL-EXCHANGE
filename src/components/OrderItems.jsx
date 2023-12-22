@@ -3,19 +3,24 @@ import { OrderItem } from "./OrderItem";
 
 // img
 import orderSwitch from '../images/order-switch.svg';
+import orderSwitchMini from '../images/order-switch-mini.svg';
 
 // lib
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { closeDropdown, openDropdown, setCoins, setOrderCreationState } from "../store/actions";
+import { closeDropdown, openDropdown, setOrderCreationState } from "../store/actions";
 import { api } from "../utils/api";
 
 
 export const OrderItems = ({
   numberOfCoinsSent,
   setNumberOfCoinsSent,
+  numberOfCoinsRecv,
+  setNumberOfCoinsRecv,
+  isInputInSentCoin,
+  setInputInSentCoin
 }) => {
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
@@ -64,41 +69,50 @@ export const OrderItems = ({
       }
 
       useEffect(() => {
-        const amount = numberOfCoinsSent;
+        const amount = isInputInSentCoin ? numberOfCoinsSent : numberOfCoinsRecv;
+        const direction = isInputInSentCoin ? 'from' : 'to';
         let fromCcy = coinSend;
         let toCcy = coinRecv;
 
         // Если название коинов одинаковое, меняем их местами:
-        if (fromCcy === state.creatingOrder.to.code) {
+        if (fromCcy === toCcy) {
           toCcy = state.creatingOrder.from.code;
-        } else if (toCcy === state.creatingOrder.from.code) {
+          setCoinRecv(toCcy);
+        } else if (toCcy === fromCcy) {
           fromCcy = state.creatingOrder.to.code;
+          setCoinSent(fromCcy);
         }
 
         const timer = setTimeout(() => {
           if (Number(amount) > 0) {
             const type = state.isFixed ? 'fixed' : 'float';
 
-            api.getPrice({ fromCcy, toCcy, amount, direction: "from", type })
+            api.getPrice({ fromCcy, toCcy, amount, direction, type })
               .then((response) => {
                 if (response.data === null) {
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
-                  if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
-                    setAmountCoin(response.data.from.min);
-                  }
+                  setNumberOfCoinsSent(response.data.from.amount);
+                  setNumberOfCoinsRecv(response.data.to.amount);
+                  // if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
+                  //   setAmountCoin(response.data.from.min, true);
+                  // }
                 }
               })
               .catch((err) => console.error(err));
           }
         }, 1000);
         return () => clearTimeout(timer);
-        
-      }, [numberOfCoinsSent, coinSend, coinRecv]);
+      }, [numberOfCoinsSent, numberOfCoinsRecv, coinSend, coinRecv]);
 
-      const setAmountCoin = (amount) => {
-          setNumberOfCoinsSent(validateInput(amount));
+      const setAmountCoin = (amount, witch) => {
+          console.log(amount);
+          if (witch) {
+            setNumberOfCoinsSent(validateInput(amount));
+          } else {
+            setNumberOfCoinsRecv(validateInput(amount));
+          }
       }
 
       const swapCoin = () => {
@@ -115,23 +129,26 @@ export const OrderItems = ({
               title="Отправляете"
               dropdownState={dropdownSent}
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
-              stateCoin={state.creatingOrder.from}
+              stateCoin={coinSend}
               setStateCoin={setCoinSent}
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
-              amount={numberOfCoinsSent}
+              amount={isInputInSentCoin ? numberOfCoinsSent : state.creatingOrder.from.amount}
+              setInputInSentCoin={setInputInSentCoin}
               which="FROM"
             />
             {!ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
-            {/* <img src={orderSwitch} alt="switch"/> */}
+            {ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitchMini} alt="switch" className="cursor-pointer absolute right-3.5 top-[353px]"/>}
             <OrderItem
               title="Получаете"
               dropdownState={dropdownReceived}
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
-              stateCoin={state.creatingOrder.to}
+              stateCoin={coinRecv}
               setStateCoin={setCoinRecv}
+              setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.from.code}
-              amount={state.creatingOrder.to.amount}
+              amount={!isInputInSentCoin ? numberOfCoinsRecv : state.creatingOrder.to.amount}
+              setInputInSentCoin={setInputInSentCoin}
               which="TO"
               float={!state.isFixed}
             />

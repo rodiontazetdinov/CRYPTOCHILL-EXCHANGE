@@ -7,17 +7,19 @@ import selectedRadio from "../images/icons/selectedRadio.svg";
 import close from "../images/icons/close.svg";
 
 // lib
-import { useState } from "react";
 import "@splidejs/react-splide/css/core";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import QrReader from "react-qr-scanner";
-import { useSelector } from "react-redux";
 import classNames from "classnames";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useMediaQuery } from "@uidotdev/usehooks"; 
+import { useParams } from "react-router-dom";
 
+import { addToOrders, withdrawFromOrders } from "../utils/helpers";
 import { api } from "../utils/api";
+import { setOrder } from "../store/actions";
 
 export const SendingActionsExpiredOrder = () => {
-
   const iphone = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
@@ -29,11 +31,17 @@ export const SendingActionsExpiredOrder = () => {
   );
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
 
+
+  const dispatch = useDispatch();
+
   const [isReturn, setIsReturn] = useState(true);
   const [coinAddress, setCoinAddress] = useState("");
   const [openQR, setOpenQR] = useState(false);
   const order = useSelector((state) => state.order);
   const [memoTag, setMemoTag] = useState("");
+  const [localOrder, setLocalOrder] = useState(
+    withdrawFromOrders(useParams().id) || {}
+  );
 
   const previewStyle = {
     height: "100%",
@@ -78,6 +86,23 @@ export const SendingActionsExpiredOrder = () => {
                   address: coinAddress,
                 })
                 .then((res) => {
+                  if (res.msg === "OK") {
+                    order &&
+                      api
+                        .getOrder({
+                          id: localOrder.id,
+                          token: localOrder.token,
+                        })
+                        .then((response) => {
+                          console.log(response);
+                          dispatch(setOrder(response.data));
+                          localStorage.setItem(
+                            "order",
+                            JSON.stringify(response.data)
+                          );
+                          addToOrders(response.data);
+                        });
+                  }
                   console.log(res);
                 })
                 .catch((err) => {
