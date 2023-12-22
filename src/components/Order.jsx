@@ -19,7 +19,9 @@ export const Order = () => {
 
   const order = useSelector(state => state.creatingOrder);
   
+  const [ isInputInSentCoin,  setInputInSentCoin ] = useState(true);
   const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(order.from.amount);
+  const [ numberOfCoinsRecv, setNumberOfCoinsRecv ] = useState(order.to.amount);
   const [ coinSend, setCoinSent ] = useState(order.from.code);
   const [ coinRecv, setCoinRecv ] = useState(order.to.code);
   
@@ -36,6 +38,10 @@ export const Order = () => {
       <OrderItems
         numberOfCoinsSent={numberOfCoinsSent}
         setNumberOfCoinsSent={setNumberOfCoinsSent}
+        numberOfCoinsRecv={numberOfCoinsRecv}
+        setNumberOfCoinsRecv={setNumberOfCoinsRecv}
+        isInputInSentCoin={isInputInSentCoin}
+        setInputInSentCoin={setInputInSentCoin}
         coinSend={coinSend}
         setCoinSent={setCoinSent}
         coinRecv={coinRecv}

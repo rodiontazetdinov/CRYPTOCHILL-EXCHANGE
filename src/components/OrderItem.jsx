@@ -16,10 +16,11 @@ export const OrderItem = ({
   setStateCoin,
   dropdownState,
   setDropdownState,
+  setAmountCoin,
   nameCoinTo,
+  setInputInSentCoin,
   which,
   float,
-  setAmountCoin=(() => {})
 }) => {
   const ipadMini = useMediaQuery("only screen and (max-width : 1024px)");
   const miniOrder = useMediaQuery("only screen and (max-width : 610px)");
@@ -41,13 +42,19 @@ export const OrderItem = ({
     if (Number(orderFrom.max) < amount) {
         textWarningSum = <span
           className="cursor-pointer"
-          onClick={() => setAmountCoin(orderFrom.max)}
+          onClick={() => {
+            setInputInSentCoin(true);
+            setAmountCoin(orderFrom.max, which === 'FROM' ? true : false);
+          }}
         >Максимальная сумма для обмена <span className="underline">{orderFrom.max}</span> <span>{orderFrom.code}</span></span>
         isWarningSum = true;
     } else if (Number(orderFrom.min) > amount) {
         textWarningSum = <span
           className="cursor-pointer"
-          onClick={() => setAmountCoin(orderFrom.min)}
+          onClick={() => {
+            setInputInSentCoin(true);
+            setAmountCoin(orderFrom.min, which === 'FROM' ? true : false);
+          }}
         >Минимальная сумма для обмена <span className="underline">{orderFrom.min}</span> <span>{orderFrom.code}</span></span>
         isWarningSum = true;
     }
@@ -82,13 +89,18 @@ export const OrderItem = ({
                   'text-[#d9d6ff80]': errorsWhich && errorsWhich.length > 0
                 }
               )}
-              onFocus={() => setFocusInput(true)}
+              onFocus={() => {
+                setFocusInput(true);
+                setInputInSentCoin(which === 'FROM' ? true : false);
+              }}
               onBlur={(ev) => {
                 setTimeout(() => {
                   setFocusInput(false);
                 }, 1000);
               }}
-              onChange={(ev) => setAmountCoin(ev.target.value)}
+              onChange={(ev) => {
+                setAmountCoin(ev.target.value, which === 'FROM' ? true : false);
+              }}
               value={`${float ? '≈' : ''}${amount}`}
               maxLength={17}
             />
@@ -130,11 +142,11 @@ export const OrderItem = ({
         <div className="flex flex-row justify-between w-full">
           <p 
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(currentCoin.min)}
+            onClick={() => setAmountCoin(currentCoin.min, which === 'FROM' ? true : false)}
           >{`min: ${currentCoin.min}`}</p>
           <p
             className="text-left text-base mt-2 cursor-pointer"
-            onClick={() => setAmountCoin(currentCoin.max)}
+            onClick={() => setAmountCoin(currentCoin.max, which === 'FROM' ? true : false)}
           >{`max: ${currentCoin.max}`}</p>
         </div>
       )}
