@@ -13,8 +13,9 @@ export const DropdownListCoins = ({
   setDropdownState,
   which,
 }) => {
+
   const coins = useSelector((state) => state.coins);
-  const selectedCoin = coins?.find((coin) => coin.code === stateCoin.code);
+  const selectedCoin = coins?.find((coin) => coin.code === stateCoin);
 
   const [fieldSearchCoin, setFieldSearchCoin] = useState("");
 
