@@ -7,33 +7,17 @@ import { formatSeconds, formatDate, handleClickCopy } from "../utils/helpers";
 
 import squaresImg from "../images/icons/squares.svg";
 
-export const SendingOrderNumber = ({
-  time = "29:52",
-  rateType = "Плавающий",
-  crearedAt = "30.06.2023 06:21",
-}) => {
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const iphone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 744px)"
-  );
-  const ipadMini = useMediaQuery(
-    "only screen and (min-width : 744px) and (max-width : 1024px)"
-  );
-  const macbook = useMediaQuery(
-    "only screen and (min-width : 1024px) and (max-width : 1440px)"
-  );
-  const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-  const miniSending = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 911px)"
-  );
-  const miniTop = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 1210px)"
-  );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
+export const SendingOrderNumber = () => {
+  // const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+  // const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
+  // const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
+  // const macbook = useMediaQuery("only screen and (min-width : 1024px) and (max-width : 1440px)");
+  // const desctop = useMediaQuery("only screen and (min-width : 1440px)");
+  // const miniSending = useMediaQuery("only screen and (min-width : 320px) and (max-width : 911px)");
+  // const miniTop = useMediaQuery("only screen and (min-width : 320px) and (max-width : 1210px)");
+  // const phone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 585px)");
 
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [isIdCopied, setIdCopied] = useState(false);
   const order = useSelector((state) => state.order);
   const [timer, setTimer] = useState(null);
@@ -61,7 +45,10 @@ export const SendingOrderNumber = ({
       )}
     >
       <p className="text-2xl font-semibold">Номер заказа</p>
-      <div className="flex flex-row items-center">
+      <div
+        className="flex flex-row items-center cursor-pointer"
+        onClick={() => handleClickCopy(order.id, setIdCopied)}
+      >
         <p className={classNames("text-3xl font-semibold mr-1", {
           "text-blue-200": !isIdCopied,
           "text-[#95FF54]": isIdCopied,
@@ -69,8 +56,6 @@ export const SendingOrderNumber = ({
           {order && order.id}
         </p>
         <img
-          className="cursor-pointer"
-          onClick={() => handleClickCopy(order.id, setIdCopied)}
           src={squaresImg}
           alt="иконка квадраты"
         />

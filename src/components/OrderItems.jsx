@@ -70,10 +70,12 @@ export const OrderItems = ({
         let toCcy = coinRecv;
 
         // Если название коинов одинаковое, меняем их местами:
-        if (fromCcy === state.creatingOrder.to.code) {
+        if (fromCcy === toCcy) {
           toCcy = state.creatingOrder.from.code;
-        } else if (toCcy === state.creatingOrder.from.code) {
+          setCoinRecv(toCcy);
+        } else if (toCcy === fromCcy) {
           fromCcy = state.creatingOrder.to.code;
+          setCoinSent(fromCcy);
         }
 
         const timer = setTimeout(() => {
@@ -116,7 +118,7 @@ export const OrderItems = ({
               title="Отправляете"
               dropdownState={dropdownSent}
               setDropdownState={() => dispatch(dropdownSent ? closeDropdown('coinSentOrder') : openDropdown('coinSentOrder'))}
-              stateCoin={state.creatingOrder.from}
+              stateCoin={coinSend}
               setStateCoin={setCoinSent}
               setAmountCoin={setAmountCoin}
               nameCoinTo={state.creatingOrder.to.code}
@@ -129,7 +131,7 @@ export const OrderItems = ({
               title="Получаете"
               dropdownState={dropdownReceived}
               setDropdownState={() => dispatch(dropdownReceived ? closeDropdown('coinReceivedOrder') : openDropdown('coinReceivedOrder'))}
-              stateCoin={state.creatingOrder.to}
+              stateCoin={coinRecv}
               setStateCoin={setCoinRecv}
               nameCoinTo={state.creatingOrder.from.code}
               amount={state.creatingOrder.to.amount}

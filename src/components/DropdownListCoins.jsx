@@ -16,7 +16,10 @@ export const DropdownListCoins = ({
   const coins = useSelector((state) => state.coins);
   const selectedCoin = coins?.find((coin) => coin.code === stateCoin.code);
 
-  const [fieldSearchCoin, setFieldSearchCoin] = useState("");
+    console.log(stateCoin);
+    const coins = useSelector(state => state.coins);
+    const selectedCoin = coins.find((coin) => coin.code === stateCoin);
+    console.log(selectedCoin);
 
   const searchMatch = (coin) => {
     const searchString = fieldSearchCoin.toLowerCase();
