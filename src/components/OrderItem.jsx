@@ -70,6 +70,7 @@ export const OrderItem = ({
           "w-[347px]": laptop,
         }
       )}
+      onClick={() => setInputInSentCoin(which === 'FROM' ? true : false)}
     >
       <h3 className="text-3xl w-full text-left">{title}</h3>
       {/* <OrderItemCoin /> */}

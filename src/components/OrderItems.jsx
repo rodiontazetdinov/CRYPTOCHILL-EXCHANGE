@@ -76,10 +76,9 @@ export const OrderItems = ({
 
         // Если название коинов одинаковое, меняем их местами:
         if (fromCcy === toCcy) {
+          fromCcy = state.creatingOrder.to.code;
           toCcy = state.creatingOrder.from.code;
           setCoinRecv(toCcy);
-        } else if (toCcy === fromCcy) {
-          fromCcy = state.creatingOrder.to.code;
           setCoinSent(fromCcy);
         }
 

@@ -121,6 +121,7 @@ export const SendingPage = () => {
               <SendingInfo />
               <SendingQr />
             </div>
+            
           )}
           {miniTop && (
             <div className="flex flex-col w-full space-y-6">
