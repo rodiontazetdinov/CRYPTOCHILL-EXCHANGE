@@ -3,13 +3,14 @@ import { OrderItem } from "./OrderItem";
 
 // img
 import orderSwitch from '../images/order-switch.svg';
+import orderSwitchMini from '../images/order-switch-mini.svg';
 
 // lib
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { closeDropdown, openDropdown, setCoins, setOrderCreationState } from "../store/actions";
+import { closeDropdown, openDropdown, setOrderCreationState } from "../store/actions";
 import { api } from "../utils/api";
 
 
@@ -125,7 +126,7 @@ export const OrderItems = ({
               which="FROM"
             />
             {!ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitch} alt="switch" className="cursor-pointer"/>}
-            {/* <img src={orderSwitch} alt="switch"/> */}
+            {ipadMini && <img onClick={() => swapCoin([state.creatingOrder.to.amount, state.creatingOrder.to.code], state.creatingOrder.from.code)} src={orderSwitchMini} alt="switch" className="cursor-pointer absolute right-3.5 top-[353px]"/>}
             <OrderItem
               title="Получаете"
               dropdownState={dropdownReceived}

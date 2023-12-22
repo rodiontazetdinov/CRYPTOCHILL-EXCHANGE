@@ -5,6 +5,7 @@ import segwitIcon from '../images/sending-icons/segwit.svg';
 import calculatorIcon from '../images/sending-icons/calc.svg';
 
 export const MAIN_URL = 'https://ccex.money/api';
+// export const MAIN_URL = 'http://localhost:3232/api';
 
 export const toKnow = [
     {
