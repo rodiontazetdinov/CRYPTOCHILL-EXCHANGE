@@ -79,12 +79,21 @@ export const SendingActionsExpiredOrder = () => {
           // SUBMIT
           isReturn
             ? api
-                .cancelOrder({
-                  id: order.id,
-                  token: order.token,
-                  choice: "REFUND",
-                  address: coinAddress,
-                })
+                .cancelOrder((memoTag === "") ?
+                  {
+                    id: order.id,
+                    token: order.token,
+                    choice: "REFUND",
+                    address: coinAddress,
+                  } :
+                  {
+                    id: order.id,
+                    token: order.token,
+                    choice: "REFUND",
+                    address: coinAddress,
+                    tag: memoTag,
+                  }
+                )
                 .then((res) => {
                   if (res.msg === "OK") {
                     order &&
@@ -172,10 +181,10 @@ export const SendingActionsExpiredOrder = () => {
         )}
 
         {isReturn && (
-          <div className={classNames("flex w-full", { "flex-col": !desctop })}>
+          <div className={classNames("flex w-full justify-between", { "flex-col": !desctop })}>
             <div
               className={classNames(
-                "relative bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between",
+                "bg-[#08035B] flex flex-row py-3 px-6 rounded-xl justify-between",
                 {
                   "w-[62%]": desctop && order.from.tag,
                   "w-[80%]": desctop && !order.from.tag,
@@ -228,6 +237,7 @@ export const SendingActionsExpiredOrder = () => {
                     "mb-4 w-[30%]": macbook,
                     "mb-4 w-[50%]": ipadMini,
                     "mb-4": iphone,
+                    // "mx-4": desctop,
                   }
                 )}
               >
@@ -237,6 +247,7 @@ export const SendingActionsExpiredOrder = () => {
                   value={memoTag}
                   placeholder={`Destination tag`}
                   onChange={(ev) => setMemoTag(ev.target.value)}
+                  maxLength={20}
                 />
                 <div className="flex flex-row">
                   <img
