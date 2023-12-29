@@ -44,6 +44,32 @@ export const SendingAllert = () => {
           </div>
         </>
       )}
+      {order && order.status === "EMERGENCY" && (
+        <>
+          <div
+            className={classNames(
+              "flex items-start text-[32px] font-bold mb-6",
+              {
+                "text-xl": iphone,
+              }
+            )}
+          >
+            <img
+              className="mr-2 w-10 h-10 self-baseline"
+              src={warning}
+              alt="warning"
+            />
+            <p className="text-left text-2xl font-semibold">
+              Ждём изменения статуса заказа
+            </p>
+          </div>
+          <div className="flex flex-col items-start text-left text-base font-normal">
+            После изменения статуса заказа перейдём к{" "}
+            {order && order.emergency.choice === "EXCHANGE" && "обмену"}{" "}
+            {order && order.emergency.choice === "REFUND" && "возврату"} средств
+          </div>
+        </>
+      )}
       {order && order.status === "WITHDRAW" && (
         <>
           <div
@@ -152,11 +178,11 @@ export const SendingAllert = () => {
               На адрес, указанный в заказе, ещё не поступили средства. Когда мы
               получим нужное количество подтверждений сети блокчейн, средства
               будут возвращены на адрес{" "}
-            {
-              <span className="font-semibold text-blue-200">
-                {order.back.address}
-              </span>
-            }
+              {
+                <span className="font-semibold text-blue-200">
+                  {order.back.address}
+                </span>
+              }
             </div>
           </>
         )}
