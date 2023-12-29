@@ -88,7 +88,7 @@ export const Footer = ({ isLoggedIn }) => {
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/about">О нас</Link></li>
                 <li className="text-base"><Link to="/">Наш бренд</Link></li>
-                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                {/* <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li> */}
                 <li className="text-base"><Link to="/">Условия использования</Link></li>
                 <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
@@ -97,9 +97,9 @@ export const Footer = ({ isLoggedIn }) => {
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
+                <li className="text-base"><Link to="/">XMR to BTC</Link></li>
+                <li className="text-base"><Link to="/">ETH to BTC</Link></li>
+                <li className="text-base"><Link to="/">LTC to ETH</Link></li>
               </ul>
             </div>
             <div
@@ -116,9 +116,9 @@ export const Footer = ({ isLoggedIn }) => {
                 <li className="text-base">
                   <Link to="/support">Поддержка</Link>
                 </li>
-                <li className="text-base">
+                {/* <li className="text-base">
                   <Link to="/api">API</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -176,7 +176,7 @@ export const Footer = ({ isLoggedIn }) => {
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/about">О нас</Link></li>
                 <li className="text-base"><Link to="/">Наш бренд</Link></li>
-                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                {/* <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li> */}
                 <li className="text-base"><Link to="/">Условия использования</Link></li>
                 <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
@@ -185,9 +185,9 @@ export const Footer = ({ isLoggedIn }) => {
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
+                <li className="text-base"><Link to="/">XMR to BTC</Link></li>
+                <li className="text-base"><Link to="/">ETH to BTC</Link></li>
+                <li className="text-base"><Link to="/">LTC to ETH</Link></li>
               </ul>
             </div>
             <div
@@ -204,9 +204,9 @@ export const Footer = ({ isLoggedIn }) => {
                 <li className="text-base">
                   <Link to="/support">Поддержка</Link>
                 </li>
-                <li className="text-base">
+                {/* <li className="text-base">
                   <Link to="/api">API</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

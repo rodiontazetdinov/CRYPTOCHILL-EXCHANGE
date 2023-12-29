@@ -51,9 +51,9 @@ export const Header = ({ isLoggedIn }) => {
           <Navbar />
           <div className="flex flex-row items-center h-16">
             <LanguageMenu />
-            {!isLoggedIn && (
+            {/* {!isLoggedIn && (
               <AccountMenu />
-            )}
+            )} */}
             {isLoggedIn && <AuthMenu />}
           </div>
         </div>
@@ -63,9 +63,9 @@ export const Header = ({ isLoggedIn }) => {
           <Navbar />
           <div className="flex flex-row items-center h-16">
             <LanguageMenu />
-            {!isLoggedIn && (
+            {/* {!isLoggedIn && (
               <AccountMenu />
-            )}
+            )} */}
             {isLoggedIn && <AuthMenu />}
           </div>
         </>
@@ -99,9 +99,9 @@ export const Header = ({ isLoggedIn }) => {
               <div className="absolute top-full -left-4 w-screen h-screen backdrop-blur z-10"></div>
             )}
             <LanguageMenu />
-            {!isLoggedIn && (
+            {/* {!isLoggedIn && (
               <AccountMenu />
-            )}
+            )} */}
             {isLoggedIn && <AuthMenu />}
           </div>
         </div>
