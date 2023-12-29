@@ -134,28 +134,40 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             }}
           />
           <div className="flex flex-row">
-            <img
-              onClick={() => setOpenQR(true)}
-              className="mr-3 cursor-pointer"
-              src={qr}
-              alt='QR'
-            />
-            <img
-              className="cursor-pointer"
-              onClick={() => {
-                navigator.clipboard.readText()
-                  .then((clipText) => {
-                    console.log(clipText);
-                    setInvalidAddress(false);
-                    setCoinAddress(clipText.replace(/[^\d\a-zA-Z\:]/g, ''))
-                  })
-                  .catch((err) => {
-                    alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
-                  })
-              }}
-              src={squares}
-              alt='Paste'
-            />
+            {coinAddress === '' && (
+              <>
+              <img
+                onClick={() => setOpenQR(true)}
+                className="mr-3 cursor-pointer"
+                src={qr}
+                alt='QR'
+              />
+              <img
+                className="cursor-pointer"
+                onClick={() => {
+                  navigator.clipboard.readText()
+                    .then((clipText) => {
+                      console.log(clipText);
+                      setInvalidAddress(false);
+                      setCoinAddress(clipText.replace(/[^\d\a-zA-Z\:]/g, ''))
+                    })
+                    .catch((err) => {
+                      alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                    })
+                }}
+                src={squares}
+                alt='Paste'
+              />
+              </>
+            )}
+            {coinAddress !== '' && (
+              <img
+                onClick={() => setCoinAddress('')}
+                className="cursor-pointer w-6 h-6"
+                src={close}
+                alt='отмена ввода'
+              />
+            )}
           </div>
           {invalidAddress && (
             <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
@@ -182,20 +194,30 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             maxLength={20}
           />
           <div className="flex flex-row">
-            <img
-              className="cursor-pointer"
-              onClick={() => {
-                navigator.clipboard.readText()
-                  .then((clipText) => {
-                    setCoinMemo(clipText)
-                  })
-                  .catch((err) => {
-                    alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
-                  })
-              }}
-              src={squares}
-              alt='Paste'
-            />
+            {coinMemo === '' && (
+              <img
+                className="cursor-pointer"
+                onClick={() => {
+                  navigator.clipboard.readText()
+                    .then((clipText) => {
+                      setCoinMemo(clipText)
+                    })
+                    .catch((err) => {
+                      alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
+                    })
+                }}
+                src={squares}
+                alt='Paste'
+              />
+            )}
+            {coinMemo !== '' && (
+              <img
+                onClick={() => setCoinMemo('')}
+                className="cursor-pointer w-6 h-6 "
+                src={close}
+                alt='отмена ввода'
+              />
+            )}
           </div>
           </div>
         )}

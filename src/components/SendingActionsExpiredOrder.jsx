@@ -206,27 +206,39 @@ export const SendingActionsExpiredOrder = () => {
                 }}
               />
               <div className="flex flex-row">
-                <img
-                  onClick={() => setOpenQR(true)}
-                  className="mr-3 cursor-pointer"
-                  src={qr}
-                  alt="QR"
-                />
-                <img
-                  className="cursor-pointer"
-                  onClick={() => {
-                    navigator.clipboard
-                      .readText()
-                      .then((clipText) => setCoinAddress(clipText))
-                      .catch((err) => {
-                        alert(
-                          "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                        );
-                      });
-                  }}
-                  src={squares}
-                  alt="Paste"
-                />
+                {coinAddress === '' && (
+                  <>
+                    <img
+                      onClick={() => setOpenQR(true)}
+                      className="mr-3 cursor-pointer"
+                      src={qr}
+                      alt="QR"
+                    />
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard
+                          .readText()
+                          .then((clipText) => setCoinAddress(clipText))
+                          .catch((err) => {
+                            alert(
+                              "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                            );
+                          });
+                      }}
+                      src={squares}
+                      alt="Paste"
+                    />
+                  </>
+                )}
+                {coinAddress !== '' && (
+                  <img
+                    onClick={() => setCoinAddress('')}
+                    className="cursor-pointer w-6 h-6"
+                    src={close}
+                    alt='отмена ввода'
+                  />
+                )}
               </div>
             </div>
             {order.from.tag && (
@@ -250,23 +262,33 @@ export const SendingActionsExpiredOrder = () => {
                   maxLength={20}
                 />
                 <div className="flex flex-row">
-                  <img
-                    className="cursor-pointer"
-                    onClick={() => {
-                      navigator.clipboard
-                        .readText()
-                        .then((clipText) => {
-                          setMemoTag(clipText);
-                        })
-                        .catch((err) => {
-                          alert(
-                            "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                          );
-                        });
-                    }}
-                    src={squares}
-                    alt="Paste"
-                  />
+                  {memoTag === '' && (
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard
+                          .readText()
+                          .then((clipText) => {
+                            setMemoTag(clipText);
+                          })
+                          .catch((err) => {
+                            alert(
+                              "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                            );
+                          });
+                      }}
+                      src={squares}
+                      alt="Paste"
+                    />
+                  )}
+                  {memoTag !== '' && (
+                    <img
+                      onClick={() => setMemoTag('')}
+                      className="cursor-pointer w-6 h-6 "
+                      src={close}
+                      alt='отмена ввода'
+                    />
+                  )}
                 </div>
               </div>
             )}
