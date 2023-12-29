@@ -86,7 +86,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
               console.log(data);
               if (data.msg === "Invalid address") {
                 setInvalidAddress('Неверный адрес');
-              }else if (data.code > 0){
+              } else if (data.code > 0){
                 setInvalidAddress(data.msg);
               } else {
                 dispatch(setOrder(data.data));
@@ -129,7 +129,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             value={coinAddress}
             placeholder={`Ваш ${receivedCoin.code} адрес`}
             onChange={(ev) => {
-              setCoinAddress(ev.target.value.replace(/[^\d\a-zA-Z\:]/g, ''));
+              setCoinAddress(ev.target.value.replace(/[\а-яА-Я]/g, ''));
               setInvalidAddress(false);
             }}
           />
@@ -147,9 +147,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                 onClick={() => {
                   navigator.clipboard.readText()
                     .then((clipText) => {
-                      console.log(clipText);
                       setInvalidAddress(false);
-                      setCoinAddress(clipText.replace(/[^\d\a-zA-Z\:]/g, ''))
+                      setCoinAddress(clipText.replace(/[\а-яА-Я]/g, ''))
                     })
                     .catch((err) => {
                       alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
