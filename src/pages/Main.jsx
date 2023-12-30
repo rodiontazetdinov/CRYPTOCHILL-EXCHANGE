@@ -6,7 +6,12 @@ import { Instructions } from "../components/Instructions";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
 
-export const Main = () => {
+export const Main = ({
+  coinSend,
+  coinRecv,
+  setCoinSent,
+  setCoinRecv,
+}) => {
     const iphone = useMediaQuery(
         "only screen and (min-width : 320px) and (max-width : 744px)"
       );
@@ -21,7 +26,12 @@ export const Main = () => {
 
     return (
         <div className="flex flex-col w-full">
-            <Intro/>
+            <Intro 
+              coinSend={coinSend}
+              coinRecv={coinRecv}
+              setCoinSent={setCoinSent}
+              setCoinRecv={setCoinRecv}
+            />
             <div className={classNames("mx-auto",{
                 "min-w-[1328px] max-w-[1328px]": desctop,
                 "max-w-main-container": macbook || laptop,

@@ -8,7 +8,12 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export const Order = () => {
+export const Order = ({
+  coinSend,
+  coinRecv,
+  setCoinSent,
+  setCoinRecv
+}) => {
   const iphone = useMediaQuery("only screen and (min-width : 320px) and (max-width : 744px)");
   const ipadMini = useMediaQuery("only screen and (min-width : 744px) and (max-width : 1024px)");
   const macbook = useMediaQuery("only screen and (min-width : 1024px)");
@@ -19,8 +24,8 @@ export const Order = () => {
   const [ isInputInSentCoin,  setInputInSentCoin ] = useState(true);
   const [ numberOfCoinsSent, setNumberOfCoinsSent ] = useState(order.from.amount);
   const [ numberOfCoinsRecv, setNumberOfCoinsRecv ] = useState(order.to.amount);
-  const [ coinSend, setCoinSent ] = useState(order.from.code);
-  const [ coinRecv, setCoinRecv ] = useState(order.to.code);
+  // const [ coinSend, setCoinSent ] = useState(order.from.code);
+  // const [ coinRecv, setCoinRecv ] = useState(order.to.code);
   
   return (
     <div className={classNames("flex flex-col items-center relative",{

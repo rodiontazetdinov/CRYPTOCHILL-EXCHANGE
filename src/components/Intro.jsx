@@ -3,7 +3,12 @@ import { Order } from "./Order";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
-export const Intro = () => {
+export const Intro = ({
+  coinSend,
+  coinRecv,
+  setCoinSent,
+  setCoinRecv,
+}) => {
     const iphone = useMediaQuery(
         "only screen and (min-width : 320px) and (max-width : 744px)"
       );
@@ -22,7 +27,12 @@ export const Intro = () => {
                 "text-2xl": iphone,
                 "text-5xl": !iphone,
             })}>Моментальный обмен криптовалют</h1>
-            <Order/>
+            <Order 
+              coinSend={coinSend}
+              coinRecv={coinRecv}
+              setCoinSent={setCoinSent}
+              setCoinRecv={setCoinRecv}
+            />
             <h2 className={classNames(" mt-20 bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent font-bold",{
                 "text-2xl": iphone,
                 "text-5xl": !iphone,

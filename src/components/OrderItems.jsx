@@ -20,16 +20,15 @@ export const OrderItems = ({
   numberOfCoinsRecv,
   setNumberOfCoinsRecv,
   isInputInSentCoin,
-  setInputInSentCoin
+  setInputInSentCoin,
+  coinSend,
+  coinRecv,
+  setCoinSent,
+  setCoinRecv,
 }) => {
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
       const state = useSelector(state => state);
-
-      const [ localCoinSend, localCoinRecv ] = JSON.parse(localStorage.getItem('orderCoins') || "[null, null]");
-
-      const [ coinSend, setCoinSent ] = useState(localCoinSend || state.creatingOrder.from.code);
-      const [ coinRecv, setCoinRecv ] = useState(localCoinRecv || state.creatingOrder.to.code);
       
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
@@ -88,9 +87,11 @@ export const OrderItems = ({
           if (Number(amount) > 0) {
             const type = state.isFixed ? 'fixed' : 'float';
 
+            console.log(fromCcy, toCcy);
             api.getPrice({ fromCcy, toCcy, amount, direction, type })
               .then((response) => {
                 if (response.data === null) {
+                  console.log(response.data);
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
