@@ -96,10 +96,10 @@ export const Footer = ({ isLoggedIn }) => {
             <div>
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
+                <li className="text-base"><Link  to="/blog">Блог</Link></li>
+                <li className="text-base"><Link to="#order" reloadDocument>XMR to BTC</Link></li>
+                <li className="text-base"><Link to="#order" reloadDocument>ETH to BTC</Link></li>
+                <li className="text-base"><Link to="#order" reloadDocument>LTC to ETH</Link></li>
               </ul>
             </div>
             <div
