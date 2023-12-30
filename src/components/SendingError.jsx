@@ -32,38 +32,38 @@ import close from "../images/icons/close.svg";
 import { useState } from "react";
 import "@splidejs/react-splide/css/core";
 import QrReader from "react-qr-scanner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { api } from "../utils/api";
+
+import { setOrder } from "../store/actions";
 
 export const SendingError = () => {
   const miniSending = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 911px)"
   );
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+
   const iphone = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
   const ipadMini = useMediaQuery(
     "only screen and (min-width : 744px) and (max-width : 1024px)"
   );
+
   const macbook = useMediaQuery(
     "only screen and (min-width : 1024px) and (max-width : 1440px)"
   );
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-  const miniTop = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 1210px)"
-  );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
 
   const [isReturn, setIsReturn] = useState(true);
   const [coinAddress, setCoinAddress] = useState("");
+  const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [openQR, setOpenQR] = useState(false);
   const order = useSelector((state) => state.order);
   const [memoTag, setMemoTag] = useState("");
+
+  const dispatch = useDispatch();
 
   const previewStyle = {
     height: "100%",
@@ -224,7 +224,17 @@ export const SendingError = () => {
                     }
                   )
                   .then((res) => {
+                    if (res.msg === "Invalid address") {
+                      setInvalidAddress('Неверный адрес');
+                    }
                     console.log(res);
+                    // if (res.data === true) {
+                    //   dispatch(setOrder({...order, "emergency": {
+                    //     "status": order.emergency.status,
+                    //     "choice": "REFUND",
+                    //     "repeat": order.emergency.repeat
+                    // } }))
+                    // }
                   })
                   .catch((err) => {
                     console.log(err);
@@ -237,6 +247,13 @@ export const SendingError = () => {
                   })
                   .then((res) => {
                     console.log(res);
+                    // if (res.data === true) {
+                    //   dispatch(setOrder({...order, "emergency": {
+                    //     "status": order.emergency.status,
+                    //     "choice": "EXCHANGE",
+                    //     "repeat": order.emergency.repeat
+                    // } }))
+                    // }
                   })
                   .catch((err) => {
                     console.log(err);
@@ -320,40 +337,52 @@ export const SendingError = () => {
                   placeholder={`Ваш ${order.from.name} адрес`}
                   onChange={(ev) => {
                     setCoinAddress(
-                      ev.target.value.replace(/[^\d\a-zA-Z\:]/g, "")
+                      ev.target.value.replace(/[\а-яА-Я]/g, "")
                     );
-                    // setInvalidAddress(false);
+                    setInvalidAddress(false);
                   }}
                 />
                 <div className="flex flex-row">
-                  <img
-                    onClick={() => setOpenQR(true)}
-                    className="mr-3 cursor-pointer"
-                    src={qr}
-                    alt="QR"
-                  />
-                  <img
-                    className="cursor-pointer"
-                    onClick={() => {
-                      navigator.clipboard
-                        .readText()
-                        .then((clipText) => setCoinAddress(clipText))
-                        .catch((err) => {
-                          alert(
-                            "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                          );
-                        });
-                    }}
-                    src={squares}
-                    alt="Paste"
-                  />
+                  {coinAddress === '' && (
+                    <>
+                      <img
+                        onClick={() => setOpenQR(true)}
+                        className="mr-3 cursor-pointer"
+                        src={qr}
+                        alt="QR"
+                      />
+                      <img
+                        className="cursor-pointer"
+                        onClick={() => {
+                          navigator.clipboard
+                            .readText()
+                            .then((clipText) => setCoinAddress(clipText))
+                            .catch((err) => {
+                              alert(
+                                "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                              );
+                            });
+                        }}
+                        src={squares}
+                        alt="Paste"
+                      />
+                    </>
+                  )}
+                  {coinAddress !== '' && (
+                    <img
+                      onClick={() => setCoinAddress('')}
+                      className="cursor-pointer w-6 h-6"
+                      src={close}
+                      alt='отмена ввода'
+                    />
+                  )}
                 </div>
-                {/* {invalidAddress && (
-                        <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
-                            <img src={warning} alt="" />
-                            <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
-                        </div>
-                        )} */}
+                {invalidAddress && (
+                  <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
+                      <img src={warning} alt="" />
+                      <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
+                  </div>
+                )}
               </div>
               {order.from.tag && (
                 <div
@@ -375,23 +404,33 @@ export const SendingError = () => {
                     maxLength={20}
                   />
                   <div className="flex flex-row">
-                    <img
-                      className="cursor-pointer"
-                      onClick={() => {
-                        navigator.clipboard
-                          .readText()
-                          .then((clipText) => {
-                            setMemoTag(clipText);
-                          })
-                          .catch((err) => {
-                            alert(
-                              "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                            );
-                          });
-                      }}
-                      src={squares}
-                      alt="Paste"
-                    />
+                     {memoTag === '' && (
+                        <img
+                          className="cursor-pointer"
+                          onClick={() => {
+                            navigator.clipboard
+                              .readText()
+                              .then((clipText) => {
+                                setMemoTag(clipText);
+                              })
+                              .catch((err) => {
+                                alert(
+                                  "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                                );
+                              });
+                          }}
+                          src={squares}
+                          alt="Paste"
+                        />
+                      )}
+                      {memoTag !== '' && (
+                        <img
+                          onClick={() => setMemoTag('')}
+                          className="cursor-pointer w-6 h-6 "
+                          src={close}
+                          alt='отмена ввода'
+                        />
+                      )}
                   </div>
                 </div>
               )}
@@ -420,6 +459,13 @@ export const SendingError = () => {
               })
               .then((res) => {
                 console.log(res);
+                // if (res.data === true) {
+                //   dispatch(setOrder({...order, "emergency": {
+                //     "status": order.emergency.status,
+                //     "choice": "REFUND",
+                //     "repeat": order.emergency.repeat
+                // } }))
+                // }
               })
               .catch((err) => {
                 console.log(err);

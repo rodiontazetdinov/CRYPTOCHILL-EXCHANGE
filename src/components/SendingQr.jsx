@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setOrder } from "../store/actions";
 import { api } from "../utils/api";
 
 import qr from "../images/sending-icons/qr.svg";
@@ -16,9 +15,8 @@ export const SendingQr = () => {
         "only screen and (min-width : 320px) and (max-width : 585px)"
       );
 
-  const dispatch = useDispatch();
-
   const order = useSelector((state) => state.order);
+  const [counterQr, setCounterQr] = useState(false);
 
   const [listOfQRs, setListOfQRs] = useState([{
       "title": "QR еще не сгенерирован",
@@ -43,15 +41,16 @@ export const SendingQr = () => {
   };
 
   useEffect(() => {
-    order &&
-    api.getQr({id: order.id, token: order.token, choice: "EXCHANGE"})
+    order && !counterQr &&
+    api.getQr({id: order.id, token: order.token})
     .then((response) => {
       const listQR = response.data.map((item, index) => {
           item.checked = index === 0 ? true : false;
           return item;
       });
-
+      console.log(listQR);
       setListOfQRs(listQR);
+      setCounterQr(true);
     })
     .catch((error) => {
       console.log(error);

@@ -20,6 +20,13 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
+  const state = useSelector(state => state);
+
+  const [ localCoinSend, localCoinRecv ] = JSON.parse(localStorage.getItem('orderCoins') || "[null, null]");
+
+  const [ coinSend, setCoinSent ] = useState(localCoinSend || state.creatingOrder.from.code);
+  const [ coinRecv, setCoinRecv ] = useState(localCoinRecv || state.creatingOrder.to.code);
+
   // const getSHA256Hash = async (input) => {
   //   const textAsBuffer = new TextEncoder().encode(input);
   //   const hashBuffer = await window.crypto.subtle.digest(
@@ -105,8 +112,16 @@ export const App = () => {
         <img src={img} alt="" />
       )})} */}
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Main/>} />
+        <Route path="/" element={<Layout
+          setCoinSent={setCoinSent}
+          setCoinRecv={setCoinRecv}
+        />}>
+          <Route index element={<Main 
+            coinSend={coinSend}
+            coinRecv={coinRecv}
+            setCoinSent={setCoinSent}
+            setCoinRecv={setCoinRecv}
+          />} />
           <Route path="about" element={<AboutUs/>} />
           <Route path="blog" element={<Blog />} />
           <Route path="faq" element={<Faq/>} />

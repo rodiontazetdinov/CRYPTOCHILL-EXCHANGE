@@ -8,8 +8,14 @@ import bc from "../images/footerlinks/bc.svg";
 import star from "../images/footerlinks/star.svg";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useDispatch } from "react-redux";
+import { setLanguage } from "../store/actions";
 
-export const Footer = ({ isLoggedIn }) => {
+export const Footer = ({
+  isLoggedIn,
+  setCoinSent,
+  setCoinRecv
+}) => {
   const iphone = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
@@ -26,6 +32,8 @@ export const Footer = ({ isLoggedIn }) => {
   const miniFooter = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 635px)"
   );
+
+  const dispatch = useDispatch();
 
   return (
     <footer className="bg-main-bg">
@@ -88,7 +96,7 @@ export const Footer = ({ isLoggedIn }) => {
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/about">О нас</Link></li>
                 <li className="text-base"><Link to="/">Наш бренд</Link></li>
-                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                {/* <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li> */}
                 <li className="text-base"><Link to="/">Условия использования</Link></li>
                 <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
@@ -97,9 +105,34 @@ export const Footer = ({ isLoggedIn }) => {
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('XMR');
+                      setCoinRecv('BTC');
+                    }}
+                  >XMR to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('ETH');
+                      setCoinRecv('BTC');
+                    }}
+                  >ETH to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    onClick={() => {
+                      setCoinSent('LTC');
+                      setCoinRecv('ETH');
+                    }}  
+                    to="#order"
+                    reloadDocument
+                  >LTC to ETH</Link>
+                </li>
               </ul>
             </div>
             <div
@@ -116,9 +149,9 @@ export const Footer = ({ isLoggedIn }) => {
                 <li className="text-base">
                   <Link to="/support">Поддержка</Link>
                 </li>
-                <li className="text-base">
+                {/* <li className="text-base">
                   <Link to="/api">API</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -176,7 +209,7 @@ export const Footer = ({ isLoggedIn }) => {
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/about">О нас</Link></li>
                 <li className="text-base"><Link to="/">Наш бренд</Link></li>
-                <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li>
+                {/* <li className="text-base"><Link to="/account/partner">Партнерская программа</Link></li> */}
                 <li className="text-base"><Link to="/">Условия использования</Link></li>
                 <li className="text-base"><Link to="/">Политика конфиденциальности</Link></li>
               </ul>
@@ -185,9 +218,33 @@ export const Footer = ({ isLoggedIn }) => {
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/sending">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/sending">LTC to ETH</Link></li>
+                <li className="text-base">
+                  <Link 
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('XMR');
+                      setCoinRecv('BTC');
+                    }}
+                  >XMR to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('ETH');
+                      setCoinRecv('BTC');
+                    }}
+                  >ETH to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('LTC');
+                      setCoinRecv('ETH');
+                    }}
+                  >LTC to ETH</Link>
+                </li>
               </ul>
             </div>
             <div
@@ -204,9 +261,9 @@ export const Footer = ({ isLoggedIn }) => {
                 <li className="text-base">
                   <Link to="/support">Поддержка</Link>
                 </li>
-                <li className="text-base">
+                {/* <li className="text-base">
                   <Link to="/api">API</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

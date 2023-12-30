@@ -20,14 +20,15 @@ export const OrderItems = ({
   numberOfCoinsRecv,
   setNumberOfCoinsRecv,
   isInputInSentCoin,
-  setInputInSentCoin
+  setInputInSentCoin,
+  coinSend,
+  coinRecv,
+  setCoinSent,
+  setCoinRecv,
 }) => {
       const ipadMini = useMediaQuery("only screen and (max-width : 744px)");
 
       const state = useSelector(state => state);
-
-      const [ coinSend, setCoinSent ] = useState(state.creatingOrder.from.code);
-      const [ coinRecv, setCoinRecv ] = useState(state.creatingOrder.to.code);
       
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
@@ -86,27 +87,27 @@ export const OrderItems = ({
           if (Number(amount) > 0) {
             const type = state.isFixed ? 'fixed' : 'float';
 
+            console.log(fromCcy, toCcy);
             api.getPrice({ fromCcy, toCcy, amount, direction, type })
               .then((response) => {
                 if (response.data === null) {
+                  console.log(response.data);
                   alert('Упс, что-то пошло не так(');
                 } else {
                   dispatch(setOrderCreationState(response.data));
                   setNumberOfCoinsSent(response.data.from.amount);
                   setNumberOfCoinsRecv(response.data.to.amount);
-                  // if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
-                  //   setAmountCoin(response.data.from.min, true);
-                  // }
+                  localStorage.setItem('orderCoins', JSON.stringify([coinSend, coinRecv]));
                 }
               })
               .catch((err) => console.error(err));
           }
-        }, 1000);
+        }, 500); // было 1000 перед запросом курса
         return () => clearTimeout(timer);
       }, [numberOfCoinsSent, numberOfCoinsRecv, coinSend, coinRecv]);
 
       const setAmountCoin = (amount, witch) => {
-          console.log(amount);
+          console.log(amount, witch);
           if (witch) {
             setNumberOfCoinsSent(validateInput(amount));
           } else {

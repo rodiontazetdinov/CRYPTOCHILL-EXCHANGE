@@ -15,7 +15,7 @@ export const Navbar = () => {
       <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/about"}>О нас</NavLink>
       <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/blog"}>Блог</NavLink>
       <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/faq"}>FAQ</NavLink>
-      <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/api"}>API</NavLink>
+      {/* <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/api"}>API</NavLink> */}
       <NavLink className={({ isActive, isPending }) => isActive ? `text-blue-200 ${classLink}` : classLink} to={"/support"}>Поддержка</NavLink>
     </nav>
   );
