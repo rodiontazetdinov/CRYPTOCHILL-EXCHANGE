@@ -26,8 +26,10 @@ export const OrderItems = ({
 
       const state = useSelector(state => state);
 
-      const [ coinSend, setCoinSent ] = useState(state.creatingOrder.from.code);
-      const [ coinRecv, setCoinRecv ] = useState(state.creatingOrder.to.code);
+      const [ localCoinSend, localCoinRecv ] = JSON.parse(localStorage.getItem('orderCoins') || "[null, null]");
+
+      const [ coinSend, setCoinSent ] = useState(localCoinSend || state.creatingOrder.from.code);
+      const [ coinRecv, setCoinRecv ] = useState(localCoinRecv || state.creatingOrder.to.code);
       
       const dropdownSent = state.dropdowns.coinSentOrder;
       const dropdownReceived = state.dropdowns.coinReceivedOrder;
@@ -94,19 +96,17 @@ export const OrderItems = ({
                   dispatch(setOrderCreationState(response.data));
                   setNumberOfCoinsSent(response.data.from.amount);
                   setNumberOfCoinsRecv(response.data.to.amount);
-                  // if (response.data.to.amount < 0 || response.data.from.amount < response.data.from.min) {
-                  //   setAmountCoin(response.data.from.min, true);
-                  // }
+                  localStorage.setItem('orderCoins', JSON.stringify([coinSend, coinRecv]));
                 }
               })
               .catch((err) => console.error(err));
           }
-        }, 1000);
+        }, 500); // было 1000 перед запросом курса
         return () => clearTimeout(timer);
       }, [numberOfCoinsSent, numberOfCoinsRecv, coinSend, coinRecv]);
 
       const setAmountCoin = (amount, witch) => {
-          console.log(amount);
+          console.log(amount, witch);
           if (witch) {
             setNumberOfCoinsSent(validateInput(amount));
           } else {

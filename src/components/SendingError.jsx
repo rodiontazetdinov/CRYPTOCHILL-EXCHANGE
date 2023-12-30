@@ -58,6 +58,7 @@ export const SendingError = () => {
 
   const [isReturn, setIsReturn] = useState(true);
   const [coinAddress, setCoinAddress] = useState("");
+  const [ invalidAddress, setInvalidAddress ] = useState(false);
   const [openQR, setOpenQR] = useState(false);
   const order = useSelector((state) => state.order);
   const [memoTag, setMemoTag] = useState("");
@@ -223,6 +224,9 @@ export const SendingError = () => {
                     }
                   )
                   .then((res) => {
+                    if (res.msg === "Invalid address") {
+                      setInvalidAddress('Неверный адрес');
+                    }
                     console.log(res);
                     // if (res.data === true) {
                     //   dispatch(setOrder({...order, "emergency": {
@@ -333,40 +337,52 @@ export const SendingError = () => {
                   placeholder={`Ваш ${order.from.name} адрес`}
                   onChange={(ev) => {
                     setCoinAddress(
-                      ev.target.value.replace(/[^\d\a-zA-Z\:]/g, "")
+                      ev.target.value.replace(/[\а-яА-Я]/g, "")
                     );
-                    // setInvalidAddress(false);
+                    setInvalidAddress(false);
                   }}
                 />
                 <div className="flex flex-row">
-                  <img
-                    onClick={() => setOpenQR(true)}
-                    className="mr-3 cursor-pointer"
-                    src={qr}
-                    alt="QR"
-                  />
-                  <img
-                    className="cursor-pointer"
-                    onClick={() => {
-                      navigator.clipboard
-                        .readText()
-                        .then((clipText) => setCoinAddress(clipText))
-                        .catch((err) => {
-                          alert(
-                            "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                          );
-                        });
-                    }}
-                    src={squares}
-                    alt="Paste"
-                  />
+                  {coinAddress === '' && (
+                    <>
+                      <img
+                        onClick={() => setOpenQR(true)}
+                        className="mr-3 cursor-pointer"
+                        src={qr}
+                        alt="QR"
+                      />
+                      <img
+                        className="cursor-pointer"
+                        onClick={() => {
+                          navigator.clipboard
+                            .readText()
+                            .then((clipText) => setCoinAddress(clipText))
+                            .catch((err) => {
+                              alert(
+                                "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                              );
+                            });
+                        }}
+                        src={squares}
+                        alt="Paste"
+                      />
+                    </>
+                  )}
+                  {coinAddress !== '' && (
+                    <img
+                      onClick={() => setCoinAddress('')}
+                      className="cursor-pointer w-6 h-6"
+                      src={close}
+                      alt='отмена ввода'
+                    />
+                  )}
                 </div>
-                {/* {invalidAddress && (
-                        <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
-                            <img src={warning} alt="" />
-                            <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
-                        </div>
-                        )} */}
+                {invalidAddress && (
+                  <div className="absolute top-full left-0 flex justify-between items-center self-start px-3 py-1 bg-[#FF5454] rounded-lg mt-1">
+                      <img src={warning} alt="" />
+                      <p className="text-[#08035B] ml-2">{`Неверный адрес`}</p>
+                  </div>
+                )}
               </div>
               {order.from.tag && (
                 <div
@@ -388,23 +404,33 @@ export const SendingError = () => {
                     maxLength={20}
                   />
                   <div className="flex flex-row">
-                    <img
-                      className="cursor-pointer"
-                      onClick={() => {
-                        navigator.clipboard
-                          .readText()
-                          .then((clipText) => {
-                            setMemoTag(clipText);
-                          })
-                          .catch((err) => {
-                            alert(
-                              "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
-                            );
-                          });
-                      }}
-                      src={squares}
-                      alt="Paste"
-                    />
+                     {memoTag === '' && (
+                        <img
+                          className="cursor-pointer"
+                          onClick={() => {
+                            navigator.clipboard
+                              .readText()
+                              .then((clipText) => {
+                                setMemoTag(clipText);
+                              })
+                              .catch((err) => {
+                                alert(
+                                  "Вам нужно дать браузеру разрешение на использование вашего буфера обмена"
+                                );
+                              });
+                          }}
+                          src={squares}
+                          alt="Paste"
+                        />
+                      )}
+                      {memoTag !== '' && (
+                        <img
+                          onClick={() => setMemoTag('')}
+                          className="cursor-pointer w-6 h-6 "
+                          src={close}
+                          alt='отмена ввода'
+                        />
+                      )}
                   </div>
                 </div>
               )}

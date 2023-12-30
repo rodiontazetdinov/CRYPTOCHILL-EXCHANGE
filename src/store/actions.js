@@ -34,3 +34,8 @@ export const openDropdown = (name) => ({
   type: "OPEN_DROPDOWN",
   paylode: name,
 });
+
+export const setLanguage = (language) => ({
+  type: "SET_LANGUAGE",
+  paylode: language
+})

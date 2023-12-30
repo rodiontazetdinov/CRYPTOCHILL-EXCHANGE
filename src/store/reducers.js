@@ -47,6 +47,7 @@ const initialCreatingOrder = {
 };
 
 const initialState = {
+  language: "ru",
   coins: [],
   order: JSON.parse(localStorage.getItem('order')) ?? initialCreatingOrder,
   creatingOrder: initialCreatingOrder,
@@ -98,6 +99,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         dropdowns: { ...initialDropdowns },
       };
+    
+    case "SET_LANGUAGE":
+      return {
+        ...state,
+        language: action.paylode,
+      }
 
     default:
       return state;

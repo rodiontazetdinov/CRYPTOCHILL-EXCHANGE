@@ -44,12 +44,12 @@ export const Support = () => {
                 "min-w-[652px]": ipadMini,
                 "flex-col items-center": iphone,
             })}>
-                <SuppportCard
+                {/* <SuppportCard
                     title="Чат на сайте"
                     text="Начните диалог прямо сейчас" 
                     icon={chatIcon}
                     onClick={() => {}}
-                />
+                /> */}
                 <SuppportCard
                     title="Telegram"
                     text="Время ответа 10 минут" 
