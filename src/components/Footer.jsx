@@ -8,8 +8,14 @@ import bc from "../images/footerlinks/bc.svg";
 import star from "../images/footerlinks/star.svg";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useDispatch } from "react-redux";
+import { setLanguage } from "../store/actions";
 
-export const Footer = ({ isLoggedIn }) => {
+export const Footer = ({
+  isLoggedIn,
+  setCoinSent,
+  setCoinRecv
+}) => {
   const iphone = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
@@ -26,6 +32,8 @@ export const Footer = ({ isLoggedIn }) => {
   const miniFooter = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 635px)"
   );
+
+  const dispatch = useDispatch();
 
   return (
     <footer className="bg-main-bg">
@@ -96,10 +104,35 @@ export const Footer = ({ isLoggedIn }) => {
             <div>
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
-                <li className="text-base"><Link  to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="#order" reloadDocument>XMR to BTC</Link></li>
-                <li className="text-base"><Link to="#order" reloadDocument>ETH to BTC</Link></li>
-                <li className="text-base"><Link to="#order" reloadDocument>LTC to ETH</Link></li>
+                <li className="text-base"><Link to="/blog">Блог</Link></li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('XMR');
+                      setCoinRecv('BTC');
+                    }}
+                  >XMR to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('ETH');
+                      setCoinRecv('BTC');
+                    }}
+                  >ETH to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    onClick={() => {
+                      setCoinSent('LTC');
+                      setCoinRecv('ETH');
+                    }}  
+                    to="#order"
+                    reloadDocument
+                  >LTC to ETH</Link>
+                </li>
               </ul>
             </div>
             <div
@@ -185,9 +218,33 @@ export const Footer = ({ isLoggedIn }) => {
               <h4 className="text-left text-2xl mb-4">Популярные</h4>
               <ul className="flex flex-col items-start gap-2">
                 <li className="text-base"><Link to="/blog">Блог</Link></li>
-                <li className="text-base"><Link to="/">XMR to BTC</Link></li>
-                <li className="text-base"><Link to="/">ETH to BTC</Link></li>
-                <li className="text-base"><Link to="/">LTC to ETH</Link></li>
+                <li className="text-base">
+                  <Link 
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('XMR');
+                      setCoinRecv('BTC');
+                    }}
+                  >XMR to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('ETH');
+                      setCoinRecv('BTC');
+                    }}
+                  >ETH to BTC</Link>
+                </li>
+                <li className="text-base">
+                  <Link
+                    to="#order" reloadDocument
+                    onClick={() => {
+                      setCoinSent('LTC');
+                      setCoinRecv('ETH');
+                    }}
+                  >LTC to ETH</Link>
+                </li>
               </ul>
             </div>
             <div
