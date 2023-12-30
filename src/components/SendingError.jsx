@@ -32,32 +32,29 @@ import close from "../images/icons/close.svg";
 import { useState } from "react";
 import "@splidejs/react-splide/css/core";
 import QrReader from "react-qr-scanner";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { api } from "../utils/api";
+
+import { setOrder } from "../store/actions";
 
 export const SendingError = () => {
   const miniSending = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 911px)"
   );
-  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
+
   const iphone = useMediaQuery(
     "only screen and (min-width : 320px) and (max-width : 744px)"
   );
   const ipadMini = useMediaQuery(
     "only screen and (min-width : 744px) and (max-width : 1024px)"
   );
+
   const macbook = useMediaQuery(
     "only screen and (min-width : 1024px) and (max-width : 1440px)"
   );
   const desctop = useMediaQuery("only screen and (min-width : 1440px)");
-  const miniTop = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 1210px)"
-  );
-  const phone = useMediaQuery(
-    "only screen and (min-width : 320px) and (max-width : 585px)"
-  );
 
   const [isReturn, setIsReturn] = useState(true);
   const [coinAddress, setCoinAddress] = useState("");
@@ -65,6 +62,8 @@ export const SendingError = () => {
   const [openQR, setOpenQR] = useState(false);
   const order = useSelector((state) => state.order);
   const [memoTag, setMemoTag] = useState("");
+
+  const dispatch = useDispatch();
 
   const previewStyle = {
     height: "100%",
@@ -229,6 +228,13 @@ export const SendingError = () => {
                       setInvalidAddress('Неверный адрес');
                     }
                     console.log(res);
+                    // if (res.data === true) {
+                    //   dispatch(setOrder({...order, "emergency": {
+                    //     "status": order.emergency.status,
+                    //     "choice": "REFUND",
+                    //     "repeat": order.emergency.repeat
+                    // } }))
+                    // }
                   })
                   .catch((err) => {
                     console.log(err);
@@ -241,6 +247,13 @@ export const SendingError = () => {
                   })
                   .then((res) => {
                     console.log(res);
+                    // if (res.data === true) {
+                    //   dispatch(setOrder({...order, "emergency": {
+                    //     "status": order.emergency.status,
+                    //     "choice": "EXCHANGE",
+                    //     "repeat": order.emergency.repeat
+                    // } }))
+                    // }
                   })
                   .catch((err) => {
                     console.log(err);
@@ -446,6 +459,13 @@ export const SendingError = () => {
               })
               .then((res) => {
                 console.log(res);
+                // if (res.data === true) {
+                //   dispatch(setOrder({...order, "emergency": {
+                //     "status": order.emergency.status,
+                //     "choice": "REFUND",
+                //     "repeat": order.emergency.repeat
+                // } }))
+                // }
               })
               .catch((err) => {
                 console.log(err);

@@ -18,7 +18,7 @@ export const Intro = () => {
       
     return (
         <section className="flex flex-col items-center">
-            <h1 className={classNames("text-center font-bold font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-10",{
+            <h1 id="order" className={classNames("text-center font-bold font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-10",{
                 "text-2xl": iphone,
                 "text-5xl": !iphone,
             })}>Моментальный обмен криптовалют</h1>

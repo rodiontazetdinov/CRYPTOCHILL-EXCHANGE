@@ -71,7 +71,7 @@ export const SendingPage = () => {
           .catch((error) => {
             console.log(error);
           });
-    }, 11000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [order]);
 
@@ -425,7 +425,11 @@ export const SendingPage = () => {
           )}
         >
           <SendingCoinTo />
-          <SendingError />
+          {/* <SendingError /> */}
+          {order && order.emergency.choice === "NONE" && (
+                <SendingError />
+              )}
+          {order && order.emergency.choice !== "NONE" && <SendingAllert />}
           {!miniTop && (
             <div className="flex flex-row w-full space-x-6">
               <SendingOrderNumber />
