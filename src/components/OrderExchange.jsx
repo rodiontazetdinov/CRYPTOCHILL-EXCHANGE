@@ -149,7 +149,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                   navigator.clipboard.readText()
                     .then((clipText) => {
                       setInvalidAddress(false);
-                      setCoinAddress(clipText.replace(/[\а-яА-Я]/g, ''))
+                      setCoinAddress(clipText.replace(/[\\а-яА-Я]/g, ''))
                     })
                     .catch((err) => {
                       alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
