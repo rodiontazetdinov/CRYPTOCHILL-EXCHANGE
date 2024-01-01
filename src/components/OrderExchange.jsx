@@ -129,7 +129,8 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             value={coinAddress}
             placeholder={`Ваш ${receivedCoin.code} адрес`}
             onChange={(ev) => {
-              setCoinAddress(ev.target.value.replace(/[\а-яА-Я]/g, ''));
+              setCoinAddress(ev.target.value.replace(/[\\а-яА-Я]/g, ''));
+              console.log(coinAddress)
               setInvalidAddress(false);
             }}
           />
@@ -148,7 +149,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
                   navigator.clipboard.readText()
                     .then((clipText) => {
                       setInvalidAddress(false);
-                      setCoinAddress(clipText.replace(/[\а-яА-Я]/g, ''))
+                      setCoinAddress(clipText.replace(/[\\а-яА-Я]/g, ''))
                     })
                     .catch((err) => {
                       alert('Вам нужно дать браузеру разрешение на использование вашего буфера обмена');
