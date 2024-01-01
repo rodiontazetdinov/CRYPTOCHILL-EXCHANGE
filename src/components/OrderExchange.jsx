@@ -129,7 +129,7 @@ export const OrderExchange = ({ numberOfCoinsSent }) => {
             value={coinAddress}
             placeholder={`Ваш ${receivedCoin.code} адрес`}
             onChange={(ev) => {
-              setCoinAddress(ev.target.value.replace(/[\а-яА-Я]/g, ''));
+              setCoinAddress(ev.target.value.replace(/[\\а-яА-Я]/g, ''));
               console.log(coinAddress)
               setInvalidAddress(false);
             }}
