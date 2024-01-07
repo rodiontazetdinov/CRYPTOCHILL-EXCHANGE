@@ -40,6 +40,12 @@ export const Main = ({
             })}>
             <Transactions/>
             <FaqSection/>
+            <h2 className={classNames("text-center font-bold font-segoe bg-gradient-to-r from-[#FBE3F1] to-[#CAAEFF] bg-clip-text text-transparent mt-12 mb-10 self-center",{
+              "text-4xl": !iphone,
+              "text-2xl": iphone,
+            })}>
+              Новости
+            </h2>
             <News/>
             <Instructions/>
             </div>

@@ -1,5 +1,6 @@
 import { useMediaQuery } from "@uidotdev/usehooks";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 export const NewsCard = ({ title, description, imgLink}) => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
@@ -36,7 +37,12 @@ export const NewsCard = ({ title, description, imgLink}) => {
           "text-xl": iphone,
         })}>{title}</h3>
         <p className="mt-2 text-left text-base h-[98px] line-clamp-4">{description}</p>
-        <button className={classNames("font-semibold text-xl px-4 py-3 bg-btns rounded-lg self-left mt-4 w-28 ")}>Читать</button>
+        <Link
+          className={classNames("font-semibold text-xl text-center px-4 py-3 bg-btns rounded-lg self-left mt-4 w-28 ")}
+          to={`/news/1`}
+          reloadDocument
+        >Читать</Link>
+        {/* <button className={classNames("font-semibold text-xl px-4 py-3 bg-btns rounded-lg self-left mt-4 w-28 ")}>Читать</button> */}
     </div>
   );
 };
