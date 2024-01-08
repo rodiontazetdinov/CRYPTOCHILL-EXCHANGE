@@ -1,5 +1,5 @@
 import './App.scss';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Layout } from './components/Layout';
 import { Main } from './pages/Main';
@@ -15,6 +15,7 @@ import { closeAllDropdowns, setCoins, setOrderCoins } from './store/actions';
 import defaultImg from "./images/logo.svg";
 import { useState, useEffect } from 'react';
 import { api } from './utils/api';
+import { NewsPage } from './components/NewsPage';
 
 export const App = () => {
 
@@ -129,6 +130,7 @@ export const App = () => {
           <Route path="support" element={<Support/>} />
           <Route path="sending/:id" element={<SendingPage/>} />
           <Route path="account/*" element={<Account/>} />
+          <Route path="news/:id" element={<NewsPage />} />
         </Route>
       </Routes>
       {/* <Header/> */}
